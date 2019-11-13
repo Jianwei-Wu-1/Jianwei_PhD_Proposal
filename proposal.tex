@@ -1,0 +1,88 @@
+\documentclass[10pt,letterpaper,onecolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{patterns, spy}
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\usepackage[cmex10]{amsmath}
+\usepackage{subfiles}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage[hyphens]{url}
+\usepackage{xspace}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\sisetup{
+  group-separator={,}, 
+  group-four-digits=true, 
+  binary-units = true,
+  table-number-alignment = center,
+}
+\usepackage[sort&compress, numbers]{natbib}
+\usepackage{acronym}
+\usepackage[section]{placeins}
+\usepackage{pbox}
+\usepackage[overload]{textcase}
+\usepackage{tabu, booktabs}
+\usepackage[hyphens]{url}
+\usepackage{algorithm, algpseudocode}
+\usepackage[inline]{enumitem}
+\setlist[enumerate]{label=(\arabic*), itemjoin={,\ }, itemjoin*={,\ and\ }}
+\usepackage{hyphenat}
+\usepackage{color}
+\usepackage[margin=1in]{geometry} % change default margins
+
+\title{Systematically Providing Descriptive Names for Unit Tests \\ 
+[24pt] Ph.D. Dissertation Proposal}
+\author{\textbf{Jianwei Wu} \\
+{\small Email: wjwcis@udel.edu} \\\\
+\\
+Department of Computer and Information Sciences \\
+University of Delaware \\\\
+}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{cleveref}
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty} % do not include numeration in cover page
+\newpage % separate cover page from content
+
+\tableofcontents
+\newpage
+
+\subfile{abstract.tex}
+\newpage
+
+\subfile{introduction.tex}
+
+\subfile{related-work.tex}
+
+\subfile{test-pattern-section.tex}
+
+\subfile{remaining-work.tex}
+
+\subfile{contributions.tex}
+
+
+\bibliographystyle{abbrvnat}
+\setlength{\bibsep}{2pt}
+\newpage
+\bibliography{proposal.bib}
+
+\end{document}

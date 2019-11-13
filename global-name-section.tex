@@ -1,53 +1,12 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-
-\title{Systematically Providing Descriptive Names for Unit Tests \\ 
-Ph.D. Dissertation Proposal}
-\author{\textbf{Jianwei Wu} \\
-\small wjwcis@udel.edu}
-\date{Nov 2019 - 2020}
-
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{csquotes}
-\usepackage{siunitx}
-\usepackage{booktabs}
-\usepackage{cleveref}
-
+\documentclass[proposal.tex]{subfiles}
 \begin{document}
 
-\maketitle
+\subsection{A Concept-based Approach to Globally Provide Descriptive Test Names}
+\label{sec:global-name}
 
-\tableofcontents
+\subsubsection{Motivation}
 
-\section{Introduction}
-
-~~The overall topic of the dissertation is about solving the naming problem in unit testing.
-%
-The first part we investigated is about improving non-descriptive test names.
-%
-The second part we will develop is a learning-based\slash graph-based technique to globally provide descriptive test names since the naming of tests is not \enquote{local}.
-%
-The last part we will develop is a comprehensive study that can provide descriptive names for every code element in unit tests (i.e., identifiers, test names, test class names, etc.).
-
-
-\begin{itemize}
-	\item First Section: improving test names.
-	\item Second Section: globally predict descriptive test names.
-	\item Third Section: comprehensively provide descriptive names for unit testing.
-\end{itemize}
-
-\section{A Pattern-based Approach to Detect and Improve Non-descriptive Test Names}
-
-...
-
-
-\section{A Concept-based Approach to Globally Provide Descriptive Test Names}
-
-
-\subsection{Motivation}
-
-\begin{table*}
+\begin{table*}[ht]
 \centering
 \begin{tabular}{
   l
@@ -71,7 +30,7 @@ The last part we will develop is a comprehensive study that can provide descript
 \label{tab:subjects}
 \end{table*}
 
-\begin{figure}[t]
+\begin{figure}[ht]
     \centering
     \includegraphics[scale=0.5]{./plots/motivation_plot.pdf}
     \caption{Survey Results.}
@@ -115,51 +74,5 @@ In this paper, we propose a concept-based approach to globally provide descripti
 
 
 
-123
 
-
-
-\section{Remaining Work}
-
-    
-\subsection{A Comprehensive Approach to Provide Descriptive Names for Every Code Element in Unit Testing or Automatically Generate Descriptive Summary\slash User's Manual for Open-source Project}
-
-
-\section{Foreseen Contributions}
-
-
-
-...
-
-
-% \section{Solving the Naming Problem v2}
-
-% The overall topic of the dissertation is about solving the naming problem in different parts of program.
-% %
-% The first part we investigated is about improving non-descriptive test names.
-% %
-% The second part we will investigate is to find the method and class names that are renamed for multiple times.
-% %
-% The last part we will develop is to combine those two techniques to generating human-readable test names.
-
-% \begin{itemize}
-% 	\item First Section: improving test names.
-% 	\item Second Section: finding test names that are renamed for multiple time.
-% 	\item Third Section: generating human-readable test names.
-% \end{itemize}
-
-% \subsection{Detect and Improve Non-descriptive Test Names}
-
-% ...
-
-% \subsection{Finding Potential Problematic Test Names}
-
-% ...
-
-% \subsection{Generating Human-readable Test Names by Combine Pattern and Rename Logs}
-
-% ...
-
-\bibliographystyle{plain}
-\bibliography{proposal}
 \end{document}
