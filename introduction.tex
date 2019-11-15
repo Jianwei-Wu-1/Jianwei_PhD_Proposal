@@ -5,6 +5,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
+
 Unit tests are an important artifact that supports the software development process in several ways.
 %
 In addition to helping developers ensure the quality of their software by checking for failures~\cite{daka2014survey}, they can also serve as an important source of documentation.
@@ -14,7 +15,7 @@ For example, when a test fails, its name can provide the first step towards unde
 Similarity, a test's name can help developers decide whether a test should be left alone, modified, or removed in response to changes in the application under test and whether the test should be included in a regression test suite.
 
 
-In this work, we believe that test names are \enquote{good} if they are descriptive (i.e., they accurately summarize both the scenario and the expected outcome of the test~\cite{trenk14}) and \enquote{bad} if they are not descriptive.
+In this proposal, I believe that test names in unit tests are \enquote{good} if they are descriptive (i.e., they accurately summarize both the scenario and the expected outcome of the test~\cite{trenk14}) and \enquote{bad} if they are not descriptive.
 %
 This is because descriptive names:
 \begin{enumerate*}
@@ -22,6 +23,14 @@ This is because descriptive names:
 \item help prevent tests that are too large or contain unrelated assertions---if a test cannot be summarized, it likely should be split into multiple tests
 \item serve as documentation for the class under test---a class's supported functionality can be identified by reading the names of its tests
 \end{enumerate*}~\cite{zhang2015automatically}.
+%
+Furthermore, I expand the idea of descriptive names to a global scope.
+%
+Rather than limiting to locally descriptive names, I start to investigate if we can provide test names that are not only descriptive but also global.
+%
+The word \enquote{global} means that a test name should not be derived from it related unit test solely, and it need to be considered from a larger scope (i.e., project level).
+%
+By using the larger scope, my working prototype of this proposal will provide descriptive test names that can also be globally recognized.
 
 
 Unfortunately, unit tests often lack descriptive names.
@@ -49,7 +58,7 @@ Another approach is to help developers improve their existing names by suggestin
 %
 For example, \citeauthor{host2009debugging} proposed an approach for Java methods and variables which uses a set of naming rules and related semantics~\cite{host2009debugging} and \citeauthor{allamanis2015suggesting} and \citeauthor{pradel2018deepbugs} use a model-based and a learning-based approach, respectively, to directly suggest better names or find name-based bugs to facilitate improvements~\cite{allamanis2015suggesting, pradel2018deepbugs}.
 %
-In my dissertation work, I will focus on systematically providing descriptive names for unit tests.
+In my dissertation work, I will focus on systematically providing descriptive names for unit tests and expanding the same idea to all names in unit tests (e.g., test class names, identifier names, etc).
 %
 More specifically, I propose the following research tasks:
 
@@ -66,7 +75,7 @@ From the comparison between the information from body and from name, we can dete
 Second, I propose a concept-based technique to globally provide descriptive test names since the naming of tests is not \enquote{local}.
 
 
-Finally, I will develop is a comprehensive study that can provide descriptive names for every component (i.e., identifiers, test names, test class names, etc.) in unit tests.
+Finally, I will develop is a comprehensive study that can provide descriptive names for every component in unit tests.
 
 
 \end{document}

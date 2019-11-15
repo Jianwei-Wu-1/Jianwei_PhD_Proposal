@@ -1,11 +1,91 @@
 \documentclass[proposal.tex]{subfiles}
 \begin{document}
 
+\newpage
 \section{Related Work}
 \label{sec:related-work}
 
+Existing work related to my proposed research will be discussed in this section.
+%
+I have organized them into the following categories:
+
+\subsection{Detecting Mismatches\slash Improving Names}
+
+\Citeauthor{host2009debugging}'s work is the most similar to our approach as it attempts to identify several types of naming bugs in general Java methods~\cite{host2009debugging}.
+%
+Their approach relies on a manually generated rule book that is extracted from the implicit convention between names and implementations in Java programming, which can be utilized to detect name bugs and provide some suggestions for constructing more suitable names.
+%
+In their previous works, \citeauthor{host2008java} already showed that there is a mutual dependency between method names and their associated implementations~\cite{host2008java}.
+%
+Therefore, their approach considered the mismatch between the name and the implementation of its associated method and used the mismatch to fix name bugs, which are both similar to the analytical process and goal of our pattern-based approach.
+%
+There are two major differences between their work and ours.
+%
+First, our approach primarily focuses on the test names rather than the method names that often follow a different naming convention.
+%
+For example, their approach treated the data type of the value in the \texttt{return} statement as an essential attribute in their rule book.
+%
+However, normally for the unit tests, they compared different values using the \texttt{assertions} rather than any \texttt{return} statement, so the information in those \texttt{assertions} will be a crucial part of their test names.
+%
+Second, instead of using a manually generated rule book, we built our approach based on the test patterns, and those test patterns were mined from a large test corpus by a semi-automatic process.
 
 
+\citeauthor{zhong2013detecting} provided a novel approach for detecting API documentation errors, and those errors are essentially the mismatches between the API documentation and the actual programs~\cite{zhong2013detecting}.
+%
+To address the importance of words in Java programming, \citeauthor{singer2008exploiting} showed that words in class names are closely related to class properties that can be described in micro patterns~\cite{singer2008exploiting}.
+%
+\citeauthor{allamanis2014learning} mentioned that developers should follow a consistent naming convention, and they proposed a novel framework that can suggest identifier names accurately~\cite{allamanis2014learning}.
+%
+All of their works comprehensively showed it is feasible to find poorly structured (i.e., non-descriptive) names by using the mismatch or pattern between the name and the program, and we can also improve those names by using providing accurate suggestions.
+%
+Nonetheless, each of their techniques is often limited to a certain aspect in the problem of detecting and improving non-descriptive names, so none of them can be directly applied to improving non-descriptive names in unit tests.
+%
+\citeauthor{pradel2018deepbugs} recently proposed a framework for the detection of naming bugs~\cite{pradel2018deepbugs}.
+%
+Regardless of their effort to introduce a new approach that can detect name-based bugs by using their machine learning method, we still can not apply their approach to the unit tests without further modifications.
+%
+Because some unit tests are expected to produce certain exceptions or failures when using them, so testers might intentionally design poorly named identifiers in those tests.
+%
+Consequently, lots of false-positives could be generated without a complete retrofit to extend their proposed framework to unit tests.
+
+
+\subsection{Automated Generation of Test Names}
+
+In contrast to the techniques mentioned above that attempt to improve names, there are several approaches that attempt to automatically generate names.
+
+Some of these techniques use natural language-based program analysis~(NLPA).
+%
+For example, \citeauthor{zhang2016towards} proposed their approach that can generate descriptive names from existing test bodies by using natural-language program analysis and text generation~\cite{zhang2016towards}.
+%
+However, their approach left an important question unanswered that is testers need to decide which one of the three possible test names should be used for their unit tests by themselves, and it is possible that none of the three generated names follow the common naming convention.
+%
+Other techniques utilized Java bytecode, method-call sequences, API-level coverage goals, and \texttt{logbilinear} context models~\cite{fraser2011evosuite,thummalapenta2009mseqgen,daka2017generating,allamanis2015suggesting}.
+%
+Even with their automated generation process, their generated test names are not human-readable that can cause misunderstanding for testers who want to further modify those generated test names or bodies.
+%
+Although some techniques can generate descriptive names, they required testers to perform a full test execution with certain coverage criteria or build a context model, which are often error-prone in practice (i.e., some tests may fail to meet the coverage criteria or fit in the model).
+
+
+\subsection{Natural Language Program Analysis}
+
+There are lots of existing works that try to analyze programs from a natural language-based perspective.
+
+\citeauthor{pollock2007introducing} and~\citeauthor{shepherd2007using} introduced NLPA by illustrating how to apply NLPA in practice and also giving some insights about aspect mining~\cite{pollock2007introducing,shepherd2007using,pollock2009natural}.
+%
+Their studies showed natural language clues from developers' naming style can be used for improving the effectiveness of software tools.
+%
+\citeauthor{abebe2010natural} proposed a natural language-based method to parse the identifier names of program elements for extracting concepts from them~\cite{abebe2010natural}.
+%
+Furthermore, some researchers attempted to split identifiers~\cite{enslen2009mining,butler2011improving,guerrouj2013tidier,hill2014empirical}, and others managed to expand abbreviations~\cite{hill2008amap,madani2010recognizing,corazza2012linsen}.
+
+
+\subsection{Formal Concept Analysis}
+
+In order to globally construct descriptive test names, I primarily consider formal concept analysis (FCA) as the main method.
+%
+By using FCA, I can extract concept hierarchy from all code elements contained in a set of unit tests.
+%
+The extracted concept hierarchy can be utilized to mimic how developers actually think of those elements in unit tests since developers have a global view of the whole project.
 
 
 
