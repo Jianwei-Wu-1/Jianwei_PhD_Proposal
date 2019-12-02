@@ -1,9 +1,10 @@
 \documentclass[10pt,letterpaper,onecolumn]{article}
+
+\usepackage{adjustbox}
 \usepackage[utf8]{inputenc}
 \usepackage{titlesec}
 \usepackage{tikz}
 \usetikzlibrary{patterns, spy}
-
 \setcounter{secnumdepth}{4}
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -48,12 +49,24 @@
 Department of Computer and Information Sciences \\
 University of Delaware \\\\
 }
+\usepackage[capitalize,sort]{cleveref}
+\usepackage{listings}
+\lstdefinestyle{custom_java}{
+  belowcaptionskip=1\baselineskip,
+  basicstyle=\scriptsize,
+  captionpos=b,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=Java,
+}
+\lstset{
+  style=custom_java,
+}
+\newcommand{\includecode}[2][c]{\lstinputlisting[escapechar=, style=custom_#1]{#2}}
 
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{csquotes}
-\usepackage{booktabs}
-\usepackage{cleveref}
+
+
+
 
 
 

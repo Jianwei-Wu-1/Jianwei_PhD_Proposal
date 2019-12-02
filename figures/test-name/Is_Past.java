@@ -1,0 +1,3 @@
+test<Action><Predicate>...
+    POS:Verb POS:Verb, past participle
+    (is/are)
