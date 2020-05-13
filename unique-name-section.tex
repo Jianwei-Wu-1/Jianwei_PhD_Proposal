@@ -1,0 +1,35 @@
+\documentclass[proposal.tex]{subfiles}
+\begin{document}
+
+\subsection{Empirical Study: Are tests named for what makes them unique?}
+\label{sec:unique-test-name}
+
+Our concept-based test naming approach is based on the assumption that developers often choose the name for a test based on what aspect of the test makes the test unique among its siblings (e.g., tests in the same class).
+%
+To validate this assumption, we conducted an empirical study of \num{579} existing tests.
+%
+First, we examined each test in order to identify what makes it unique from its siblings.
+%
+Then we examined the test's name and judged whether the name is based either entirely or in part on the unique aspect of the test.
+
+\subsection{Research Plan}
+
+The research plan of this remaining work contains four steps.
+%
+The first step has been done in my preliminary work that is to perform an empirical study to determine if tests are named after what makes them unique, which provides intuition for how to build a tool to detect the uniqueness of tests.
+%
+The second step is to develop and implement a concept-based approach to extract the uniqueness of tests and improve existing test names with the uniqueness.
+%
+The third step is targeting at evaluating the concept-based approach with a randomly selected set of \num{10} Java projects, which come from Github that is the most popular repository of open-source projects.
+%
+Research questions involved in this step are:
+\begin{enumerate}
+    \item Coverage: Is the concept-based approach capable of covering most of the selected tests?
+    \item Accuracy: Can the concept-based approach accurately extract the uniqueness out of each test?
+    \item Usefulness: Are the names of those tests become more readable and useful after adding the uniqueness of tests to them?
+\end{enumerate}.
+
+The final step is to develop a hybrid approach that can improve descriptiveness and uniqueness for other components in unit tests, which will significantly improve the overall quality and readability of the entire test suite.
+
+
+\end{document}

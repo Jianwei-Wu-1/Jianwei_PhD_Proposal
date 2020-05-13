@@ -1,7 +1,7 @@
 \documentclass[proposal.tex]{subfiles}
 \begin{document}
 
-\section{A Pattern-based Approach to Detect and Improve Non-descriptive Test Names}
+\section{A Pattern-based Approach to Detect and Improve Non-descrip-\\tive Test Names}
 \label{sec:test-pattern}
 
 \begin{figure*}[t]
@@ -20,10 +20,93 @@
 \label{fig:example-patterns}
 \end{figure*}
 
+
+Unit tests are an important artifact that supports the software development process in several ways.
+% change done here 
+In addition to helping developers ensure the quality of their software by checking for failures~\cite{daka2014survey}, they can also serve as an important source of documentation not only for human developers but also for automated software engineering tools (e.g., recent work on fault localization by \citeauthor{li2019deepfl} uses test name information~\cite{li2019deepfl}).
+%
+For example, when a test fails, its name can provide the first step towards understanding the purpose of the test and ultimately fixing the cause of the observed failure.
+%
+Similarly, a test's name can help developers decide whether a test should be left alone, modified, or removed in response to changes in the application under test and whether the test should be included in a regression test suite.
+
+
+In this work, we believe that test names are \enquote{good} if they are descriptive (i.e., they accurately summarize both the scenario and the expected outcome of the test~\cite{trenk14}) and \enquote{bad} if they are not descriptive.
+%
+This is because descriptive names:
+\begin{enumerate*}
+\item make it easier to tell if some functionality is not being tested---if a behavior is not mentioned in the name of a test, then the behavior is not being tested
+\item help prevent tests that are too large or contain unrelated assertions---if a test cannot be summarized, it likely should be split into multiple tests
+\item serve as documentation for the class under test---a class's supported functionality can be identified by reading the names of its tests
+\end{enumerate*}~\cite{zhang2015automatically}.
+
+
+Unfortunately, unit tests often lack descriptive names.
+%
+For example, an exploratory study by \citeauthor{zhang2015automatically} found that only \SI{9}{\percent} of the \num{213423} test names they considered were complete (i.e., fully described the body of test) while \SI{62}{\percent} were missing some information and \SI{29}{\percent} contained no useful information (e.g., tests named \enquote{test})~\cite{zhang2015automatically}.
+%
+Poor test names can be due to developers writing non-descriptive or incomplete names.
+%
+They can also occur due to incomplete code modifications.
+%
+For example, a developer may modify a test's body but fail to make the corresponding changes to the test's name.
+%
+Regardless of the cause, non-descriptive test names complicate comprehension tasks and increase the costs and difficulty of software development.
+
+
+Because non-descriptive names negatively impact software development, there have been several attempts to address this issue.
+%
+One approach has been to automatically generate names based on implementations (e.g.,~\cite{arcuri2014automated, zhang2015automatically, daka2017generating}).
+%
+For example, \citeauthor{zhang2015automatically} and \citeauthor{daka2017generating} use static and dynamic analysis, respectively, to extract important expressions from a test's body and natural language processing techniques to transform such expression into test names \cite{zhang2015automatically, daka2017generating}. 
+%
+While automatically generating names from bodies eliminates the possibility of mismatches between names and bodies the generated names do not always meet with developer approval (e.g., they may not fit with existing naming conventions).
+%
+Another approach is to help developers improve their existing names by suggesting improvements.  
+%
+For example, \citeauthor{host2009debugging} proposed an approach for Java methods and variables which uses a set of naming rules and related semantics~\cite{host2009debugging}, \citeauthor{li2019deepfl} provided a learning-based approach to locate software faults using test name information \cite{li2019deepfl}, and \citeauthor{allamanis2015suggesting} and \citeauthor{pradel2018deepbugs} use a model-based and a learning-based approach, respectively, to directly suggest better names or find name-based bugs to facilitate improvements~\cite{allamanis2015suggesting, pradel2018deepbugs}.
+
+
+In this paper, we propose a new, pattern-based approach that can:
+\begin{enumerate*}
+\item detect non-descriptive test names by finding mismatches between the name and body of a given JUnit test
+\item provide descriptive information that consists of the main motive of test, the property to be tested in the test, and the prerequisite needed in the test or the object to be tested (see~\cref{sec:test_patterns} for details) to facilitate the improvement of non-descriptive test names
+\end{enumerate*}.
+%
+Unlike existing approaches that suggesting improvements, which were designed to handle general methods, our approach is specific to JUnit tests.
+%
+The narrower scope of the work allows it to take advantage of the highly repetitive structures that exist in both test names and bodies of JUnit tests (see~\cref{sec:test_patterns}).
+%
+From a high-level point of view, the approach uses a set of predefined patterns to extract descriptive information from both a test's name and body.
+%
+This information is then compared to find non-descriptive names (i.e., cases where the name does not accurately summarize the body).
+%
+When a mismatch is found, the information used by the approach can help developers address the mismatch and improve the quality of the test name.
+
+
+To assess the pattern-based approach, we implemented it as an IntelliJ IDE plugin.
+%
+The plugin was then used to carry out an empirical evaluation of the quality of more than \num{34000} tests from \num{10} Java projects.
+%
+Overall, the results of our evaluation are promising and show that the pattern-based approach is feasible, accurate, and effective.
+
+
+In particular, this work makes the following contributions:
+\begin{itemize}
+  \item A novel, pattern-based approach can detect non-descriptive test names of JUnit tests and provide descriptive information about the unit tests to help developers improve existing unit tests.
+  \item A prototype implementation of the approach as an IntelliJ IDE plugin.
+  \item An empirical evaluation on \num{10} Java projects that shows:
+      \begin{enumerate*}
+          \item the patterns are general and cover a majority of test names and bodies
+          \item the patterns can accurately extract descriptive information from both test names and bodies
+          \item the approach can accurately classify test names as either descriptive or non-descriptive
+      \end{enumerate*}.
+\end{itemize}
+
 \subsection{Test Patterns}
 \label{sec:test_patterns}
 
-I chose a pattern-based approach because unit tests often have similar structures that can be used to identify the purpose of a test from both its name and body.
+
+We choose a pattern-based approach because unit tests often have similar structures that can be used to identify the purpose of a test from both its name and body.
 %
 More specifically, patterns can be used to extract:
 \begin{enumerate*}
@@ -32,13 +115,14 @@ More specifically, patterns can be used to extract:
     \item the \textbf{scenario} which are the conditions under which the action is being performed or the predicate is evaluated
 \end{enumerate*}.
 
+
 As examples of the common structures shared by unit test bodies, consider the code examples shown in \cref{fig:example-patterns}.
 %
 \Cref{PatternExample_tc} shows a unit test whose body consists of a \texttt{try-catch} statement.
 %
 The goal of this type of test is to perform the action under an optional scenario and then to check whether the action was successful or not.
 %
-In test corpus used for pattern generation in \cref{tab:test-corpus}, we found more than \num{2800} tests (\SI{\approx 14}{\percent}) shared this structure.
+In the test corpus used for pattern generation in \cref{tab:test-corpus}, we found more than \num{2800} tests (\SI{\approx 14}{\percent}) shared this structure.
 %
 Because of the regular structure of this type of test, it is possible to automatically extract its purpose in the form of its action, scenario, and predicate.
 %
@@ -46,7 +130,7 @@ More specifically, the action is the \texttt{method invocation} that occurs befo
 %
 In \cref{PatternExample_tc}, the action of the test is \enquote{\textbf{execute}} and the scenario of the test is \enquote{\textbf{action}}, the object being tested.
 %
-For another example, \Cref{PatternExample_allA} presents a unit test whose body only contains only a single assertion.
+For another example, \Cref{PatternExample_allA} presents a unit test whose body contains only a single assertion.
 %
 The goal of this type of test is to compare the result of an action under a required scenario to an expected predicate.
 % 
@@ -55,6 +139,7 @@ Again, this type of test is common: about \num{1000} tests in the corpus mention
 For this type of test, the action and the predicate can be found by looking at the actual (second) and expected (first) arguments to the assertion statement, respectively, and the scenario will again be the object on which the action is invoked.
 %
 Therefore, in \cref{PatternExample_allA}, the action of the test is \enquote{\textbf{entries}}, the predicate is \enquote{\textbf{getSampleElements}}, and the scenario is \enquote{\textbf{multimap}}.
+
 
 Common patterns among test names can also be seen in the examples in \cref{fig:example-patterns}.
 %
@@ -73,11 +158,13 @@ In this case, the action of the test name is simply the single word contained in
 
 In the remainder of this section, we explain the process we used to identify common test name and test body patterns and present a list of the patterns that we used to detect non-descriptive names (see~\cref{sec:approach}).
 
-\subsection{Test Corpus}
+
+\subsubsection{Test Corpus}
 
 \begin{table}[t]
 \scriptsize
 \centering
+\caption{Considered projects for identifying test patterns.}
 \begin{tabular}{
     l
     l
@@ -95,7 +182,6 @@ Barbecue~\cite{barbecue}     & 44a8632              & 154               \\
 \multicolumn{2}{r}{Total}                           & 18109             \\
 \bottomrule
 \end{tabular}
-\caption{Considered projects for identifying test patterns.}
 \label{tab:test-corpus}
 \end{table}
 
@@ -110,54 +196,16 @@ Each project focuses on a different domain: \enquote{Guava} is a general-purpose
 % 
 Moreover, they are written by different authors so their test suites are likely to have tests written in different ways.
 %
-Due to this criteria, the patterns we identify from these projects are likely to be general, rather than specific to any one test suite from a project or author.
+Due to these criteria, the patterns we identify from these projects are likely to be general, rather than specific to any one test suite from a project or author.
 
 
 \subsubsection{Test Body Patterns}
 \label{sec:body-patterns}
 
-
-To identify common body patterns, we used a semi-automated process based on applying frequent pattern mining to the statements contained in test bodies.
-%
-We chose to operate at the statement-level for two major reasons:
-\begin{enumerate*}
-    \item statements are the basic syntactic component of tests and standard unit tests are composed of statements~\cite{JUnitCook}
-    \item while the entire test serves a purpose, individual statements encapsulate sub-steps towards achieving the overall goal~\cite{lakhotia1993understanding} such as the action, scenario, and predicate 
-\end{enumerate*}.
-
-
-The first step in the process was to eliminate inconsequential differences (e.g., literals, variable names, etc.) by abstracting each statement to a number that encodes its type.
-%
-For example, declaration statements are assigned the number \num{1}, \texttt{method invocation} statements are assigned the number \num{2}, etc.
-%
-While more nuanced abstraction approaches are possible (e.g., def-use-based or graph-based), we found that this approach worked satisfactorily in practice.
-%
-We also added special symbols to explicitly encode the start and end of each test.
-%
-These markers are used later to filter out mined patterns that do not span entire tests.
-
-
-The second step in the process was to apply the ClaSP frequent pattern mining algorithm~\cite{gomariz2013clasp} to the abstracted statements.
-%
-We chose to use ClaSP because it can efficiently mine the complete set of frequent, closed patterns from its input~\cite{fournier2017survey}.
-%
-This means that ClaSP ensures that each mined pattern has the highest frequency among its super-patterns (i.e., closed, similar to a class and its super-classes), and that long patterns, which are relevant for our purposes, can be mined efficiently.
-%
-To avoid confusion, we will refer to the output of ClaSP as \enquote{proto-patterns} as they serve as the basis for constructing our test body patterns.
-%
-As the output of this step, we generated \num{873} proto-patterns.
-
-
-The final step in the process was to manually examine the proto-patterns to generate test body patterns.
-%
-This step is necessary because the proto-patterns contain duplicates, spurious entries (i.e., patterns that do not occur in the original tests), and patterns that do not span an entire test.
-%
-Additionally, we wanted patterns that are both general and that allow for accurately extracting the action, predicate, and scenario.
-
-
 \begin{table}[t]
 \scriptsize
 \centering
+\caption{Test Body Patterns}
 \begin{tabular}{l} 
 \toprule
 \textbf{Name} \\
@@ -181,11 +229,77 @@ No Assertion (Multiple method invocations) \\
 No Assertion (Multiple declarations) \\
 \bottomrule
 \end{tabular}
-\caption{Test Body Patterns}
 \label{tab:body-patterns}
 \end{table}
 
+\begin{figure}[t]
+\centering
+    \begin{subfigure}{0.9\textwidth}
+        \begin{footnotesize}
+        \verbatiminput{figures/ClaSP.java}
+        \end{footnotesize}
+    \end{subfigure}
+\caption{Mined Examples by ClaSP.}
+\label{ClaSP_examples}
+\end{figure}
 
+
+To identify common body patterns, we used a semi-automated process based on applying frequent pattern mining to the statements contained in test bodies.
+%
+We chose to operate at the statement-level for two major reasons:
+\begin{enumerate*}
+    \item statements are the basic syntactic component of tests and standard unit tests are composed of statements~\cite{JUnitCook}
+    \item while the entire test serves a purpose, individual statements encapsulate sub-steps towards achieving the overall goal~\cite{lakhotia1993understanding} such as the action, scenario, and predicate
+\end{enumerate*}.
+
+
+The first step in the process was to eliminate inconsequential differences (e.g., literals, variable names, etc.) by abstracting each statement to a number that encodes its type.
+%
+For example, declaration statements are assigned the number \num{1}, \texttt{method invocation} statements are assigned the number \num{2}, etc.
+%
+While more nuanced abstraction approaches are possible (e.g., def-use-based or graph-based), we found that this approach worked satisfactorily in practice.
+%
+We also added special symbols to explicitly encode the start and end of each test.
+%
+These markers are used later to filter out mined patterns that do not span entire tests.
+
+
+The second step in the process was to apply the ClaSP frequent pattern mining algorithm~\cite{gomariz2013clasp} to the abstracted statements.
+% change done ->
+ClaSP is a novel algorithm that utilized vertical database strategy and heuristic to mine frequent closed patterns.
+%
+We chose to use ClaSP because it can efficiently mine the complete set of frequent, closed patterns from its input~\cite{fournier2017survey}.
+%
+This means that ClaSP ensures that each mined pattern has the highest frequency among its super-patterns (i.e., closed, similar to a class and its super-classes), and that long patterns, which are relevant for our purposes, can be mined efficiently.
+%
+To avoid confusion, we will refer to the output of ClaSP as \enquote{proto-patterns} as they serve as the basis for constructing our test body patterns.
+%
+As the output of this step, we generated \num{873} proto-patterns.
+
+
+The final step in the process was to manually examine the proto-patterns to generate test body patterns.
+%
+This step is necessary because the proto-patterns contain duplicates, spurious entries (i.e., patterns that do not occur in the original tests), and patterns that do not span an entire test.
+%
+Additionally, since the proto-patterns may contain different setups of where the action, predicate, and scenario should be extracted, we wanted patterns that are both general and that allow for accurately extracting the action, predicate, and scenario.
+
+
+In~\cref{ClaSP_examples}, the pattern mining process is clearly illustrated by a real-world example that is extracted during the process of pattern mining.
+%
+The example is composed of three parts:
+\begin{enumerate*}
+\item abstracting each statement to a number
+\item using ClaSP to mine frequent patterns from the abstracted statements
+\item manually examining the proto-patterns to generate test body patterns
+\end{enumerate*}.
+%
+First, we utilized an automated script to convert statements to numbers to prepare the corpus for pattern mining, and each type of statement to number pair is also stored for reference (e.g., \texttt{methodCall} to \num{2}).
+%
+Second, after the mining results of ClaSP is completely generated, we collected all generated sequences (e.g.,~\num{0} \num{-1} \num{7} \num{-1} \num{8} \num{-1} \num{10} \num{-1} \num{11} \num{-1} \num{3} \num{-1}) as the proto-patterns and use the statement-number pair from the first step to reconstruct those patterns (e.g.,~$start\{ \star try\{ \star catch\{ \star \}catch \star \}try \star \}end \star \}$).
+%
+Last, we performed a manual examination of the proto-patterns to generate test body patterns.
+%
+From the last two lines (i.e., each of them is a reconstructed pattern with its number of matches) in~\cref{ClaSP_examples}, although both of them are mined patterns and the first one even has more matches (i.e., \num{1847}), we only selected the second one as one kind of representation of the \textit{Try Catch (Restricted)} body pattern shown in~\cref{tc_one} since the first one is a spurious entry.
 
 
 Because the number of proto-patterns is large, we used various grouping strategies to merge similar proto-patterns.
@@ -197,13 +311,10 @@ Another useful approach was to group the proto-patterns by common prefixes in or
 The resulting groups of proto-patterns were further examined to eliminate ones that did not include both the special start and end of test markers and ones that did not allow for identifying the action, scenario, and predicate.
 %
 Finally, the remaining proto-patterns were manually translated in to the \num{17} test body patterns shown in \cref{tab:body-patterns}.
+% change done ->
+For these selected proto-patterns, we manually examined each of them and extracted the action, predicate, and scenario from each pattern by reviewing matched test bodies from those considered projects in \cref{tab:test-corpus}.
 %
-In remainder of this section each of these patterns will be described in more detail.
-
-
-\begin{description}
-
-\item[If Else]
+In the remainder of this section each of these patterns will be described in more detail.
 
 \begin{figure}[t]
 \centering
@@ -213,6 +324,18 @@ In remainder of this section each of these patterns will be described in more de
 \caption{If Else.}
 \label{ifElse}
 \end{figure}
+\begin{figure}[t]
+\centering
+    \begin{subfigure}{0.65\textwidth}
+        \includecode[java]{figures/loopPattern.java}
+    \end{subfigure}
+\caption{Loop.}
+\label{loopPattern}
+\end{figure}
+
+\begin{description}
+
+\item[If Else]
 
 
 The motive behind \texttt{If Else} body pattern is to capture a type of test body that uses an if-else condition to fulfill its task by testing a particular \texttt{method invocation} under a given object in the if part, and use the \texttt{assertions} in the else part for its evaluation.
@@ -224,15 +347,14 @@ Then the extracted scenario under test will be the only \enquote{object} that is
 
 \item[Loop]
 
-\begin{figure}[t]
+\begin{figure}[!htb]
 \centering
     \begin{subfigure}{0.65\textwidth}
-        \includecode[java]{figures/loopPattern.java}
+        \includecode[java]{figures/tc_any.java}
     \end{subfigure}
-\caption{Loop.}
-\label{loopPattern}
+\caption{Try Catch (Generalized).}
+\label{tc_any}
 \end{figure}
-
 
 The motive of \textit{Loop} body pattern is to include any test body that is trying to repetitively test a \texttt{method invocation} under a specific \enquote{object}, and use its contained \texttt{assertion} to evaluate the outcomes.
 %
@@ -287,14 +409,6 @@ As we mentioned in \Cref{PatternExample_tc}, that unit test is a standard match 
 
 \item[Try Catch (Generalized)] 
 
-\begin{figure*}[t]
-\centering
-    \begin{subfigure}{0.65\textwidth}
-        \includecode[java]{figures/tc_any.java}
-    \end{subfigure}
-\caption{Try Catch (Generalized).}
-\label{tc_any}
-\end{figure*}
 
 This pattern - \textit{Try Catch (Generalized)} body pattern is a more general form of the previous two types of \texttt{try-catch} statement-based body patterns.
 %
@@ -320,6 +434,24 @@ If there is an \texttt{assertion}, then the predicate of the test is the \texttt
 \label{AllA_single}
 \end{figure*}
 
+\begin{figure*}[t]
+\centering
+    \begin{subfigure}{0.8\textwidth}
+        \includecode[java]{figures/AllA_mutiple.java}
+    \end{subfigure}
+\caption{All Assertion (Multiple).}
+\label{AllA_mutiple}
+\end{figure*}
+
+\begin{figure}[!htb]
+\centering
+    \begin{subfigure}{0.675\textwidth}
+        \includecode[java]{figures/NP_23.java}
+    \end{subfigure}
+\caption{Normal (Restricted).}
+\label{NP_2/3}
+\end{figure}
+
 A test body matched by the \textit{All Assertion (Single)} body pattern compares the result of an action under a required scenario to an expected predicate.
 %
 In \textit{All Assertion (Single)}, the single \texttt{assertion} contained in the test body is trying to compare different results, so the action is the \texttt{method invocation} placed in the \enquote{actual} position of the \texttt{assertion}.
@@ -333,14 +465,6 @@ Like in \Cref{PatternExample_allA}, the unit test is a standard match to the \te
 
 \item[All Assertion (Multiple)] 
 
-\begin{figure*}[t]
-\centering
-    \begin{subfigure}{0.8\textwidth}
-        \includecode[java]{figures/AllA_mutiple.java}
-    \end{subfigure}
-\caption{All Assertion (Multiple).}
-\label{AllA_mutiple}
-\end{figure*}
 
 The \textit{All Assertion(Multiple)} body pattern serves as a more general form of the \textit{All Assertion (Single)} pattern.
 %
@@ -361,15 +485,6 @@ The inner \texttt{method invocation} - \enquote{$\langle predicate \rangle$} is 
 
 \item[Normal (Restricted)] 
 
-\begin{figure*}[t]
-\centering
-    \begin{subfigure}{0.675\textwidth}
-        \includecode[java]{figures/NP_23.java}
-    \end{subfigure}
-\caption{Normal (Restricted).}
-\label{NP_2/3}
-\end{figure*}
-
 
 The motive of \textit{Normal (Restricted)} body pattern is to capture a type of test body that tries to perform an action under a specific scenario as its \enquote{setup} and evaluate it with a required predicate.
 %
@@ -384,7 +499,18 @@ In \cref{NP_2/3}, the action of the body is \enquote{$\langle action \rangle$}, 
 
 \item[Normal (Generalized)] 
 
-\begin{figure}[t]
+
+The motive of \textit{Normal (Generalized)} body pattern is also to capture a type of test body that tries to perform an action under a specific scenario as its \enquote{setup} and evaluate it with a required predicate.
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.7\textwidth}
+        \includecode[java]{figures/NoAstP_any.java}
+    \end{subfigure}
+\caption{No Assertion (Generalized).}
+\label{NoAstP_any}
+\end{figure}
+\begin{figure}[H]
 \centering
     \begin{subfigure}{0.675\textwidth}
         \includecode[java]{figures/NP_any.java}
@@ -393,8 +519,6 @@ In \cref{NP_2/3}, the action of the body is \enquote{$\langle action \rangle$}, 
 \label{NP_any}
 \end{figure}
 
-The motive of \textit{Normal (Generalized)} body pattern is also to capture a type of test body that tries to perform an action under a specific scenario as its \enquote{setup} and evaluate it with a required predicate.
-%
 This pattern is an extended version of \textit{Normal (Restricted)}, so it shares the similar extraction of the action and predicate.
 %
 One major difference between this pattern and the previous one is that this pattern allows more statements to be included in the body, and another difference is that this pattern only considers the \texttt{method invocation} as the scenario since multiple objects can be declared in the test body.
@@ -404,14 +528,6 @@ In \cref{NP_any}, the action of the body is \enquote{$\langle action \rangle$}, 
 
 \item[No Assertion] 
 
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.7\textwidth}
-        \includecode[java]{figures/NoAstP.java}
-    \end{subfigure}
-\caption{No Assertion.}
-\label{NoAstP}
-\end{figure}
 
 From a structural perspective, the \textit{No Assertion} body pattern differs from other patterns due to its lack of any \texttt{assertion}, which is inspired by one of the test stereotypes mentioned in a recent work~\cite{li2018aiding}.
 %
@@ -424,7 +540,52 @@ However, this pattern requires at least three lines of code for its information 
 The primary position of the action is in the initialization part of the leading \texttt{declaration}, and it can be as the first \texttt{method} being invoked after the \texttt{declaration}.
 %
 The scenario is the object that invokes the first \texttt{method invocation} (i.e., the action) and is declared in the leading \texttt{declaration}.
-%
+
+\begin{figure}[t]
+\centering
+    \begin{subfigure}{0.7\textwidth}
+        \includecode[java]{figures/NoAstP.java}
+    \end{subfigure}
+\caption{No Assertion.}
+\label{NoAstP}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.6\textwidth}
+        \includecode[java]{figures/NoAstP_one.java}
+    \end{subfigure}
+\caption{No Assertion (Specialized for sole method).}
+\label{NoAstP_one}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.7\textwidth}
+        \includecode[java]{figures/NoAstP_SD.java}
+    \end{subfigure}
+\caption{No Assertion (Single declaration).}
+\label{NoAstP_SD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.75\textwidth}
+        \includecode[java]{figures/NoAstP_new.java}
+    \end{subfigure}
+\caption{No Assertion (Single new object).}
+\label{NoAstP_new}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.45\textwidth}
+        \includecode[java]{figures/NoAstP_MC.java}
+    \end{subfigure}
+\caption{No Assertion (Single method invocation).}
+\label{NoAstP_MC}
+\end{figure}
+
 The predicate is the secondary \texttt{method invocation} being invoked after the first \texttt{method invocation}.
 %
 In \cref{NoAstP}, the action of the body is \enquote{$\langle action \rangle$}, the predicate is \enquote{$\langle predicate \rangle$}, and the scenario is \enquote{$\langle scenario \rangle$}.
@@ -432,14 +593,6 @@ In \cref{NoAstP}, the action of the body is \enquote{$\langle action \rangle$}, 
 
 \item[No Assertion (Generalized)] 
 
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.7\textwidth}
-        \includecode[java]{figures/NoAstP_any.java}
-    \end{subfigure}
-\caption{No Assertion (Generalized).}
-\label{NoAstP_any}
-\end{figure}
 
 The motive of \textit{No Assertion (Generalized)} body pattern is also intended to perform an action under a required scenario, but there is often no primary predicate due to the lack of \texttt{assertion}.
 %
@@ -451,81 +604,9 @@ The scenario is the \texttt{object} in the leading \texttt{declaration}.
 %
 In \cref{NoAstP_any}, the action of is \enquote{$\langle action \rangle$} and the scenario is \enquote{$\langle scenario \rangle$}.
 
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.45\textwidth}
-        \includecode[java]{figures/NoAstP_MC.java}
-    \end{subfigure}
-\caption{No Assertion (Single method invocation).}
-\label{NoAstP_MC}
-\end{figure}
-
-
 \item[No Assertion (Specialized for sole method)]
 
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.6\textwidth}
-        \includecode[java]{figures/NoAstP_one.java}
-    \end{subfigure}
-\caption{No Assertion (Specialized for sole method).}
-\label{NoAstP_one}
-\end{figure}
-
-\begin{figure*}[t]
-\centering
-    \begin{subfigure}{0.7\textwidth}
-        \includecode[java]{figures/NoAstP_SD.java}
-    \end{subfigure}
-\caption{No Assertion (Single declaration).}
-\label{NoAstP_SD}
-\end{figure*}
-
-
 The \textit{No Assertion (Specialized for sole method)} body pattern is a distinctive kind of no assertion-based pattern.
-%
-The specialization of this pattern is that it only captures a test body with only one \texttt{method invocation} across all its statements, which could be an independent \texttt{method invocation} or an argument from any statement in the body.
-%
-In \cref{NoAstP_one}, the motive of this pattern is to perform the sole action (i.e., the \texttt{method invocation}) under a required scenario, so the action of the body is \enquote{$\langle action \rangle$} and the scenario of the body is \enquote{$\langle scenario \rangle$}.
-
-
-\item[No Assertion (Single declaration)]
-
-
-Creating \textit{No Assertion (Single declaration)} body pattern is to include a special kind of no assertion body pattern that can capture any test body with a sole declaration.
-%
-The motive of this pattern is testing an \enquote{object} that is initialized by a required \texttt{method} to check if the \enquote{object} can be successfully initialized.
-%
-In \cref{NoAstP_SD}, the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the scenario of the body is \enquote{$\langle scenario \rangle$} as the object being tested.
-
-
-\item[No Assertion (Single method invocation)]
-
-
-Creating \textit{No Assertion (Single method invocation)} body pattern is to include a special kind of no assertion body pattern that can capture any test body with a sole \texttt{method invocation}.
-%
-The motive of this pattern is performing an action that is under a required argument (i.e., predicate) to check if the action can be successfully performed.
-%
-In \cref{NoAstP_MC}, the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the predicate of the body is the \enquote{$\langle predicate \rangle$} as the inner argument of the \texttt{method invocation}.
-
-
-\item[No Assertion (Single new object)]
-
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.75\textwidth}
-        \includecode[java]{figures/NoAstP_new.java}
-    \end{subfigure}
-\caption{No Assertion (Single new object).}
-\label{NoAstP_new}
-\end{figure}
-
-
-The \textit{No Assertion (Single new object)} body pattern is also a special kind of no assertion body pattern that can capture any test body with a sole new object initialization.
-%
-The motive of this pattern is initializing a \texttt{new object} that is chained to two required \texttt{methods} to check if the \texttt{new object} can be successfully initialized.
-%
-In \cref{NoAstP_new}, the action of the body is \enquote{$\langle action \rangle$} as the last \texttt{method} being invoked, the predicate is the \enquote{$\langle predicate \rangle$} as the first \texttt{method} being invoked, and the scenario is \enquote{$\langle scenario \rangle$} as the new object being initialized.
 
 \begin{figure}[H]
 \centering
@@ -545,23 +626,7 @@ In \cref{NoAstP_new}, the action of the body is \enquote{$\langle action \rangle
 \label{NoAstP_m_MC}
 \end{figure}
 
-\item[No Assertion (Multiple declarations)]
-
-The \textit{No Assertion (Multiple declarations)} body pattern is to create an extension of the \textit{No Assertion (Single declaration)} pattern, and it allows more than one line of code in any captured test body.
-%
-In \cref{NoAstP_m_dec}, the motive and information extraction are the same as the \enquote{single method} version: the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the scenario is \enquote{$\langle scenario \rangle$} as the object being tested.
-%
-Also, the scenario in this pattern needs to be the most frequently evaluated object in the test body, and the action is served as a required argument of that object.
-
-
-\item[No Assertion (Multiple method invocations)]
-
-
-The \textit{No Assertion (Multiple method invocations)} body pattern is to create an extension of the \textit{No Assertion (Single method invocation)} pattern, and it allows more than one line of code in any captured test body.
-%
-The motive and the information extraction are the same as the \enquote{single method} version: the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the predicate is the \enquote{$\langle predicate \rangle$} as the inner argument of the \texttt{method invocation}, which is also shown in \cref{NoAstP_m_MC}.
-
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
     \begin{subfigure}{0.65\textwidth}
         \includecode[java]{figures/test-name/divided-dual-verb.java}
@@ -588,6 +653,54 @@ The motive and the information extraction are the same as the \enquote{single me
 \label{fig:name_vmn}
 \end{figure}
 
+The specialization of this pattern is that it only captures a test body with only one \texttt{method invocation} across all its statements, which could be an independent \texttt{method invocation} or an argument from any statement in the body.
+%
+In \cref{NoAstP_one}, the motive of this pattern is to perform the sole action (i.e., the \texttt{method invocation}) under a required scenario, so the action of the body is \enquote{$\langle action \rangle$} and the scenario of the body is \enquote{$\langle scenario \rangle$}.
+
+
+\item[No Assertion (Single declaration)]
+
+
+Creating \textit{No Assertion (Single declaration)} body pattern is to include a special kind of no assertion body pattern that can capture any test body with a sole declaration.
+%
+The motive of this pattern is testing an \enquote{object} that is initialized by a required \texttt{method} to check if the \enquote{object} can be successfully initialized.
+%
+In \cref{NoAstP_SD}, the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the scenario of the body is \enquote{$\langle scenario \rangle$} as the object being tested.
+
+\item[No Assertion (Single method invocation)]
+
+
+Creating \textit{No Assertion (Single method invocation)} body pattern is to include a special kind of no assertion body pattern that can capture any test body with a sole \texttt{method invocation}.
+%
+The motive of this pattern is performing an action that is under a required argument (i.e., predicate) to check if the action can be successfully performed.
+%
+In \cref{NoAstP_MC}, the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the predicate of the body is the \enquote{$\langle predicate \rangle$} as the inner argument of the \texttt{method invocation}.
+
+
+\item[No Assertion (Single new object)]
+
+The \textit{No Assertion (Single new object)} body pattern is also a special kind of no assertion body pattern that can capture any test body with a sole new object initialization.
+%
+The motive of this pattern is initializing a \texttt{new object} that is chained to two required \texttt{methods} to check if the \texttt{new object} can be successfully initialized.
+%
+In \cref{NoAstP_new}, the action of the body is \enquote{$\langle action \rangle$} as the last \texttt{method} being invoked, the predicate is the \enquote{$\langle predicate \rangle$} as the first \texttt{method} being invoked, and the scenario is \enquote{$\langle scenario \rangle$} as the new object being initialized.
+
+\item[No Assertion (Multiple declarations)]
+
+The \textit{No Assertion (Multiple declarations)} body pattern is to create an extension of the \textit{No Assertion (Single declaration)} pattern, and it allows more than one line of code in any captured test body.
+%
+In \cref{NoAstP_m_dec}, the motive and information extraction are the same as the \enquote{single method} version: the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the scenario is \enquote{$\langle scenario \rangle$} as the object being tested.
+%
+Also, the scenario in this pattern needs to be the most frequently evaluated object in the test body, and the action is served as a required argument of that object.
+
+
+\item[No Assertion (Multiple method invocations)]
+
+
+The \textit{No Assertion (Multiple method invocations)} body pattern is to create an extension of the \textit{No Assertion (Single method invocation)} pattern, and it allows more than one line of code in any captured test body.
+%
+The motive and the information extraction are the same as the \enquote{single method} version: the action of the body is \enquote{$\langle action \rangle$} as the \texttt{method} being invoked, and the predicate is the \enquote{$\langle predicate \rangle$} as the inner argument of the \texttt{method invocation}, which is also shown in \cref{NoAstP_m_MC}.
+%
 Also, the action in this pattern needs to be the most frequently invoked \texttt{method} in the test body, and the predicate is associated with the action as its inner argument.
 
 \end{description}
@@ -596,6 +709,7 @@ Also, the action in this pattern needs to be the most frequently invoked \texttt
 \begin{table}[t]
 \scriptsize
 \centering
+\caption{Test Name Patterns.}
  \begin{tabular}{l} 
  \toprule
  \textbf{Name} \\
@@ -612,16 +726,11 @@ Also, the action in this pattern needs to be the most frequently invoked \texttt
  Regex Match \\
  \bottomrule
 \end{tabular}
-\caption{Test Name Patterns.}
 \label{tab:name-patterns}
 \end{table}
 
-
-
-
 \subsubsection{Test Name Patterns}
 \label{sec:name-patterns}
-
 
 Because test names are easier to compare since they are shorter than test body we were able to use a fully manual process for identifying commonalities among test names.
 %
@@ -650,8 +759,6 @@ In \cref{fig:name_vmn}, the first word after the leading \enquote{test} should b
 
 \item[Divided Duel Verb Phrase]
 
-
-
 \begin{figure}[t]
 \centering
     \begin{subfigure}{0.65\textwidth}
@@ -672,7 +779,34 @@ In \cref{fig:name_vmn}, the first word after the leading \enquote{test} should b
 
 
 The motive of this name pattern is to match a type of test names that has a leading "test" followed by a \enquote{verb-noun-verb-noun} structure.
-%
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}{0.65\textwidth}
+        \includecode[java]{figures/test-name/verb-with-test.java}
+    \end{subfigure}
+\caption{Verb Phrase With Prepended Test.}
+\label{fig:verb-with-test}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+     \begin{subfigure}{0.65\textwidth}
+        \includecode[java]{figures/test-name/noun-phase.java}
+    \end{subfigure}
+\caption{Noun Phrase.}
+ \label{fig:noun-phrase}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+     \begin{subfigure}{0.65\textwidth}
+        \includecode[java]{figures/test-name/single-entity.java}
+    \end{subfigure}
+\caption{Single Entity.}
+\label{fig:single-entity}
+\end{figure}
+
 In \cref{fig:divided-dual-verb}, the first word tagged as \enquote{verb} is the action of the name, and the second word tagged as \enquote{noun} is the scenario of the name that is same as the fourth word.
 %
 The third word should be tagged as \enquote{verb} that is the scenario of the name.
@@ -714,33 +848,6 @@ This name pattern aims to match a type of test names that has a \enquote{verb-ve
 %
 In \cref{fig:dual-verb}, the action of the name is the first word tagged as \enquote{verb}, the predicate is the second word also tagged as \enquote{verb}, and the scenario is the third word tagged as \enquote{noun}.
 
-\begin{figure}[H]
-\centering
-    \begin{subfigure}{0.65\textwidth}
-        \includecode[java]{figures/test-name/verb-with-test.java}
-    \end{subfigure}
-\caption{Verb Phrase With Prepended Test.}
-\label{fig:verb-with-test}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-     \begin{subfigure}{0.65\textwidth}
-        \includecode[java]{figures/test-name/noun-phase.java}
-    \end{subfigure}
-\caption{Noun Phrase.}
- \label{fig:noun-phrase}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-     \begin{subfigure}{0.65\textwidth}
-        \includecode[java]{figures/test-name/single-entity.java}
-    \end{subfigure}
-\caption{Single Entity.}
-\label{fig:single-entity}
-\end{figure}
-
 \item[Noun Phrase]
 
 
@@ -756,7 +863,23 @@ The \enquote{Single Entity} name pattern also belongs to the regular expression-
 After the leading \enquote{test}, the combination of all following words is the action of the name.
 %
 Nonetheless, the action of the name needs to fulfill a special requirement that requires the action to be matched to one of the \enquote{method under test}~\cite{zhang2016towards}.
-%
+
+\begin{figure}[t]
+\centering
+    \begin{subfigure}{0.675\textwidth}
+        \includecode[java]{figures/test-name/regex-match.java}
+    \end{subfigure}
+\caption{Regex Match.}
+\label{fig:regex-match}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{figures/overview_of_approach.pdf}
+  \caption{Overview of the pattern-based approach.}
+  \label{fig:approach}
+\end{figure}
+
 A \enquote{method under test} is a \texttt{method} that is being tested in the test or the test class.
 %
 When the action of the name is matched to a \enquote{method under test} (i.e., identical names), it will be counted as a pattern match to this name pattern.
@@ -778,23 +901,6 @@ The \enquote{verb phrase} also consists of a leading \enquote{verb} with a follo
 %
 In \cref{fig:verb-with-test}, the action of the name is the leading \enquote{verb}, the predicate of the name is the secondary \enquote{verb}, and the scenario of the name is the \enquote{noun} between the action and the predicate.
 
-
-\begin{figure}[t]
-\centering
-    \begin{subfigure}{0.675\textwidth}
-        \includecode[java]{figures/test-name/regex-match.java}
-    \end{subfigure}
-\caption{Regex Match.}
-\label{fig:regex-match}
-\end{figure}
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[scale=0.25]{figures/overview_of_approach.pdf}
-  \caption{Overview of the pattern-based approach.}
-  \label{fig:approach}
-\end{figure*}
-
 \item[Regex Match]
 
 This name pattern is a collection of \num{70} regular expression-based sub-patterns.
@@ -807,9 +913,7 @@ The last sub-pattern is to execute the predicate while the right scenario is suc
 
 \end{description}
 
-
 \subsection{A Pattern-based Approach to Detect Non-descriptive Test Names}
-
 \label{sec:approach}
 
 \Cref{fig:approach} presents a high-level overview of our pattern-based approach for detecting non-descriptive test names.
@@ -827,6 +931,7 @@ This information comparison process allows for not only detecting non-descriptiv
 The remainder of this section describes the two steps of the approach in more detail.
 
 \subsubsection{Phase 1: Pattern-based Analysis}
+\label{sec:Pattern-based-Analysis}
 
 \begin{figure}[t]
     \centering
@@ -876,6 +981,38 @@ If a pattern matches against a name or body, the values it extracts as the actio
 If none of the name patterns match or none of the body patterns match, empty values are passed instead.
 
 
+% change done here
+Generally, if a name or body meets all requirements of a name\slash body pattern, the name or body is counted as a match to that name\slash body pattern.
+%
+In~\cref{sec:test_patterns}, the requirements of matching each test pattern is stated in a pattern-by-pattern style.
+%
+For an example of how to match the name pattern, the \enquote{Noun Phrase} name pattern can be matched to a test name that is only composed of a leading \enquote{test} and an ending noun (i.e., requirements are fulfilled, and the name is considered to be a match to the \enquote{Noun Phrase} name pattern), and the ending noun is extracted from the name as the scenario of the name.
+%
+For an example of how to match the body pattern, the \enquote{All Assertion (Single)} body pattern can be matched to a test body that only contains a single and complete JUnit \texttt{assertion} (i.e., requirements are fulfilled, and the body is considered to be a match to the \enquote{All Assertion (Single)} body pattern).
+%
+The \texttt{expected} part of the \texttt{assertion} is extracted from the body as the predicate of the body, and the \texttt{actual} part of the \texttt{assertion} should be a complete \texttt{method invocation} that contains an \texttt{object} and a \texttt{method call}.
+%
+The \texttt{object} in the \texttt{method invocation} is extracted as the scenario of the body, and the \texttt{method call} is extracted as the action of the body.
+
+
+% change done here
+After a match is found, the matched name\slash body pattern can extract the components from the name\slash body by using the corresponding positions of the action, predicate, and scenario.
+%
+Similar to the two examples of matching a pattern to a test name or body that we already mentioned, the extraction process is also straightforward.
+%
+For the same example of the \enquote{Noun Phrase} name pattern, the approach can automatically parse the test name with part-of-speech tags and stores every word in the name with its original order and part-of-speech tag.
+%
+Then the approach first rules out irrelevant test names (e.g., test names that contain more than two words) and then extracts the first and only noun in the name to be the scenario of the name
+%
+For the same example of the \enquote{All Assertion (Single)} body pattern, the approach is also able to automatically parse code from the statement-level and identifies different types of statements.
+%
+Therefore, the approach first rules out any test body with more than one statement or contains any kind of statement other than JUnit \texttt{assertion}, and it then parse the JUnit \texttt{assertion} to extract the \texttt{expected} part and the \texttt{actual} part.
+%
+After all parts of the \texttt{assertion} are gathered, the approach extracts the \texttt{expected} part (i.e., which is often a \texttt{method invocation}) as the predicate of the body, the \texttt{object} in the \texttt{actual} part as the scenario of the body, and the \texttt{method call} in the \texttt{actual} part as the action of the body.
+%
+When every component is successfully extracted from both the test name and body, the approach will determine if the name is descriptive or non-description and generate a report for the associated test as shown~\cref{sec:InformationComparison}.
+
+
 The main complexity in this phase arises from the fact that more than one pattern may match a name or body.
 % 
 For example, \cref{fig:approach-0} shows a unit test that can be matched by more than one pattern.
@@ -893,7 +1030,7 @@ A dash (---) indicates an empty value that occurs when a pattern did not extract
 %
 \Cref{fig:approach-1} is an example of when one pattern may be more accurate at extracting information.
 %
-In this case, the \enquote{Single Entity} pattern correctly extracts \enquote{GetSSLProtocol} as the action and does not extract a value for the predicate or scenario while the \enquote{Verb Phrase With Prepended Test} pattern incorrectly identifies the action and scenario.
+In this case, the \enquote{Single Entity} pattern correctly extracts \enquote{GetSSLProtocol} as the action and does not extract a value for the predicate or scenario while the \enquote{Verb Phrase With Prepended Test} pattern incorrectly identifies the action and scenario (i.e., \enquote{Get} is tagged as \enquote{verb} for the action and \enquote{SSL} is tagged as \enquote{noun} for the scenario).
 %
 \Cref{fig:approach-2} is an example of when one pattern may extract more information.
 %
@@ -913,7 +1050,7 @@ The resulting orders for the name patterns and body patterns are shown in \cref{
 
 
 \subsubsection{Phase 2: Information Comparison}
-
+\label{sec:InformationComparison}
 
 The goal of the information comparison phase is to detect non-descriptive test names.
 %
@@ -993,6 +1130,8 @@ In this case, it is impossible to determine the quality of the name because an i
 If there is sufficient information to compare, the approach checks each existing piece of information from the name against the corresponding information from the body.
 %
 If all of the existing pieces of information match, then the name is considered \emph{descriptive}.
+% change done ->
+Also, if all of the existing pieces from the name is a valid subset of the pieces from the body, the name is still considered \emph{descriptive}.
 %
 \Cref{fig:descriptive-examples} shows an example of a test name that is classified as descriptive.
 %
@@ -1052,10 +1191,24 @@ To address the challenge, the approach automatically converts the \emph{name} of
 For example, the \enquote{Normal (Restricted)} body patterns can extract the name of the \texttt{assertion method} in \cref{fig:approach-0}, and it is converted to a string that is shown as \enquote{assertNotNull} in \cref{fig:approach-2}.
 %
 Once both the information from the name and the information from the body have been converted to strings, they are also converted to lower case.
-%
-The two string are equal, or if one is strictly contained in the other, they are considered to match.
+
+
+% change done here
+The two strings are equal, or if one is strictly contained in the other (i.e., one of them may contain additional information), they are considered to match.
 %
 Otherwise, they are unmatched.
+
+
+% change done here 
+After we sorted out the process of determining a match, the pattern-based approach can automatically classify each test name in a project as a descriptive name or a non-descriptive name.
+%
+In the first step, the approach gathers all unit tests from the test suite of a selected project by using an automated project analyzer and finds pattern matches for their test names and bodies.
+%
+In the second step, the approach then uses the test patterns to extract the action, predicate, and scenario from the name and body of each test and generate a report for each name, which is the same as the reports shown in~\cref{NewExamplesForRQ3}.
+%
+In the last step, the approach automatically aggregates all generated reports for all extracted tests in a comprehensive report for the project, which contains all the detected descriptive and non-descriptive test names.
+%
+To provide a more intuitive presentation of the approach, an implementation of the pattern-based approach is provided as an IDE plugin~\cite{prototype}.
 
 \subsection{Empirical Evaluation}
 \label{sec:evaluation}
@@ -1082,6 +1235,12 @@ This gives us more flexibility in choosing applications when building our set of
 It also has support for automatically identifying test suites, which are the input to the approach.
 %
 Finally, it has a robust parsing API that we can use to implement the body patterns.
+% change done here
+Currently developers can use the plugin by selecting a menu item that analyzes all tests in the current project.
+%
+In future work, the plugin could easily be extended to support other interaction mechanisms.
+%
+For example, checking only the names of test in a specific class or the names of individually selected tests.
 
 
 To generate the experimental data for investigating our research questions, we instrumented the plugin to record the information necessary for answering each research question.
@@ -1103,7 +1262,7 @@ Adding up the time for executing the plugin on each project, the total amount of
 Even though the implementation is unoptimized, the execution time is such that it is feasible to include the approach as part of an off-line build process (e.g., overnight).
 
 
-The remainder of this section describes our experimental subjects and research questions in more detail.
+The remainder of this section describes our experimental subjects, research questions, and experimental results in more detail.
 
 
 \subsubsection{Experimental Subjects}
@@ -1111,6 +1270,7 @@ The remainder of this section describes our experimental subjects and research q
 
 \begin{table*}
 \centering
+\caption{Experimental Subjects.}
 \begin{tabular}{
   l
   l
@@ -1121,24 +1281,23 @@ The remainder of this section describes our experimental subjects and research q
  \midrule
  Xodus      & 8d82ef7 & 940   \\
  mytcuml    & 0786c55 & 21532 \\
- wheels     & 15696da & 811   \\
- EventBus   & 2e7c046 & 124   \\
- Picasso    & 5c05678 & 336   \\
- Jenkins    & 6c1d61a & 2245  \\
- ScribeJava & fce41f9 & 109   \\
- mockito    & 2204944 & 2112  \\
- Guice      & 6f1c6cc & 1322  \\
- fastjson   & 4c7935c & 4821  \\
+ wheels     & 15696da & 811  \\
+ EventBus   & 2e7c046 & 124  \\
+ Picasso    & 5c05678 & 336  \\
+ Jenkins    & 6c1d61a & 2245 \\
+ ScribeJava & fce41f9 & 109  \\
+ mockito    & 2204944 & 2112 \\
+ Guice      & 6f1c6cc & 1322 \\
+ fastjson   & 4c7935c & 4821 \\
  \midrule
  \multicolumn{2}{r}{Total} & 34352 \\
  \bottomrule
 \end{tabular}
-\caption{Experimental Subjects.}
-\label{tab:subjects-pattern}
+\label{tab:subjects}
 \end{table*}
 
 
-As the subjects for the evaluation, we selected a set of \num{34352} unit tests comprised of the test suites from the \num{10} Java projects shown in \cref{tab:subjects-pattern}.
+As the subjects for the evaluation, we selected a set of \num{34352} unit tests comprised of the test suites from the \num{10} Java projects shown in \cref{tab:subjects}.
 %
 In the table, the first column, \emph{Project}, shows the name of each project; the second column, \emph{Commit}, shows commit hash of the version of the project that was evaluated; and the last column, \emph{\#~Tests}, shows the number of unit tests contained in each project's test suite.
 
@@ -1167,6 +1326,7 @@ Finally, in aggregate, they have a sufficient number of tests to allow for a tho
 
 \begin{table*}[t]
 \centering
+\caption{Match Rates for Name Patterns (Over All Tests).}
 \begin{tabular}{
   l
   S[table-format=5]
@@ -1189,12 +1349,12 @@ Finally, in aggregate, they have a sufficient number of tests to allow for a tho
  Overall                                   & 34352                                   & 100.00 \\
  \bottomrule
 \end{tabular}
-\caption{Match Rate for Name Patterns.}
 \label{tab:rq1-name}
 \end{table*}
 
 \begin{table*}[t]
 \centering
+\caption{Match Rates for Body Patterns (Over All Tests).}
 \begin{tabular}{
   l
   S[table-format=5]
@@ -1214,7 +1374,6 @@ Finally, in aggregate, they have a sufficient number of tests to allow for a tho
  Overall                                   & 26502                                   & 77.15  \\
  \bottomrule
 \end{tabular}
-\caption{Match Rates for Body Patterns.}
 \label{tab:rq1-body}
 \end{table*}
 
@@ -1256,8 +1415,8 @@ The data also demonstrate that the ordering of the patterns is effective.
 More general patterns (i.e., ones have shown lower in the tables) have higher match rates than more specific patterns (ones shown higher in the tables).
 %
 Overall, we believe that these results suggest that the approach is feasible.
-%
-The coverage of the patterns is high enough to enable the approach to provide feedback for a majority of tests.
+% change done here ->
+Based on the performance of several related approaches~\cite{host2009debugging,host2008java,zhong2013detecting,singer2008exploiting,allamanis2014learning}, we believe that the coverage of the patterns is high enough to enable the approach to provide feedback for a majority of tests.
 
 
 \subsubsection{RQ2: Accuracy}
@@ -1266,6 +1425,7 @@ The coverage of the patterns is high enough to enable the approach to provide fe
 
 \begin{table*}[t]
 \centering
+\caption{Accuracy Results for Each Name Pattern.}
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{
 l
@@ -1299,12 +1459,12 @@ S[table-format=3.1]
  \bottomrule
 \end{tabular}
 \end{adjustbox}
-\caption{Accuracy Results for Each Name Pattern.}
 \label{tab:rq2_name}
 \end{table*}
 
 \begin{table*}[t]
 \centering
+\caption{Accuracy Results for Each Body Pattern.}
 \begin{tabular}{
   l
   S[table-format=3.1]
@@ -1332,14 +1492,13 @@ S[table-format=3.1]
   Overall              & 94  & 6  & 88  & 12 & 97  & 3 \\
  \bottomrule
 \end{tabular}
-\caption{Accuracy Results for Each Body Pattern.}
 \label{tab:rq2_body}
 \end{table*}
 
 
 The goal of the second research question is to investigate whether the patterns can accurately extract information from test names and bodies.
-%
-Because assessing the accuracy of the extracted information must be done manually, it is infeasible to consider all \num{26502} tests that were matched by a pattern.
+% change done ->
+Because assessing the accuracy of the extracted information must be done manually (i.e., inspect each test case with the information manually and check if it can correctly describe the action\slash predicate\slash scenario of the name or body by our researchers), it is infeasible to consider all \num{26502} tests that were matched by a pattern.
 %
 Therefore, we chose a subset of information extracted from matched tests to classify.
 %
@@ -1385,22 +1544,65 @@ As such, we believe that both types of patterns are effective at accurately iden
 
 \begin{table*}[t]
 \centering
+\caption{Effectiveness of the approach.}
 \begin{tabular}
 {
   l
-  S[table-format=3]
-  S[table-format=2.1]
+  S[table-format=3.1]
+  S[table-format=3.1]
+  S[table-format=3.1]
+  S[table-format=3.1]
 }
-\toprule 
-\multicolumn{1}{c}{\textbf{Classification}} & \multicolumn{1}{c}{\textbf{Count}} & \multicolumn{1}{c}{\textbf{(\%)}}\\
+\toprule
+& & \multicolumn{2}{c}{\textbf{Rate (\%)}}\\
+\cmidrule(lr){3-4}
+
+\multicolumn{1}{c}{\textbf{Project}} &
+\multicolumn{1}{c}{\textbf{\# Reports}} & 
+\multicolumn{1}{c}{\textbf{TP}} &
+\multicolumn{1}{c}{\textbf{FP}}
+\\
 \midrule
-TP  & 251 & 94.7 \\
-FP  & 14  & 5.3  \\
+ Xodus      & 29  &  97  & 3   \\
+ mytcuml    & 105 &  96  & 4   \\
+ wheels     & 11  &  91  & 9   \\
+ EventBus   & 10  &  90  & 10  \\
+ Picasso    & 14  &  93  & 7   \\
+ Jenkins    & 20  &  90  & 10  \\
+ ScribeJava & 3   &  100 & 0   \\
+ mockito    & 11  &  82  & 18  \\
+ Guice      & 16  &  94  & 6   \\
+ fastjson   & 46  &  98  & 2   \\
+ \midrule
+ Overall    & 265 &  95  &  5  \\
 \bottomrule
 \end{tabular}
-\caption{Effectiveness of the approach.}
 \label{tab:rq3}
 \end{table*}
+% todo[done]: table 9 to per project, and point back to the example in the approach, add the pointer to the repository.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.75\textwidth}
+    \centering
+        \begin{footnotesize}
+        \verbatiminput{figures/NewExamples3-1.java}
+        \end{footnotesize}
+        \caption{A correctly detected non-descriptive test name.}
+        \label{NewExamples3-1}
+    \end{subfigure}
+    \\[2ex]
+    \begin{subfigure}{0.75\textwidth}
+    \centering
+        \begin{footnotesize}
+        \verbatiminput{figures/NewExamples3-2.java}
+        \end{footnotesize}        
+        \caption{A wrongly detected non-descriptive test name.}
+        \label{NewExamples3-2}
+    \end{subfigure}
+    \caption{Examples of a true positive and a false positive.}
+    \label{NewExamplesForRQ3}
+\end{figure}
 
 
 The goal of the third research question is to determine if the pattern-based approach can correctly classify descriptive and non-descriptive test names.
@@ -1411,7 +1613,7 @@ Therefore, we again selected a representative subset to consider.
 %
 In this case, because we are interested in the performance across all tests, we chose to consider a total of  \num{265} tests (i.e., \SI{1}{\percent} of the \num{26502} tests matched by both a name and body pattern).
 %
-The \num{265} tests were selected from among each project proportionally to the number of tests in the project's test suite (e.g., \num{166} tests were taken from \enquote{mytcuml}, \num{37} test were taken from \enquote{fastjson}, etc.).
+The \num{265} tests were selected from among each project proportionally to the number of tests in the project's test suite (e.g., \num{105} tests were taken from \enquote{mytcuml}, \num{46} test were taken from \enquote{fastjson}, etc.).
 
 
 For each test in the selected subset, each author again manually examined the output of the approach independently.
@@ -1423,13 +1625,64 @@ Disagreements among the raters were discussed until a resolution was reached.
 The results of the classification are shown in \cref{tab:rq3}.
 
 
-In \cref{tab:rq3}, the first column shows the classification of reports (i.e., either a true-positive~(TP) or a false-positive~(FP)), and the second and third columns show the number of true and false positives as a raw count and as a ratio out of the total number of reports (i.e., \num{265}).
+In \cref{tab:rq3}, the first column presents each project’s name, the second column shows the number of tests for each project, and the final two columns show the rates for each classification, respectively.
+% change done here
+For example, the first row shows there are \num{29} reports that were selected for project \enquote{Xodus}, and (\SI{\approx 97}{\percent}) of them correctly classify the test name as either descriptive or non-descriptive.
 %
-For example, the first number in the first row shows there are \num{251} reports (\SI{\approx 95}{\percent}) that correctly classify a test name as either descriptive or non-descriptive.
+The last row shows that the overall TP rate of all reports is \SI{\approx 95}{\percent} (i.e., \num{251} true positives), and the FP rate is just \SI{\approx 5}{\percent} (i.e., \num{14} false positives).
 %
-Because the true positive rate is high, we can conclude that the pattern-based approach is effective at classifying names as either descriptive or non-descriptive.
+Owing to the high effectiveness of our pattern-based approach, \SI{\approx 99.2}{\percent} of the \num{251} true positives are definitively correct.
+%
+And the definition of correctness here is to be a suitable test name for its related test body.
+%
+For instance, the test case in \cref{fig:descriptive-examples} is considered to be a true positive since the report can correctly classify its name as a descriptive test name.
+%
+Additionally, more examples of true positives can be found in the public repository~\cite{prototype}.
+%
+Because the true positive rate is high with nearly perfect correctness rate, we can conclude that the pattern-based approach is effective at classifying names as either descriptive or non-descriptive.
 
-\subsection{Conclusions}
+
+% change done as follows:
+In addition, we further investigate the two examples in~\cref{NewExamplesForRQ3} that are selected from the \num{265} tests from those open-source Java projects.
+%
+In~\cref{NewExamplesForRQ3}, each example is the output that is produced by our pattern-based approach.
+%
+The action, predicate, and scenario on the left side of the equations are extracted from the test body, and the action, predicate, and scenario on the right side are extracted from the test name.
+%
+For the unit test in \cref{NewExamples3-1}, the test name \texttt{returnFoo2} is correctly classified as a non-descriptive test name.
+%
+Also, some suggestions are provided by our approach for the example in~\cref{NewExamples3-1}: 
+\begin{enumerate*}
+    \item the action of the name (i.e., \texttt{return}) should be removed from the name
+    \item the predicate and scenario of the name should be replaced by the predicate and scenario of the body (i.e., \texttt{equals} and \texttt{thenReturn})
+\end{enumerate*}.
+%
+For the unit test in \cref{NewExamples3-2}, the test name \texttt{shouldNotThrowSmartNullPointerOnObjectMethods} is incorrectly classified as a non-descriptive test name.
+%
+Because of the difference in length between the short name and long body, the test patterns failed to correctly extract the action, predicate, and scenario from the name and body, and this example is also considered as a false positive.
+
+\subsection{Prototype Implementation and Threats to Validity}
+\label{sec:implementation&threats}
+
+The prototype implementation is publicly available~\cite{prototype}.
+%
+All meta results from the pilot study and the pattern mining process, all the instances of non-descriptive test names from the 10 experimental subjects in~\cref{tab:subjects}, and the metadata of the evaluation are also uploaded in the repository.
+%
+In addition, we are sharing data for the quantitative analysis that was performed in the evaluation~\cite{evaluation_data}.
+%
+Two threats to validity do exist for our test name\slash body patterns:
+\begin{enumerate*}
+\item some body patterns contain a type of statement that can be cryptically constructed
+\item some name patterns do not currently have a match
+\end{enumerate*}.
+%
+For the first part, although it is rare to have cryptically constructed statements in a test body, we mitigated it by supporting those cryptically constructed statements within their corresponding patterns.
+%
+For example, we provided support for the conditional expression in the \texttt{If Else} body pattern to handle the cryptically constructed if else statement (e.g.,~\texttt{expression1?expression2:expression3;}).
+%
+For the second part, we will further conduct a large-scale empirical evaluation on at least \num{100} Java projects in order to discover potential matches for those name patterns as part of our planned future work.
+
+\subsection{Conclusion}
 
 Taking every test pattern into consideration, our selected test patterns can extract sufficient information from any unit test with matched name\slash body patterns.
 %
@@ -1438,6 +1691,5 @@ With the help of the output generated by our approach, developers can easily fin
 Furthermore, we also implemented our approach as an IntelliJ IDE plugin.
 %
 In the empirical evaluation, the experimental results produced by our implemented approach are encouraging, which show our approach not only can accurately extract descriptive information from unit tests but also can correctly classify descriptive and non-descriptive test names.
-
 
 \end{document}
