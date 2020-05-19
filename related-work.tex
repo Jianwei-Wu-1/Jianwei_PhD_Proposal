@@ -54,7 +54,7 @@ For instance, Junit 4 requires every test name to have a leading \enquote{test} 
 \subsection{Automated Generation of Test Names}
 
 In contrast to the techniques mentioned above that attempt to improve names, there are several approaches that attempt to automatically generate names.
-
+%
 Some of these techniques use natural language-based program analysis~(NLPA).
 %
 For example, \citeauthor{zhang2016towards} proposed their approach that can generate descriptive names from existing test bodies by using natural-language program analysis and text generation~\cite{zhang2016towards}.
@@ -71,7 +71,7 @@ Although some techniques can generate descriptive names, those techniques requir
 \subsection{General Program Analysis\slash Automated Testing and Debugging}
 
 Many researchers proposed their program analysis or automated testing techniques that can help us have a better understanding of the embedded features in unit tests. 
-
+%
 \citeauthor{moreno2012jstereocode} proposed Java method and class stereotypes, and they took a closer look at the statement level analysis of Java code~\cite{moreno2012jstereocode}, and~\citeauthor{ghafari2015automatically} tried to extract the focal method under test~\cite{ghafari2015automatically}.
 %
 To be more focused on unit testing,~\citeauthor{li2018aiding} constructed a series of tags for distinguish unit test cases~\cite{li2018aiding}.
@@ -92,7 +92,7 @@ Regardless of the performance of their proposed tool, the goal of their work is 
 \subsection{Natural Language Program Analysis}
 
 There are lots of existing works that try to analyze programs from a natural language-based perspective.
-
+%
 \citeauthor{pollock2007introducing} and~\citeauthor{shepherd2007using} introduced NLPA by illustrating how to apply NLPA in practice and also giving some insights about aspect mining~\cite{pollock2007introducing,shepherd2007using,pollock2009natural}.
 %
 Their studies showed natural language clues from developers' naming style can be used for improving the effectiveness of software tools.
@@ -113,5 +113,41 @@ Moreover, a early survey has already been conducted to discover the possibility 
 Many researchers focused on using FCA as an efficient method to provide solutions for various software engineering problems~\cite{godin2005formal,park2000software,cellier2008formal,hesse2005formal,mens2005delving}, and they used concept analysis to mock how human (i.e., developers) thinks about writing software or trace the thinking inside existing software.
 %
 However, none of them focused on applying FCA to unit tests, and their technique paid more attention to use FCA to understand the high-level structure of software rather than improving the naming in unit tests.
+
+Other works also managed to utilize formal concept analysis as a method to resolve specific problems.
+%
+\citeauthor{he2011test} developed FCA-based technique for test case generation of mutation testing \cite{he2011test}.
+%
+\citeauthor{khor2004using} proposed a automatic test generator that uses formal concept analysis to manage the relationships between tests \cite{khor2004using}.
+%
+\citeauthor{cimiano2005learning} tried to extract concept hierarchies from text corpus by using their proposed techniques based on formal concept analysis \cite{cimiano2005learning}.
+%
+\citeauthor{tonella2004aspect} managed to perform aspect mining on execution traces by using formal concept analysis \cite{tonella2004aspect}.
+%
+However, all of their works focused on solving those specific problems, so their approaches might not be applicable for providing descriptive names for unit tests.
+
+
+\subsection{Investigating Developer's Focus in Software Development}
+
+In recent years, a novel study of tracking the eye movement of developers emerged in the effort to understand the behavior of developers in the process of software development.
+%
+\citeauthor{rodeghero2015empirical} conducted an empirical study to discover the patterns of eye movement when developers perform summarization tasks~\cite{rodeghero2015empirical}.
+%
+\citeauthor{begel2018eye} performed a pilot study of capturing the eye movements of multiple developers in the process of code review, which was inspiring for building a automated tool for code review~\cite{begel2018eye}.
+%
+\citeauthor{abid2019using} focused on building a mental cognition model to understand how developers understand codes~\cite{abid2019using}.
+%
+\citeauthor{obaidellah2018survey} conducted a throughout survey on the usage of the eye-tracking technology in the research of program comprehension~\cite{obaidellah2018survey}.
+%
+\citeauthor{abid2019developer} presented a eye-tracking study that shows the behavior of developers when summarizing Java methods~\cite{abid2019developer}.
+%
+\citeauthor{ioannou2020mining} proposed a series of reading pattern by mining the eye-tracking data for comprehending the behavior of developers~\cite{ioannou2020mining}.
+%
+All of the recent work provided a great insight for us to choose which of the code elements should be selected as the secondary codes and helped us to have a profound understanding of the focus of actual developers.
+%
+Nevertheless, their work primarily focused on the eye-tracking of developers when reading the general Java methods and classes, not unit tests.
+%
+Moreover, their work did provide some results from those eye-tracking studies, but no formal approach is proposed to detect and extract the unique coding of unit tests.
+
 
 \end{document}
