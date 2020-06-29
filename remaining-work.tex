@@ -4,8 +4,25 @@
 \section{Remaining Work}
 \label{sec:remaining-work}
 
-\subfile{unique-name-section.tex}
+\subsection{Research Plan}
 
+The research plan of this remaining work contains four steps.
+%
+The first step has been done in my preliminary work that is to perform an empirical study to determine if tests are named after what makes them unique, which provides intuition for how to build a tool to detect the uniqueness of tests.
+%
+The second step is to develop and implement a concept-based approach to extract the uniqueness of tests and improve existing test names with the uniqueness.
+%
+The third step is targeting at evaluating the concept-based approach with a randomly selected set of \num{10} Java projects, which come from Github that is the most popular repository of open-source projects.
+%
+Research questions involved in this step are:
+\begin{enumerate}
+    \item Coverage: Is the concept-based approach capable of covering most tests from a project?
+    \item Accuracy: Can the concept-based approach accurately tag those tests with the top-level and secondary codes?
+    \item Effectiveness: Does the concept-based approach correctly extract the tagged text from those tests?
+    \item Usefulness: Are the test names of those tests become more readable and useful than original names after improving them with the tagged text?
+\end{enumerate}.
+
+The final step is to develop a hybrid approach that can improve descriptiveness and uniqueness for other components in unit tests, which will significantly improve the overall quality and readability of the entire test suite.
 
 
 \end{document}
