@@ -1,26 +1,63 @@
-
-
-\section{Remaining Work}
+\subsection{Remaining Work: Implementation and Evaluation of the Concept-based Approach}
 \label{sec:remaining-work}
 
-\subsection{Research Plan}
+In my preliminary work, I built a pattern-based approach to detect and improve non-descriptive test names.
+%
+However, the pattern-based approach is limited to one perspective of the solving the naming problem for unit tests that is to improve test names with descriptiveness, but the uniqueness of tests is not mentioned in this work.
+%
+Especially, pattern mining in the pattern-based approach requires close attention to each component of every test pattern, which is both difficult and labor intensive.
+%
+In the remaining work, I plan to develop a concept-based approach that uses a set of top-level and secondary codes produced by the selective coding in the empirical study for tagging and extracting the uniqueness from the tests.
+%
+First, using the set of top-level and secondary codes that were previously selected, it is feasible for us to build a concept-based approach to check and improve existing test names with a uniqueness-based naming rationale.
+%
+Second, after the concept-based approach is completed, an empirical evaluation is also needed to further investigate the correctness, effectiveness, and comprehensibility of the approach.
+%
+As mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive and unique test names, so there are still several attributes of test names that can be explored.
+%
+Therefore, for the last aspect of test names, I plan to consider the naming problem of unit tests from another innovative aspect, which is to build a shape-based approach that learn from how different shapes of a test name (i.e., length, camel cases, underscores, descriptiveness, uniqueness) affect developers' understanding of the corresponding tests.
 
-The research plan of this remaining work contains four steps.
+
+\subsubsection{Research Plan}
+
+The research plan of this remaining work contains three steps.
 %
-The first step has been done in my preliminary work that is to perform an empirical study to determine if tests are named after what makes them unique, which provides intuition for how to build a tool to detect the uniqueness of tests.
+The first step has been done in my preliminary work that is to perform an empirical study to determine if tests are named after what makes them unique and formulate a set of selective codes, which will later become the foundation of how to build a tool to detect the uniqueness of tests.
 %
-The second step is to develop and implement a concept-based approach to extract the uniqueness of tests and improve existing test names with the uniqueness.
+The second step is to develop and implement a concept-based approach to tag the tests with a specific block of text that shows the uniqueness of tests, and improve existing test names with the extracted uniqueness.
 %
-The third step is targeting at evaluating the concept-based approach with a randomly selected set of \num{10} Java projects, which come from Github that is the most popular repository of open-source projects.
+The third step is targeting at investigating if the physical shape, descriptiveness, and uniqueness of the test name can affect how developers understand the test, and I plan to propose an innovative, shape-based approach to solve the problem by using eye-tracking technique.
+
+\subsubsection{Implementation of the Concept-based Approach}
+
+Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, the next step is to build a concept-based approach that can improve existing test names by a uniqueness-based naming rationale for developers.
 %
+For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and how to integrate it with the top-level and secondary codes will also be explained.
+%
+Using the implicit relationships extracted by FCA and the existing codes, a concept-based approach can not only correctly tag the codes to the tests but also provide a uniqueness-based naming rationale for improving the existing test names.
+
+\subsubsection{Evaluation of the Concept-based Approach}
+
 Research questions involved in this step are:
+%
 \begin{enumerate}
-    \item Coverage: Is the concept-based approach capable of covering most tests from a project?
-    \item Accuracy: Can the concept-based approach accurately tag those tests with the top-level and secondary codes?
-    \item Effectiveness: Does the concept-based approach correctly extract the tagged text from those tests?
-    \item Usefulness: Are the test names of those tests become more readable and useful than original names after improving them with the tagged text?
+    \item RQ1-Correctness: Can the concept-based approach apply the top-level and secondary codes to each test correctly?
+    \item RQ2-Effectiveness: Does the tagged text of each test accurately describe the uniqueness of the test?
+    \item RQ3-Comprehensibility: Is the generated results of the concept-based approach straightforward enough to be easily understood?
 \end{enumerate}.
 
-The final step is to develop a hybrid approach that can improve descriptiveness and uniqueness for other components in unit tests, which will significantly improve the overall quality and readability of the entire test suite.
+For answering RQ1, I plan to perform a quantitative analysis by comparing the results from manual tagging of a randomly set of tests (i.e., from 5 random Java projects on Github) with the results from the concept-based approach to see if the two different results are matched.
+%
+For answering RQ2, I plan to further check if the tagged text that was generated by the concept-based approach is the same as the tagged text from the manual tagging from the same set of tests.
+%
+For answering RQ3, I plan to conduct a small scale survey that 4 experienced developer will participate, and several survey questions about if they can easily understand and apply the results from running the concept-based approach will be presented to the participants.
 
+
+\subsection{Remaining Work: A Shape-based Approach to Learn How the Shape of Test Names Affect Developer's Comprehension of Unit tests}
+
+As the last part of systematically providing descriptive and unique test names for developers, I plan to propose an innovative, shape-based approach to investigate whether the physical appearance (i.e., the shape of name: length, camel case, with or without underscore), descriptiveness, uniqueness of test names affects developer's comprehension of the tests or not.
+%
+Considering the length, camel cases or not, the number of underscores, descriptiveness, and uniqueness of test names as a set of attributes, this approach will use a eye-tracking method to measure if each attribute of the name can affect a developer's ability to understand the test and how long it takes for a developer to fully understand it.
+%
+Using a different empirical study for this work, I will not only explore the feasibility of this approach to know how developers actually understand a unit test but also provide a profound insight that can further help developers improve their naming of tests by changing or modifying those attributes of test names.
 
