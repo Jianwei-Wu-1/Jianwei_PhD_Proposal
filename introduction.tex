@@ -10,7 +10,7 @@ For example, when a test fails, its name can provide the first step towards unde
 Similarly, a test's name can help developers decide whether a test should be left alone, modified, or removed in response to changes in the application under test and whether the test should be included in a regression test suite.
 
 
-In this work, we believe that test names are \enquote{good} if they are descriptive (i.e., they accurately summarize both the scenario and the expected outcome of the test~\cite{trenk14}) and \enquote{bad} if they are not descriptive.
+In this work, we believe that test names are \enquote{good} if they are descriptive (e.g, they accurately summarize both the scenario and the expected outcome of the test~\cite{trenk14}, or being unique among its associated test class) and \enquote{bad} if they are not descriptive.
 %
 This is because descriptive names:
 \begin{enumerate*}
@@ -45,9 +45,44 @@ Another approach is to help developers improve their existing names by suggestin
 %
 For example, \citeauthor{host2009debugging} proposed an approach for Java methods and variables which uses a set of naming rules and related semantics~\cite{host2009debugging}, \citeauthor{li2019deepfl} provided a learning-based approach to locate software faults using test name information \cite{li2019deepfl}, and \citeauthor{allamanis2015suggesting} and \citeauthor{pradel2018deepbugs} use a model-based and a learning-based approach, respectively, to directly suggest better names or find name-based bugs to facilitate improvements~\cite{allamanis2015suggesting, pradel2018deepbugs}.
 
-In this proposal, I propose the following research tasks, which will all contribute to a systematically descriptive and unique naming schema for unit tests.
 
-First, I propose a new, pattern-based approach that can:
+To address the lack of descriptive names in unit tests (i.e., the naming problem), I propose a series of approaches that can systematically provide descriptive names for unit tests.
+%
+The focus of all the approaches is to provide descriptive names (i.e., \enquote{good} names) for unit tests.
+%
+However, from the collected results of the first empirical study~\cref{sec:empStudy}, different developers often use different naming rationales for writing test names.
+%
+So we decide to develop multiple approaches that can solve the naming problem from three different naming rationales (i.e., three different perspectives of providing \enquote{good} names).
+%
+The three different naming rationales are: uniqueness-based naming, descriptiveness-based naming, and shape-based naming.
+%
+Any test name that is named after at least one of the three naming rationales will be considered as a descriptive test name, which also means that a \enquote{good} test name could be named after multiple naming rationales.
+
+
+In this proposal, I propose the following research tasks, which will contribute to three approaches that can systematically provide descriptive naming from three different perspectives.
+%
+First, in order to show the evidence that different developers often use different naming rationales, an empirical study is conducted as the first step of building the three approaches, and a set of selective codes are also produced as part of the results of the empirical study.
+%
+Using the results of the empirical study, we found out that most of the inspected tests are indeed named after what makes them unique, and the uniqueness of tests can be identified and utilized for future improvement by a set of top-level and secondary codes, which comes from the selective coding process using basic Java code elements as shown in~\cref{sec:test-pattern-section}.
+%
+Moreover, different test names are shown to be named after different naming rationale.
+%
+Some tests are named after the descriptiveness of the test name and body, while other tests are named after the uniqueness of the test among it associated test class or the shape of test.
+%
+As the first perspective of the descriptiveness of test names, I propose a novel, concept-based approach that can:
+%
+\begin{enumerate*}
+\item verify whether a test is named after what makes it unique or not
+\item utilize the uniqueness of tests from the tagged text of tests to provide a uniqueness-based naming rationale for renaming unit tests
+\item generate straightforward results using formal concept analysis (FCA)~\cite{ganter2012formal}
+\end{enumerate*}.
+%
+Unlike existing approaches that were designed to handle general methods, our approach is not only specific to JUnit tests but also one of the pioneers to focus on providing a uniqueness-based naming rationale to help developers improve existing test names.
+%
+From a high-level point of view, the concept-based approach uses a set of selective code for tagging unit tests that can also provide unique information about the test.
+
+
+Second, I propose a new, pattern-based approach that can:
 \begin{enumerate*}
 \item detect non-descriptive test names by finding mismatches between the name and body of a given JUnit test; provide descriptive information that consists of the main motive of test
 \item the property to be tested in the test, and the prerequisite needed in the test or the object to be tested (see~\cref{sec:test-pattern-section} for details) to facilitate the improvement of non-descriptive test names
@@ -64,23 +99,6 @@ This information is then compared to find non-descriptive names (i.e., cases whe
 When a mismatch is found, the information used by the approach can help developers address the mismatch and improve the quality of the test name.
 
 
-Second, as another perspective of the descriptiveness of test names, I propose a novel, concept-based approach that can:
+Finally, for the remaining future work, I plan to use a set of top-level and secondary codes to build an IDE plugin-based implementation of the concept-based approach and start to conduct a full-scale evaluation of the approach by using the implementation.
 %
-\begin{enumerate*}
-\item verify whether a test is named after what makes it unique or not
-\item utilize the uniqueness of tests from the tagged text of tests to provide a uniqueness-based naming rationale for renaming unit tests
-\item generate straightforward results using formal concept analysis (FCA)~\cite{ganter2012formal}
-\end{enumerate*}.
-%
-Unlike existing approaches that were designed to handle general methods, our approach is not only specific to JUnit tests but also one of the pioneers to focus on providing a uniqueness-based naming rationale to help developers improve existing test names.
-%
-From a high-level point of view, the concept-based approach uses a set of selective code for tagging unit tests that can also provide unique information about the test.
-%
-In order to show the feasibility of the concept-based approach, an empirical study is conducted as the first step of building the uniqueness-based naming rationale, and a set of selective codes are also produced as the main results of the empirical study.
-%
-Using the results of the empirical study, we found out that most of the inspected tests are indeed named after what makes them unique, and the uniqueness of tests can be identified and utilized for future improvement by a set of top-level and secondary codes, which comes from the selective coding process using basic Java code elements as shown in~\cref{sec:test-pattern-section}.
-
-
-Finally, as the first part of the remaining work, I plan to use a set of top-level and secondary codes to build an IDE plugin-based implementation of the concept-based approach and start to conduct a full-scale evaluation of the approach by using the implementation.
-%
-For the second part of the remaining work, I plan to propose an innovative, shape-based approach to investigate if the physical appearance (i.e., length, camel cases or not, etc.), descriptiveness, uniqueness of test names affects developer's comprehension of the tests.
+Furthermore, I plan to propose an innovative, shape-based approach to investigate if the physical appearance (i.e., length, camel cases, etc.), descriptiveness, uniqueness of test names can affect developer's comprehension of the corresponding tests.

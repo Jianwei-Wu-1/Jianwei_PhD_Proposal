@@ -1,4 +1,4 @@
-\subsection{Remaining Work: Implementation and Evaluation of the Concept-based Approach}
+\subsubsection{Remaining Work: Implementation and Evaluation of the Concept-based Approach}
 \label{sec:remaining-work}
 
 In my preliminary work, I built a pattern-based approach to detect and improve non-descriptive test names.
@@ -16,17 +16,6 @@ Second, after the concept-based approach is completed, an empirical evaluation i
 As mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive and unique test names, so there are still several attributes of test names that can be explored.
 %
 Therefore, for the last aspect of test names, I plan to consider the naming problem of unit tests from another innovative aspect, which is to build a shape-based approach that learn from how different shapes of a test name (i.e., length, camel cases, underscores, descriptiveness, uniqueness) affect developers' understanding of the corresponding tests.
-
-
-\subsubsection{Research Plan}
-
-The research plan of this remaining work contains three steps.
-%
-The first step has been done in my preliminary work that is to perform an empirical study to determine if tests are named after what makes them unique and formulate a set of selective codes, which will later become the foundation of how to build a tool to detect the uniqueness of tests.
-%
-The second step is to develop and implement a concept-based approach to tag the tests with a specific block of text that shows the uniqueness of tests, and improve existing test names with the extracted uniqueness.
-%
-The third step is targeting at investigating if the physical shape, descriptiveness, and uniqueness of the test name can affect how developers understand the test, and I plan to propose an innovative, shape-based approach to solve the problem by using eye-tracking technique.
 
 \subsubsection{Implementation of the Concept-based Approach}
 
@@ -52,12 +41,4 @@ For answering RQ2, I plan to further check if the tagged text that was generated
 %
 For answering RQ3, I plan to conduct a small scale survey that 4 experienced developer will participate, and several survey questions about if they can easily understand and apply the results from running the concept-based approach will be presented to the participants.
 
-
-\subsection{Remaining Work: A Shape-based Approach to Learn How the Shape of Test Names Affect Developer's Comprehension of Unit tests}
-
-As the last part of systematically providing descriptive and unique test names for developers, I plan to propose an innovative, shape-based approach to investigate whether the physical appearance (i.e., the shape of name: length, camel case, with or without underscore), descriptiveness, uniqueness of test names affects developer's comprehension of the tests or not.
-%
-Considering the length, camel cases or not, the number of underscores, descriptiveness, and uniqueness of test names as a set of attributes, this approach will use a eye-tracking method to measure if each attribute of the name can affect a developer's ability to understand the test and how long it takes for a developer to fully understand it.
-%
-Using a different empirical study for this work, I will not only explore the feasibility of this approach to know how developers actually understand a unit test but also provide a profound insight that can further help developers improve their naming of tests by changing or modifying those attributes of test names.
 
