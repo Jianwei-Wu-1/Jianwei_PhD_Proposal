@@ -65,11 +65,9 @@ First, in order to show the evidence that different developers often use differe
 %
 Using the results of the empirical study, we found out that most of the inspected tests are indeed named after what makes them unique, and the uniqueness of tests can be identified and utilized for future improvement by a set of top-level and secondary codes, which comes from the selective coding process using basic Java code elements as shown in~\cref{sec:test-pattern-section}.
 %
-Moreover, different test names are shown to be named after different naming rationales like uniqueness-based or descriptiveness-based.
+Some tests are named after the unique information that is contained in the test body, while other tests are named after the descriptiveness of the test among it associated test class or the shape of test.
 %
-Some tests are named after the uniqueness of the test name and body, while other tests are named after the descriptiveness of the test among it associated test class or the shape of test.
-%
-As the first perspective of the descriptiveness of test names, I propose a novel, concept-based approach that can:
+Therefore, as the first perspective of constructing descriptive test names, I propose a novel, concept-based approach that can:
 %
 \begin{enumerate*}
 \item verify whether a test is named after what makes it unique or not
@@ -98,7 +96,7 @@ From a high-level point of view, the pattern-based approach uses a set of predef
 %
 This information is then compared to find non-descriptive names (i.e., cases where the name does not accurately summarize the body).
 %
-When a mismatch is found, the information used by the approach can help developers address the mismatch and improve the quality of the test name by constructing names that can summarize the descriptive information from the test body.
+When a mismatch is found, the information used by the approach can help developers address the mismatch and improve the quality of the tests by constructing descriptive names that can summarize the descriptive information from the test body.
 
 
 \textbf{---To be changed---}
