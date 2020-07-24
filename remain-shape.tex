@@ -1,15 +1,13 @@
 \section{Remaining Work: A Shape-based Approach to Learn How the Shape of Test Names Affect Developer's Comprehension of Unit tests}
 \label{sec:remaining-shape}
 
-\textbf{---To be changed---}
-
-Learning from the planned future work of the uniqueness-based approach and the collected results from the empirical study in~\cref{sec:empStudy}, some tests are actually named after something that is either not unique in its associated test class or out of the scope of its test body.
+As another important perspective of constructing descriptive names~\cref{sec:empStudy}, some tests are not named after what makes them unique or not related to the important parts from the test body.
 %
-To address the problem of using other types of naming rationales, I plan to propose an innovative, shape-based approach to investigate if the physical appearance (i.e., the shape of name: length, camel case, with or without underscore), descriptiveness, uniqueness of test names affects developer's comprehension of the tests as the last part of work.
+To further investigate their embedded naming conventions, I plan to propose an innovative, shape-based approach to investigate how the physical appearance (i.e., length, camel case, with or without underscore) of those test names affects developer's comprehension of the tests as the last part of work.
 %
-Considering the length, camel cases or not, the number of underscores, descriptiveness, and uniqueness of test names as a set of attributes, this approach will use a eye-tracking method to measure if each attribute of the name can affect a developer's ability to understand the test and how long it takes for a developer to fully understand it.
+Considering the length, camel cases or not, the number of underscores, and other aspects of test names as a set of pre-selected attributes, this approach will use a eye-tracking method to measure how each attribute of the name can affect a developer's ability to understand the test and how long it takes for a developer to fully understand it.
 %
-Using a different empirical study for this work, I will not only explore the feasibility of this approach to know how developers actually understand a unit test but also provide a profound insight that can further help developers improve their naming of tests by changing or modifying those attributes of test names.
+Using a different empirical study for this work, I will not only explore the feasibility of this approach to know how developers actually understand those tests that are not named what makes them unique but also provide a profound insight that can further help developers improve their naming of tests by changing or modifying those attributes of test names.
 
 \subsection{Research Plan}
 
@@ -17,12 +15,12 @@ Using a different empirical study for this work, I will not only explore the fea
 
 The research plan of all proposed work contains four steps.
 %
-The first step is to conduct an empirical study about if tests are named after what makes them unique and gain the knowledge of basic naming rationales, which is the foundation of all following work.
+The first step has been done in my preliminary work that is to build a pattern-based approach to detect and improve non-descriptive test names.
 %
-The second step is to develop and implement a concept-based approach to tag the tests with a specific block of text that shows the uniqueness of tests, and improve existing test names with the extracted uniqueness.
+The second step is to conduct an empirical study about if tests are named after what makes them unique and gain the knowledge of basic naming rationales, which is the foundation of all following work.
+%
+The third step is to develop and implement a concept-based approach to tag the tests with a specific block of text that shows the uniqueness of tests, and improve existing test names with the extracted uniqueness.
 %
 This step will be done as the first part of the planned future work.
 %
-The third step has been done in my preliminary work that is to build a pattern-based approach to detect and improve non-descriptive test names.
-%
-The third step is targeting at investigating if the physical shape, descriptiveness, and uniqueness of the test name can affect how developers understand the test, and I plan to propose an innovative, shape-based approach to solve the problem by using eye-tracking technique.
+The last step is targeting at investigating if the physical shape of the test name can affect how developers understand the test, and I plan to propose an innovative, shape-based approach to automatically generate descriptive test names that can reflect the information contained in the shape of the tests.
