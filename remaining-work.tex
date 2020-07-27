@@ -19,11 +19,23 @@ Therefore, for the last aspect of test names, I plan to consider the naming prob
 
 \subsubsection{Implementation of the Concept-based Approach}
 
-Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, the next step is to build a concept-based approach that can improve existing test names by a uniqueness-based naming rationale for developers.
+Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build a concept-based approach that can improve existing test names by a uniqueness-based naming rationale for developers.
 %
-For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and how to integrate it with the top-level and secondary codes will also be explained.
+For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and provide how to integrate it with the top-level and secondary codes will also be explained.
 %
-Using the implicit relationships extracted by FCA and the existing codes, a concept-based approach can not only correctly tag the codes to the tests but also provide a uniqueness-based naming rationale for improving the existing test names.
+And I plan to follow these steps to build the concept-based approach:
+\begin{enumerate*}
+    \item Implement the top-level and secondary codes
+    \item Use an IDE plugin to apply the codes to the tests from a selected project
+    \item After the tests are tagged, generate a list of tests - tagged text pairs
+    \item Use the pairs as the input data of FCA and output the produced concept map as a metric for judging descriptive test names
+    \item Check if each test name is named after what makes it unique
+    \item If is, show the tagged text to facilitate potential improvements
+    \item If not, generate descriptive test names by summarizing the unique information
+    \item Let developers to decide if they would like to use the tagged text to improve existing test names or replace non-descriptive names with the generated descriptive names
+\end{enumerate*}.
+
+
 
 \subsubsection{Evaluation of the Concept-based Approach}
 
