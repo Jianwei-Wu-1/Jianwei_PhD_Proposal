@@ -109,11 +109,11 @@ FCA will take the tagged text produced by the selective codes as input for build
 The unique information can be used to either improve existing test names that are lack of the unique information or generate descriptive test names with unique information (i.e., summarize all the information from the tagged text to construct a specific name).
 
 
-Finally, I plan to propose an innovative, JavaDoc-based approach to investigate if we can use a set of JavaDoc patterns to extract the descriptive information from the JavaDocs of the associated classes under test of each test for deciding if the test is actually named after something that makes it unique but is out of the scope of its test body.
+Finally, I plan to propose an innovative, class under test (CUT)'s JavaDoc-based approach to investigate if we can use a set of pre-mined JavaDoc patterns to extract the descriptive information from the JavaDocs of the associated classes under test (CUTs) of each test for deciding if the test is named after that information from its CUT JavaDocs.
 %
-In our preliminary study, we found out a change of code elements in the test body seldom facilitates a corresponding change in the test name.
+During our preliminary study, we found out a change of code elements in the test body of a test or a rename of the test seldom facilitates a corresponding change in the test name.
 %
-On the contrary, the JavaDocs of classes under test does provide descriptive information that can be used to fill the gap when the uniqueness-based naming rationale is not applicable to certain tests.
+On the contrary, the JavaDocs of classes under test does provide descriptive information that can be used to fill the gap when the uniqueness-based naming rationale is not applicable in certain conditions.
 %
 The JavaDoc-based approach will follow these steps:
 \begin{enumerate*}
