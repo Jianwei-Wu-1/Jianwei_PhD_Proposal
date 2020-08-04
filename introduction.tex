@@ -109,14 +109,17 @@ FCA will take the tagged text produced by the selective codes as input for build
 The unique information can be used to either improve existing test names that are lack of the unique information or generate descriptive test names with unique information (i.e., summarize all the information from the tagged text to construct a specific name).
 
 
-Finally, I plan to propose an innovative, class under test (CUT)-based approach to investigate if we can use a similar set of selective codes to extract the descriptive information from the associated classes under test of each test for deciding if the test is actually named after something that makes it unique but is out of the scope of its test body.
+Finally, I plan to propose an innovative, class under test (CUT)-based approach to investigate if we can use a set of JavaDoc patterns to extract the descriptive information from the JavaDocs of the associated classes under test of each test for deciding if the test is actually named after something that makes it unique but is out of the scope of its test body.
+%
+In our preliminary study, we found out a change of code elements in the test body seldom facilitates a corresponding change in the test name.
+%
+On the contrary, the JavaDocs of classes under test does provide descriptive information that can be used to fill the gap when the uniqueness-based naming rationale is not applicable to certain tests.
 %
 The CUT-based approach will follow these steps:
 \begin{enumerate*}
-\item trace every class under test that is related to the test using the variables and method calls in its test body
-\item utilize a set of selective codes to parse the variables and methods in those classes under test and extract descriptive information
-\item check if the test is named after that information; if it is, provide the information for developers; if not, construct a descriptive name using the information for the test
-\item it is also possible to use this approach to provide further additional information for constructing descriptive names
+\item trace every class under test that is related to a test by referring to the variables and method calls in its test body
+\item utilize a set of JavaDoc patterns to parse the JavaDocs in those classes under test and extract descriptive information from them
+\item check if the test is fully or partially named after that information; if it is, provide the information for developers; if not, construct a descriptive name using the information extracted from the JavaDocs of CUTs
 \end{enumerate*}.
 %
-A different empirical evaluation will also be conducted to verify the validity of the CUT-based approach.
+Another empirical evaluation will also be conducted to verify the validity of the CUT-based approach.
