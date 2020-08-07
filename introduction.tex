@@ -61,26 +61,34 @@ This information is then compared to find non-descriptive names (i.e., cases whe
 When a mismatch is found, the information used by the approach can help developers address the mismatch and improve the quality of the tests by constructing descriptive names that can summarize the descriptive information from the test body.
 
 
-% TODO[done]: There is something missing here.  Remember that the above approach does not generate names.  I suggest talking about the next step is to automatically generate test names by transforming the identified information and then talk about work that does that (Benwen's work and others).  Then you can mention that these names do not always meet with developer approval so something else needs to be done.
 In order to further help developers construct descriptive test names, the next step is to build an automated approach that can generate descriptive names with the extracted information.
 %
-Many existing approach tried to generate descriptive test names by a series of pre-defined rules or models~\cite{arcuri2014automated, zhang2015automatically, allamanis2015suggesting, daka2017generating, li2019deepfl}, and their techniques performed well when solving their proposed problems.
-% TODO[done]: always be careful using "none" or "always".  This is almost always an overstatement.  Existing work did consider conventions, but they might not be what the developer wants to different.
-However, while automatically generating descriptive names from test bodies eliminates the possibility of mismatches between names and bodies and using machine learning-based model can accurately summarize the important information of the test, those generated names do not always meet with developer approval (e.g., they may not fit with existing naming conventions).
+Many existing approaches try to generate descriptive test names by a series of pre-defined rules or models~\cite{arcuri2014automated, zhang2015automatically, allamanis2015suggesting, daka2017generating, li2019deepfl}, and their techniques performed well when solving their proposed problems.
+% TODO[Done]: This sentence could be broken up
+However, while automatically generating descriptive names from test bodies eliminates the possibility of mismatches between names and bodies, those generated names do not always meet with developer approval (e.g., they may not fit with existing naming conventions).
+%
+This observation can also be applied other approaches: using machine learning-based models can accurately summarize the important information of the test, but their summarized information is not always the same information that developer needs.
 
 
-% TODO[done]: This should start another paragraph. You should also talk about this in the past tense and provide a link to a pre-print (or a forward reference to a chapter in the proposal.)
-Therefore, I further investigated how to automatically generate descriptive test names that follows the most common naming rationale used by developers.
+Therefore, I further investigated how to automatically generate descriptive test names that follow the most common naming rationale used by developers.
 %
-To show the evidence that different developers often use different naming rationales to name their tests, an empirical study was conducted as the first step of building the approach~\cite{emp-study}.
+To demonstrate that developers often use different naming rationales to name their tests, an empirical study was conducted as the first step towards building the approach~\cite{emp-study}.
+% TODO[Done]: Can you really say that different "developers" using different rationales?  WE didn't look at that.  Just that different rationales exist.
+Judging from the quantitative analysis in the empirical study, different naming rationales do exist in those selected tests, but most of them were named after what makes the test unique, which were using the unique information extracted from the test body (i.e., the uniqueness of the test).
+% TODO[Done]: Do you have any evidence that the existing approaches don't generate names that are based on what is unique?  They're not designed to, but they might do it anyway.  You also might want to discuss the other issue with model approaches *(that they generate duplicate names).  That's another motivation for a uniqueness-based approach.
+Some test generation approaches might be able to generate unique test names but are not designed to do so~\cite{arcuri2014automated, zhang2015automatically, allamanis2015suggesting, daka2017generating}, hence there is no guarantee that their approaches would generate unique names for every test in any randomly selected project.
 %
-Judging from the quantitative analysis in the empirical study, different developers often used different naming rationales for constructing test names, but most of the existing test names were named after what makes the test unique, which were using the unique information extracted from the test body (i.e., the uniqueness of the test).
+Recent machine learning-based approaches can be configured to generate descriptive test names~\cite{alon2018code2seq,alon2019code2vec}.
+%
+We chose a set of randomly selected projects from Github that are used as the input for those machine learning-based approaches to generate test names for all the unit tests in their test suites and compared all the generated test names with each other.
+%
+Nonetheless, thousands of duplicated test names were generated by both approaches~\cref{sec:duplication-names}, which can be barely used to provide any descriptive information and distinguish each test from other tests in its test class.
 %
 So as to generate descriptive names for unit tests (i.e., a descriptive test name can summarize important parts of the test body that are unique in its test class), I propose a concept-based approach that can be used to provide descriptive names with the uniqueness of test.
 
 
 For the second part of this proposal, I propose the following research tasks, which will contribute to a concept-based approach that can provide a uniqueness-based naming rationale for unit tests.
-% TODO[done, moved to prev]: This isn't future work.
+% 
 We found out that the majority of the inspected tests are named after what makes them unique in the empirical study~\cite{emp-study}, and it is feasible to extract the unique parts from the test body by utilizing a set of selective codes (i.e., include top-level and secondary), which came from the selective coding process using basic Java code elements as shown in~\cref{sec:test-pattern-section}.
 %
 Therefore, in order to generate descriptive test names using the uniqueness of test, I propose a novel, concept-based approach that can:
@@ -109,17 +117,18 @@ FCA will take the tagged text produced by the selective codes as input for build
 The unique information can be used to either improve existing test names that are lack of the unique information or generate descriptive test names with unique information (i.e., summarize all the information from the tagged text to construct a specific name).
 
 
-Finally, I plan to propose an innovative, class under test (CUT)'s JavaDoc-based approach to investigate if we can use a set of pre-mined JavaDoc patterns to extract the descriptive information from the JavaDocs of the associated classes under test (CUTs) of each test for deciding if the test is named after that information from its CUT JavaDocs.
+Finally, I plan to perform a comprehensive comparison between the pattern-based approach and the concept-based approach to discover the differences and similarities between them.
 %
-During our preliminary study, we found out a change of code elements in the test body of a test or a rename of the test seldom facilitates a corresponding change in the test name.
+This exploratory study is consist of a further evaluation of the concept-based approach and a comparison between the concept-based approach and the pattern-based approach.
 %
-On the contrary, the JavaDocs of classes under test does provide descriptive information that can be used to fill the gap when the uniqueness-based naming rationale is not applicable in certain conditions.
-%
-The JavaDoc-based approach will follow these steps:
+It will follow these steps:
 \begin{enumerate*}
-\item trace every class under test that is related to a test by referring to the variables and method calls in its test body
-\item utilize a set of JavaDoc patterns to parse the JavaDocs in those classes under test and extract descriptive information from them
-\item check if the test is fully or partially named after that information; if it is, provide additional information for developers; if not, construct a descriptive name using the information extracted from the JavaDocs of CUTs
+\item an independent evaluation of the concept-based approach is going to show us how developers actually name their tests since it will be conducted as a empirical survey with some experienced developers
+\item a different set of experimental subjects (i.e., different from those in the evaluations of both approaches) will be selected as the input for both of the approaches
+\item the results from both of the approaches will be collected and separated from each other for quantitative analysis
+\item our goal is to find the differences and similarities (i.e., potential overlap between the two approaches) of the pattern-based approach and the concept-based approach for motivating future improvements or a possible combination of the two approaches
 \end{enumerate*}.
 %
-Another empirical evaluation will also be conducted to verify the validity of the JavaDoc-based approach.
+Depending on the results from this exploratory study, first, we could gain more insight on how developers name their tests.
+%
+Second, if we manage to find potential overlap between the two approaches (i.e., some uniqueness-based test names might be the same names that the pattern-based approach would suggest), it is possible to further propose a framework for constructing test names that are both descriptive about its test body but also unique in its associated test class.

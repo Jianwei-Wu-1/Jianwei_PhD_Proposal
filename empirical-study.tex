@@ -1,4 +1,30 @@
-\subsection{Empirical Study: Are tests named for what makes them unique?}
+\subsection{Motivation for A Concept-based Approach to Provide a Uniqueness-based Naming Rationale}
+
+\subsubsection{Duplication of Names Produced by Machine Learning-based Approaches}
+\label{sec:duplication-names}
+
+As we mentioned in~\cref{sec:introduction}, recent machine learning-based approaches produced a lot of duplication when generating test names.
+%
+To understand how limited these machine learning-based approaches are, we cloned the top \num{50} Java projects from GitHub and randomly selected \num{11} projects that contain a complete suite of JUnit tests.
+%
+Then we analyzed all the unit tests from the \num{11} projects with those machine learning-based approaches and collected the generated test names for the total of \num{25567} unit tests belonging to these Java projects.
+%
+The \num{11} Java projects are built for various purposes like Guava is an open-source common library for Java and fastjson is a JSON parser\slash generator.
+%
+If there are many generated test names that are repeated at least once in its associated test class, it is necessary to develop a uniqueness-focused approach to solve the problem of duplication.
+%
+The collected results are shown in this shared document~\cite{CodeResult}, and lots of duplicated test names were generated during the process of automated name generation. 
+%
+For example, \enquote{Code2seq} produced \num{80} repeating test names for the moshi project, and \num{14} out of \num{24} test classes in the moshi project contain more than one repeating test names.
+%
+For another example, \enquote{Code2vec} produced \num{1199} repeating test names for the guava project, and \num{211} out of \num{461} test classes in the guava project contain more than one repeating test names.
+%
+Obviously, using some of the state-of-the-art approaches that is based on machine learning still   produces thousands of repeating test names when performing the automated name generation.
+%
+This result also indicates there is a need to develop a uniqueness-based naming rationale that can generate descriptive test names.
+
+
+\subsubsection{Empirical Study: Are tests named for what makes them unique?}
 \label{sec:empStudy}
 
 Before we start to develop the automated approach to generate descriptive test names that is based on the uniqueness of tests, it is important to understand how developers name their unit tests in a real-world scenario.
@@ -564,3 +590,4 @@ Although the main focus of the study is designed for checking if the tests are n
 % \end{table*}
 
 After the empirical study was completed and a set of top-level and secondary codes were selected during the study, the next step will be the implementation and evaluation of the concept-based approach, which is the first part of my planned remaining work and also the solution for solving the naming problem from a uniqueness-based perspective.
+
