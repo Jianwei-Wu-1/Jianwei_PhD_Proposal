@@ -9,13 +9,15 @@ Second, after the approach is completed, another empirical evaluation is also ne
 %
 Last, as mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive test names for developers (i.e., they are based on what makes the test unique), so generating descriptive name with unique information is also needed in the automated approach.
 
-\subsubsection{Implementation of the Automated Descriptive Name Generation Approach}
+\subsubsection{Implementation of the Concept-based Approach}
 
-Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build a concept-based approach that can improve existing test names by a uniqueness-based naming rationale for developers.
+Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build an automated approach that can not only improve existing test names by providing a uniqueness-based naming rationale for developers but also generate descriptive test names.
 %
 For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and provide how to integrate it with the top-level and secondary codes will also be explained in implementation section of our planned future work.
 %
-And I plan to follow these steps to build a concept-based approach (i.e., the automated descriptive name generation approach):
+Therefore, the automated approach is also called as the concept-based approach in the rest of this proposal.
+%
+And I plan to follow these steps to build the concept-based approach (i.e., the automated descriptive name generation approach):
 \begin{enumerate*}
     \item Implement the top-level and secondary codes
     \item Use an IDE plugin to apply the codes to the tests from a selected project
