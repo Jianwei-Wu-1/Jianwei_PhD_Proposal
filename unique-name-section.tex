@@ -1,11 +1,12 @@
 \section{Proposed Work}
-\subsection{A Concept-based Approach to Improve Test Names with a Uniqueness based Naming Rationale}
+ 
+ %TODO[done, change for all]: This title doesn't really make sense.  It's too long.  It's also too focused on concept-based.  That's an implementation detail at this point.  The uniquness-based naming approach is what is important.
+
+\subsection{Improve and Construct Descriptive Names for Existing Unit Tests by the Uniqueness-based Naming Rationale}
 \label{sec:unique-test-name}
 
-For the second part of work, I consider using a uniqueness-based naming rationale to automatically generate descriptive names, which is accomplished by building a concept-based approach that can produce .
+For the second part of work, I consider using a uniqueness-based naming rationale to automatically generate descriptive names, which is accomplished by building an implementation with a set of selective codes from the empirical study~\cite{emp-study}.
 %
-Before I start to build the concept-based approach, I first need to know whether unit tests are named after what makes them unique or not.
-%
-Therefore, an empirical study was conducted to check our thoughts and assumptions, and a set of top-level and secondary codes was formulated using selective coding~\cite{glaser1967discovery,strauss1998basics}.
+The empirical study was conducted to check our thoughts and assumptions, so a set of top-level and secondary codes can be formulated using selective coding~\cite{glaser1967discovery,strauss1998basics}.
 %
 The set of codes are used to tag the tests and extract the tagged text from those tests in the concept-based approach, which is capable of check if a test is named after what makes it unique and improve the uniqueness of that test name by utilizing the unique information from the tagged text.

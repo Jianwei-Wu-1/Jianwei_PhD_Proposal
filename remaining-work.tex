@@ -1,56 +1,44 @@
-\subsubsection{Remaining Work: Implementation and Evaluation of the Concept-based Approach}
+\subsubsection{Remaining Work: Implementation and Evaluation of the Automated Descriptive Name Generation Approach}
 \label{sec:remaining-work}
 
-% In my preliminary work, I built a pattern-based approach to detect and improve non-descriptive test names.
-% %
-% However, the pattern-based approach is limited to one perspective of the solving the naming problem for unit tests that is to improve test names with descriptiveness, but the uniqueness of tests is not mentioned in this work.
-% %
-% Especially, pattern mining in the pattern-based approach requires close attention to each component of every test pattern, which is both difficult and labor intensive.
+In the remaining work, I plan to develop an automated approach that uses a set of top-level and secondary codes produced by the selective coding in the empirical study to generate descriptive test names.
+%
+First, using the previously selected set of top-level and secondary codes, it is feasible for us to build the automated approach to check and improve existing test names with a uniqueness-based naming rationale.
+%
+Second, after the approach is completed, another empirical evaluation is also needed to further investigate the correctness, effectiveness, and comprehensibility of the approach.
+%
+Last, as mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive test names for developers (i.e., they are based on what makes the test unique), so generating descriptive name with unique information is also needed in the automated approach.
 
-In the remaining work, I plan to develop a concept-based approach that uses a set of top-level and secondary codes produced by the selective coding in the empirical study for tagging and extracting the uniqueness from the tests.
-%
-First, using the set of top-level and secondary codes that were previously selected, it is feasible for us to build a concept-based approach to check and improve existing test names with a uniqueness-based naming rationale.
-%
-Second, after the concept-based approach is completed, an empirical evaluation is also needed to further investigate the correctness, effectiveness, and comprehensibility of the approach.
-%
-As mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive and unique test names, so there are still several attributes of test names that can be explored.
-%
-Therefore, for the last aspect of test names, I plan to consider the naming problem of unit tests from another innovative aspect, which is to build a shape-based approach that learn from how different shapes of a test name (i.e., length, camel cases, underscores, descriptiveness, uniqueness) affect developers' understanding of the corresponding tests.
-
-\subsubsection{Implementation of the Concept-based Approach}
+\subsubsection{Implementation of the Automated Descriptive Name Generation Approach}
 
 Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build a concept-based approach that can improve existing test names by a uniqueness-based naming rationale for developers.
 %
-For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and provide how to integrate it with the top-level and secondary codes will also be explained.
+For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and provide how to integrate it with the top-level and secondary codes will also be explained in implementation section of our planned future work.
 %
-And I plan to follow these steps to build the concept-based approach:
+And I plan to follow these steps to build a concept-based approach (i.e., the automated descriptive name generation approach):
 \begin{enumerate*}
     \item Implement the top-level and secondary codes
     \item Use an IDE plugin to apply the codes to the tests from a selected project
     \item After the tests are tagged, generate a list of tests - tagged text pairs
     \item Use the pairs as the input data of FCA and output the produced concept map as a metric for judging descriptive test names
-    \item Check if each test name is named after what makes it unique
-    \item If is, show the tagged text to facilitate potential improvements
-    \item If not, generate descriptive test names by summarizing the unique information
-    \item Let developers to decide if they would like to use the tagged text to improve existing test names or replace non-descriptive names with the generated descriptive names
+    \item Check if each test name is named after what makes it unique; if is, show the tagged text to facilitate potential improvements; if not, generate descriptive test names by summarizing the unique information
+    \item perform a quantitative analysis as the evaluation of the concept-based approach
 \end{enumerate*}.
 
-
-
-\subsubsection{Evaluation of the Concept-based Approach}
+\subsubsection{Evaluation of the Automated Descriptive Name Generation Approach}
 
 Research questions involved in this step are:
 %
 \begin{enumerate}
     \item RQ1-Correctness: Can the concept-based approach apply the top-level and secondary codes to each test correctly?
     \item RQ2-Effectiveness: Does the tagged text of each test accurately describe the uniqueness of the test?
-    \item RQ3-Comprehensibility: Is the generated results of the concept-based approach straightforward enough to be easily understood?
+    \item RQ3-Usefulness: Is the generated results of the concept-based approach useful for improving existing test names?
 \end{enumerate}.
 
 For answering RQ1, I plan to perform a quantitative analysis by comparing the results from manual tagging of a randomly set of tests (i.e., from 5 random Java projects on Github) with the results from the concept-based approach to see if the two different results are matched.
 %
 For answering RQ2, I plan to further check if the tagged text that was generated by the concept-based approach is the same as the tagged text from the manual tagging from the same set of tests.
 %
-For answering RQ3, I plan to conduct a small scale survey that 4 experienced developer will participate, and several survey questions about if they can easily understand and apply the results from running the concept-based approach will be presented to the participants.
+For answering RQ3, I plan to conduct a small-scale survey with 4 experienced developers by letting them answer a set of questions about the usefulness of the result that is produced by running the concept-based approach on read-world projects.
 
 
