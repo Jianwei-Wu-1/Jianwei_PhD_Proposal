@@ -533,18 +533,6 @@ Although the main focus of the study is designed for checking if the tests are n
 %     \item RQ2: When uniqueness is the naming rationale, does the tagged text appear directly in the name or is it transformed?
 % \end{itemize}
 
-% \subsubsection{RQ1: Is uniqueness used as a naming rationale in JUnit tests?}
-
-% To investigate RQ1, we manually compared the name of each test against the aspects that make it unique which were identified in the first part of the study.
-% %
-% The comparison between the test name and tagged text (i.e.,the aspects of the test that make it unique) is performed as follows.
-% %
-% First, we manually split the test names and the tagged text into a set of tokens, and the splitting of the names is based on a customized tokenizer for software analysis~\cite{enslen2009mining}.
-% %
-% Then we remove the leading \enquote{text} and lower case all tokens. For example, the test name \texttt{testPostReturnsBarcodeImage} is parsed into a set of tokens: \enquote{[post, returns, barcode, image]}.
-% %
-% Finally, we manually compared the two sets of tokens. Each author did this comparison individually and classified the tests into one of the following categories based on the degree to which the name appears to be based on the tagged text.
-
 % \begin{table*}[t]
 % \centering
 % \caption{Results to check if the tokens are identical or transformed.}
@@ -588,8 +576,175 @@ Although the main focus of the study is designed for checking if the tests are n
 %  Overall            & 25 &  22  &  3  & 309 & 261 & 48 & 106 \\
 % \bottomrule
 % \end{tabular}
-% \label{tab:identical-or-transformed.}
+% \label{tab:identical-or-transformed}
 % \end{table*}
+
+% \subsubsection{RQ1: Is uniqueness used as a naming rationale in JUnit tests?}
+
+% To investigate RQ1, we manually compared the name of each test against the aspects that make it unique which were identified in the first part of the study.
+% %
+% The comparison between the test name and tagged text (i.e.,the aspects of the test that make it unique) is performed as follows.
+% %
+% First, we manually split the test names and the tagged text into a set of tokens, and the splitting of the names is based on a customized tokenizer for software analysis~\cite{enslen2009mining}.
+% %
+% Then we remove the leading \enquote{text} and lower case all tokens.
+% %
+% For example, the test name testPostReturnsBarcodeImage is parsed into a set of tokens:~\enquote{[post, returns, barcode, image]}.
+% %
+% Moreover, we also remove those connectors that are rarely used in the test body from the set of tokens (e.g., not, to, then, etc.).
+% %
+% Finally, we manually compared the two sets of tokens.
+% %
+% Each author did this comparison individually and classified the tests into one of the following categories based on the degree to which the name appears to be based on the tagged text.
+
+% \begin{enumerate}
+
+% \item Full: The tests in the Full category appear to be named wholly after what makes the test unique (i.e., every token from the name appears to be derived from a token from the tagged text).
+% %
+% For example, for \texttt{testPutAll} from Guava, the tokens from the name are <put, all> and the tokens from the tagged text are <put, all>.
+% %
+% Because each token in the token set of the name originates from a corresponding token from the token set of the tagged text (e.g., both tokens are literally the same or share the same meaning), \texttt{testPutAll} is included in the Full category.
+% %
+% As another example, consider \texttt{test\_geo} from FastJson.
+% %
+% For this test, the tokens from the name are <geo> and the tokens from the tagged text are <geometry>.
+% %
+% Because \enquote{geo} appears to be an abbreviation for \enquote{geometry}, each token from the name is derived from a token from the tagged text and the test is also included in the Full category.
+
+% \item Partial: The tests in the Partial category appear to be named partially after what makes the test unique (i.e., at least one token from the name appears to be derived from a token in the tagged text).
+% %
+% For example for \texttt{testChecksumIsNull} from Barbecue, the tokens from the name are <checksum, is, null> and the tokens from the tagged text are <calculate, checksum>.
+% %
+% Because the token \enquote{checksum} in the token set of the test name is directly derived from the token \enquote{checksum} in the token set of the tagged text, \texttt{testChecksumIsNull} is included in the Partial category.
+% %
+% As another example, consider \texttt{testChildBindingsNotVisibleToParent} from Guice, the tokens from the test name are <child, bindings, visible, parent> (i.e., less important connectors are removed), and the tokens from the tagged text are <get, binding>.
+% %
+% Because the token \enquote{bindings} from the test name is the plural of the token \enquote{binding} from the tagged text, \texttt{testChildBindingsNotVisibleToParent} is also included in the Partial category.
+
+% \item None: The tests in the None category do not appear to be named after what makes the test unique (i.e., none of the tokens from the name appear to be derived from a token from the tagged text).
+% %
+% For example, for \texttt{testValueIsRequired} from Barbecue, the tokens from the test name are <value, is, required> and the tokens from the tagged text are <remove, servlet, exception>.
+% %
+% Because none of the tokens from the test name appears to be derived from the tokens from the tagged text, \texttt{testValueIsRequired} is listed in the None category.
+% \end{enumerate}
+
+% Again, after each author classified each test individually, the authors together examined the classification in order to resolve any disagreements.
+% %
+% The results of the rectified classification are shown in~\Cref{tab:identical-or-transformed}.
+% %
+% In the table, the first column, Project, shows the name of each project and the subsequent three columns, Full, Partial, and None, show the number of tests in each category, respectively.
+% %
+% The first sub-column, Total \#, indicates the total number of tests that is under each category, and the other two sub-columns: Identical and Transformed will be later explained.
+% %
+% For example, the second row shows the data collected from Barbecue: a total of \num{2} tests are in the Full category, a total of \num{32} tests are in the Partial category and a total of 6 tests are in the None category.
+% %
+% Finally, the last row shows the totals for each category across all inspected projects.
+% %
+% As the data in~\Cref{tab:identical-or-transformed} shows, most of the tests (\num{334} out of \num{440}, \SI{\approx 76}{\percent}) are in the Full and Partial categories.
+% %
+% However, there are also a significant fraction of tests in the None category (\num{106} out of \num{440}, \SI{\approx 24}{\percent}).
+% %
+% We found this surprising, especially considering that tests with bad names were excluded from our set of tests.
+% %
+% To better understand the causes behind this, we further investigated the tests in this category.
+% %
+% We found that while these test names are not based on what makes the test unique, they do often follow a reasonable naming rationale.
+% %
+% The most common rationale (\num{34} out of \num{106}, \SI{\approx 32}{\percent}) is because a number of tests are named after something that is out of the scope of their current test bodies, which could be derived from a setup of the testing environment, a implicit behavior of the program, or even a combined naming scheme of different sources.
+% %
+% For example, \texttt{testValueIsRequired} from Barbecue is designed to make sure when there is a missing value in the required parameters of the setup of its test class, an exception will be thrown and caught.
+% %
+% However, the setup of the test class is clearly out of the scope of a single unit test. The second most common rationale in the tie is due to that some tests were written in the acceptance testing phase to mimic a certain behavior of the actual user, which is less common than the first rationale (\num{30} out of \num{106}, \SI{\approx 28}{\percent}).
+% %
+% For example, \texttt{loadThrowsWithInvalidInput} from Picasso is designed to make sure that when the user enters an invalid input (i.e., URL for this test), a corresponding exception must be thrown.
+% %
+% The third most common rationale (\num{29} out of \num{106}, \SI{\approx 27}{\percent}) is owing to the fact that some tests are named after something from their test bodies but it is not what makes those tests unique.
+% %
+% For example, \texttt{testReadFull} from Exoplayer is designed to check if a specific data source can be fully read. This test is named after the CUT method call <read>, nevertheless this call is used by other tests in the same class for multiple times.
+% %
+% Overall, about \SI{88} of the tests under the none category are named using a different rationale. The remaining tests (\num{13} out of \num{106}, \SI{\approx 12}{\percent}) were tests with post names that were not caught by our conservative filtering.
+% %
+% For example, JavaPoet contains a test named \enquote{usage} that does not provide any useful information about how the “usage” is related to the content of the test.
+% %
+% In our planned future work, we will introduce another technique to handle those three types of names, but it is not the current focus of this paper. The detailed data is shown in the shared document~\cite{emp-data}.
+% %
+% Based on the data in~\Cref{tab:identical-or-transformed} and our additional investigation of tests in the None category, we conclude that the answer to RQ1 is \enquote{yes}.
+% %
+% Uniqueness is indeed commonly used as a naming rationale when constructing the names of JUnit tests.
+% %
+% From the 440 selected tests, most of them are named under the uniqueness-based naming rationale, and their test names at least partially reflect the uniqueness by containing some or all of the tokens from the tagged text.
+
+% \subsubsection{RQ2: When uniqueness is the naming rationale, does the tagged text appear directly in the name or is it somehow transformed?}
+
+% To gain some additional insights in to how much extra work an automated tool might need to perform in order to generate names based on what makes a test unique, we further examined the tests in the Full and Partial categories to determine whether the information about what makes the test unique has the same form in the name or if it was transformed in some way.
+% %
+% In order to get the information from the collected data, we performed a manual classification of all the tests in the full and partial categories.
+% %
+% In this case were classified the tests as either identical or transformed.
+
+% \begin{enumerate}
+% \item Identical: The tests in the Identical sub-category have this feature: each token from the test name that appears to come from the tagged text is identical to the token from the tagged text.
+% %
+% For example, for \texttt{shouldIncludePort8080} from Scribejava, the tokens from the name are <should, include, port8080> from the name, and tokens from the tagged text are <request, port8080>.
+% %
+% The token \texttt{port8080} from the tokens of the name appears to come from the token \texttt{port8080} from the tokens of the tagged text, and they are identical to each other, so \texttt{shouldIncludePort8080} is included in the Identical category.
+% \item Transformed: The tests in the Transformed sub-category have this feature: each token from the test name that appears to come from the tagged text is transformed to the token from the tagged text, and it often indicates that both tokens from the name and tagged text have the same meaning but in different forms (i.e., abbreviation, plural and singular form, etc.).
+% %
+% For example, for \texttt{shouldReturnUrlParam} from Scribejava, the tokens from the name are <should, return, url, param>, and the tokens from the tagged text are <get, parameter, null, access, secret>.
+% %
+% The token \enquote{param} from the name appears to come from the token \enquote{parameter} from the tagged text, and it is a transformation of the token \enquote{parameter} from the tagged text by using the abbreviation of the word.
+% \end{enumerate}
+
+% The results of this additional classification are also shown in~\Cref{tab:identical-or-transformed}.
+% %
+% The Identical and Transformed columns show the number of names in the identical category, and the number transformed matches under the full and partial categories. For example, the data from the third row shows the project Mockito has \num{4} tests that are fully named after the tokens from the tagged text.
+% %
+% Of these \num{4} test names, \num{3} of them are under the Identical category, which indicates each of them have a shared subset of tokens between the tokens from the name and the tagged text, and each token in the shared subset is identical when comparing between the name and the tagged text (i.e., a mathematical intersection between the two sets of tokens from the name and the tagged text).
+% %
+% \num{1} of them is under the Transformed category, and it means this test also has a conceptually shared subset of tokens between the tokens from the name and the tagged text but each token in the shared subset is transformed from its appearance in the tokens of the name to its corresponding appearance in the token of the tagged text (i.e., a conceptual intersection between the two sets of tokens from the name and the tagged text).
+
+% Moreover, it also shows Mockito has \num{27} tests that are partially named after the tokens from the tagged text.
+% %
+% Of these \num{27} test names, \num{24} of them have the identical tokens between the name and the tagged text, and \num{3} of them has the same tokens between the name and the tagged text but the tokens of the name are transformed from the tokens of the tagged text.
+% %
+% At the end, there are \num{9} tests in Mockito that are not named after the tokens from the tagged text at all.
+% %
+% The data for each project slightly varies from each other, but the distribution of the identical and transformed tokens are largely consistent.
+% %
+% For example in~\Cref{tab:identical-or-transformed}, the number of identical tokens for each project is usually greater than the number of transformed tokens, and the majority of tokens from the name are identical to those from the tagged text (i.e., \num{22} out of \num{25} for full, and \num{261} out of \num{309} for partial).
+% %
+% Therefore, RQ2 is answered with \enquote{yes} and \enquote{both} since both the identical and the transformed tokens were found in the comparison between the tokens from the name and the tagged text. 
+
+% Judging from the results of both RQ1 and RQ2, the majority of the test names are indeed named after the tokens from the tagged text, and the tokens between the name and tagged text are mostly identical to each other, so we decided to proceed to build the automated tool.
+% %
+% In order to provide a preliminary plan for the automated tool, we manually analyzed each test name and its test body with the tagged text in detail.
+% %
+% Moreover, the consistency in the collected data shows that a concept-based approach for extracting the tokens from the tests is not only feasible but also effective.
+
+% \subsection{Phase 3: Duplication of Test Names Produced by Machine Learning-based Approaches}
+
+% The goal of the third part of the empirical study is to investigate if duplicates largely exist in the automatically generated test names.
+% %
+% Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
+% %
+% Although using machine learning-based models can accurately summarize the important information from the test body, their summarized test names do not always fit developer's needs that is to be unique and easy to differentiate from other tests.
+% %
+% To understand how limited these machine learning-based approaches are, we cloned the top \num{50} Java projects from GitHub and randomly selected \num{11} projects (i.e., contain \num{25567} unit tests) that contain a complete suite of JUnit tests.
+% %
+% The \num{11} Java projects are built for various purposes like Guava is an open-source common library for Java and fastjson is a JSON parser\slash generator.
+
+% If many generated test names are repeated at least once in its associated test class and there are lots of duplicated names that were generated for one project, it is necessary to develop a uniqueness-focused approach to solve the problem of duplication.
+% %
+% In order to measure the level of duplication, we performed a quantitative analysis on the collected result.
+% %
+% The data of the quantitative analysis is shown in this shared document~\cite{CodeResult}, and it shows that thousands of duplicated test names were generated during the process of automated name generation in total.
+% %
+% For example, \enquote{Code2seq} produced \num{80} repeating test names for the moshi project, and \num{14} out of \num{24} test classes in the moshi project contain more than one repeating test names.
+% %
+% For another example, \enquote{Code2vec} produced \num{1199} repeating test names for the guava project, and \num{211} out of \num{461} test classes in the guava project contain more than one repeating test names.
+% %
+% This observation during the quantitative analysis indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
+
 
 After the empirical study was completed and a set of top-level and secondary codes were selected during the study, the next step will be the implementation and evaluation of the concept-based approach, which is the first part of my planned remaining work and also the solution for solving the naming problem from a uniqueness-based perspective.
 
