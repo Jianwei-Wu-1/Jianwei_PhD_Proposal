@@ -1,45 +1,38 @@
 \section{Remaining Work: Implementation and Evaluation of the Automated Descriptive Name Generation Approach}
 \label{sec:remaining-work}
 
-In the remaining work, I plan to develop an automated approach that uses a set of top-level and secondary codes produced by the selective coding in the empirical study to generate descriptive test names.
+In the remaining work, I plan to develop a uniqueness-based approach to generate descriptive test names.
 %
-First, using the previously selected set of top-level and secondary codes, it is feasible for us to build the automated approach to check and improve existing test names with a uniqueness-based naming rationale.
+First, using the previously selected set of top-level and secondary codes from the empirical study, it is feasible for me to build a corresponding set of matchers for the selective codes.
 %
-Second, after the approach is completed, another empirical evaluation is also needed to further investigate the correctness, effectiveness, and comprehensibility of the approach.
+Second, after the matchers are built, I plan to complete the uniqueness-based approach using formal concept analysis.
 %
-Last, as mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive test names for developers (i.e., they are based on what makes the test unique), so generating descriptive name with unique information is also needed in the automated approach.
+Last, as mentioned in~\cref{sec:introduction}, the goal of my proposed research is to systematically provide descriptive test names for developers (i.e., they are based on what makes the test unique), so I plan to evaluate if the generated names are actually more descriptive than existing test names.
 
-\subsection{Implementation of the Uniqueness-based Approach}
+\subsection{A Uniqueness-based Approach to Provide Descriptive Test Names}
 
-Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build an automated approach that can not only improve existing test names by providing a uniqueness-based naming rationale for developers but also generate descriptive test names.
+
+Utilizing the top-level and secondary codes that were created in the empirical study section~\cref{sec:empStudy}, it is feasible to build an automated approach that generate descriptive test names from a uniqueness-based naming rationale.
 %
-For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method, and provide how to integrate it with the top-level and secondary codes will also be explained in implementation section of our planned future work.
+For the implementation, I plan to introduce the idea of formal concept analysis (FCA) as the main method and show how to integrate it with the top-level and secondary codes.
 %
-Therefore, the automated approach is also called as the uniqueness-based approach in the rest of this proposal.
+Given an unit test, the uniqueness-based approach would first try and match the applicable selective codes for the test and use their corresponding matchers to extract attributes from the test.
 %
-And I plan to follow these steps to build the uniqueness-based approach (i.e., the automated descriptive name generation approach):
-\begin{enumerate*}
-    \item Implement the top-level and secondary codes
-    \item Use an IDE plugin to apply the codes to the tests from a selected project
-    \item Tests are tagged with attributes (i.e., matched codes with their tagged text)
-    \item Use the $\langle test, ~attributes \rangle$ pairs as the input data of FCA
-    \item Check if each test name is named after what makes it unique; if is, show the tagged text to facilitate potential improvements; if not, generate descriptive test names by summarizing the unique information
-    \item perform a quantitative analysis as the evaluation of the uniqueness-based approach
-\end{enumerate*}.
+Using FCA, the approach automatically checks the uniqueness of tests and generates a descriptive test name for the given test if necessary.
+
 
 \subsection{Evaluation of the Automated Descriptive Name Generation Approach}
+
 
 Research questions involved in this step are:
 %
 \begin{enumerate}
-    \item RQ1-Consistency: Can the uniqueness-based approach apply the top-level and secondary codes to each test correctly?
-    \item RQ3-Descriptiveness: Are the generated test names from the uniqueness-based approach being descriptive?
+    \item RQ1-Consistency: Are the automatically matched codes by the uniqueness-based approach consistent with the manual tagging by our researchers?
+    \item RQ2-Descriptiveness: Are the generated test names by the uniqueness-based approach descriptive?
 \end{enumerate}.
 
-For answering RQ1, I plan to perform a quantitative analysis by comparing the results from manual tagging of a randomly set of tests (i.e., from 5 random Java projects on Github) with the results from the uniqueness-based approach to see if the two different results are matched.
+To answer RQ1, I plan to perform a quantitative analysis by comparing the manual tagging of a set of \num{240} tests from \num{6} randomly selected Java projects on Github with the automated tagging of the uniqueness-based approach.
 %
-For answering RQ2, I plan to further check if the tagged text that was generated by the uniqueness-based approach is the same as the tagged text from the manual tagging from the same set of tests.
-%
-For answering RQ3, I plan to conduct a small-scale survey with 4 experienced developers by letting them answer a set of questions about the descriptiveness of the result that is produced by running the uniqueness-based approach on read-world projects.
+To answer RQ2, I plan to conduct an empirical evaluation with \num{6} experienced developers by letting them choose between the original and the generated names for the  \num{240} tests used for evaluating the approach.
 
 

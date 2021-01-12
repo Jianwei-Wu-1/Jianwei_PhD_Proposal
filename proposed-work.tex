@@ -1,15 +1,17 @@
 \section{Proposed Work}
- 
- %TODO[done, change for all]: This title doesn't really make sense.  It's too long.  It's also too focused on concept-based.  That's an implementation detail at this point.  The uniquness-based naming approach is what is important.
+%TODO[done, change for all]: This title doesn't really make sense.  It's too long.  It's also too focused on uniqueness-based.  That's an implementation detail at this point.  The uniquness-based naming approach is what is important.
 
-\subsection{Improve and Construct Descriptive Names for Existing Unit Tests by the Uniqueness-based Naming Rationale}
+\subsection{A uniqueness-based Approach to Provide Descriptive Test Names}
 \label{sec:unique-test-name}
 
-For the second part of work, I consider using a uniqueness-based test naming approach to automatically generate descriptive names, which is accomplished by building an implementation with a set of selective codes from the empirical study~\cite{emp-study}.
+For the second part of work, I consider using a uniqueness-based approach to automatically generate descriptive test names.
 %
 The empirical study was conducted to check our thoughts and assumptions, so a set of top-level and secondary codes can be formulated using selective coding~\cite{glaser1967discovery,strauss1998basics}.
 %
-The set of codes are used to tag the tests and extract the tagged text from those tests in the concept-based approach, which is capable of check if a test is named after what makes it unique and improve the uniqueness of that test name by utilizing the unique information from the tagged text.
+I also plan to build a set of corresponding matchers for the selective codes, which would be used to extract information from the tests for the uniqueness-based approach.
+%
+An empirical evaluation would be performed to evaluate the consistency of the uniqueness-based approach and the descriptiveness of its generated test names.
+
 
 \subsection{An Fully Automated Framework to Provide Descriptive Test Names for Developers}
 
@@ -17,7 +19,7 @@ For the last part of work, a further evaluation of both the pattern-based and un
 %
 An developer-oriented survey will also be conducted with a group of seasoned developers, and they will be asked to describe how they write their unit tests and how they modify the existing tests.
 %
-Based on the developer-oriented survey, we could have a better understanding of how developers name their tests.
+Based on the developer-oriented survey, I could have a better understanding of how developers name their tests.
 %
 After our researchers would gain a general sense about when to apply the pattern-based approach to detect non-descriptive test names and how to apply the uniqueness-based approach to generate descriptive names, the automated framework can be built based on the pilot study and developer-oriented survey.
 
