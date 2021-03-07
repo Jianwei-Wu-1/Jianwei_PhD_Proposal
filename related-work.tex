@@ -5,7 +5,6 @@ Existing work related to my proposed research will be discussed in this section.
 
 \subsection{Detecting Mismatches\slash Improving Names}
 
-
 There are some existing works that attempt to identify name\slash implementation mismatches.
 
 \Citeauthor{host2009debugging}'s work is the most similar to our approach as it attempts to identify several types of naming bugs in general Java methods~\cite{host2009debugging}.
@@ -26,7 +25,7 @@ However, normally for the unit tests, they compared different values using the \
 %
 Second, instead of using a manually generated rule book, we built our approach based on the test patterns, and those test patterns were mined from a large test corpus by a semi-automatic process.
 
-% TODO->[fixed, moved allamanis2015suggesting&daka2017generating to next section]: Are't some of these works more approach for generating names from scratch rahter than suggesting improvemnts?
+
 \citeauthor{zhong2013detecting} provided a novel approach for detecting API documentation errors, and those errors are essentially the mismatches between the API documentation and the actual programs~\cite{zhong2013detecting}.
 %
 To address the importance of words in Java programming, \citeauthor{singer2008exploiting} showed that words in class names are closely related to class properties that can be described in micro patterns~\cite{singer2008exploiting}.
@@ -48,6 +47,15 @@ Consequently, lots of false-positives could be generated without a complete retr
 For instance, Junit 4 requires every test name to have a leading \enquote{test} \cite{JUnit4}, so some of existing techniques might consider the leading \enquote{test} as the action, predicate, or scenario of the name.
 
 
+\Citeauthor{wu2020pattern} provided a valuable insight about how to suggest descriptive test names using information comparison, but their work is still limited to a subset of existing tests~\cite{wu2020pattern}.
+%
+In order to provide descriptive names, existing work aimed at provide better names for methods or unit tests by predefined rules, neural probabilistic language model, and natural-language program analysis~\cite{schafer2008sound,zhang2016towards}.
+%
+To address the importance of identifiers and other names in programming, many researchers utilized different approaches to show the importance of naming the identifiers and present different solutions for the naming issue of identifiers~\cite{takang1996effects,arnaoudova2014repent,lawrie2006s,butler2009relating,butler2010exploring}.
+%
+Although their approaches could be modified to generate descriptive test or method names, they focused on more on name-generation rather than providing distinctive information for unit tests to facilitate better naming.
+
+
 \subsection{Automated Generation of Test Names}
 
 In contrast to the techniques mentioned above that attempt to improve names, there are several approaches that attempt to automatically generate names.
@@ -66,17 +74,7 @@ Although some techniques can generate descriptive names, those techniques requir
 
 Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
 %
-Although using machine learning-based models can accurately summarize the important information from the test body, their predicted test names often do not fit developer need that is to be unique among its siblings.
-%
-To understand how limited these machine learning-based approaches are, we conducted a pilot study with a set of \num{11} randomly selected projects (i.e., contain \num{25567} unit tests) that contain a complete suite of JUnit tests.
-%
-The \num{11} Java projects are built for various purposes like Guava is an open-source common library for Java and fastjson is a JSON parser\slash generator.
-
-If many generated test names are repeated at least once in its associated test class and there are lots of duplicated names during the name generation process, it is then necessary to develop a uniqueness-focused approach.
-%
-In order to measure the level of duplication, we performed a quantitative analysis on the collected result.
-%
-The data of the quantitative analysis is shown in this shared document~\cite{CodeResult}, and it shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
+The data of our quantitative analysis is shown in this shared document~\cite{CodeResult}, and it shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
 %
 For example, \enquote{Code2seq} produced \num{80} repeating test names for the moshi project, and \num{14} out of \num{24} test classes in the moshi project contain more than one repeating test names.
 %
@@ -93,7 +91,7 @@ Many researchers proposed their program analysis or automated testing techniques
 %
 To be more focused on unit testing,~\citeauthor{li2018aiding} constructed a series of tags for distinguish unit test cases~\cite{li2018aiding}.
 %
-A group of researchers also conducted a series of works related to tagging methods or classes with stereotypes~\cite{dragan2006reverse,dragan2010automatic,dragan2011emergent}, but their works might also not be applicable for unit tests.
+A group of researchers also conducted a series of work related to tagging methods or classes with stereotypes~\cite{dragan2006reverse,dragan2010automatic,dragan2011emergent,sharif2013identifying,alhindawi2013improving}, but their works might also not be applicable for unit tests.
 %
 From a general perspective of testing, other researchers tried to devise methods that can perform fully automated testing by the targeted event sequence or the environmental dependencies~\cite{jensen2013automated,arcuri2014automated}.
 %
@@ -148,7 +146,7 @@ However, all of their works focused on solving those specific problems, so their
 
 In recent years, a novel study of tracking the eye movement of developers emerged in the effort to understand the behavior of developers in the process of software development.
 %
-\citeauthor{rodeghero2015empirical} conducted an empirical study to discover the patterns of eye movement when developers perform summarization tasks~\cite{rodeghero2015empirical}.
+\citeauthor{rodeghero2015empirical} conducted several empirical studies to discover the patterns of eye movement when developers perform summarization tasks~\cite{rodeghero2015eye,rodeghero2015empirical,rodeghero2014improving}.
 %
 \citeauthor{begel2018eye} performed a pilot study of capturing the eye movements of multiple developers in the process of code review, which was inspiring for building a automated tool for code review~\cite{begel2018eye}.
 %
