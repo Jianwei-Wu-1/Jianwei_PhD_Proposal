@@ -2,5 +2,25 @@
 \addcontentsline{toc}{section}{Abstract}
 \label{sec:abstract}
 
+Unit tests are an important artifact that supports the software development process in several ways.
+%
+For example, when a test fails, its name can provide the first step towards understanding the purpose of the test.
+%
+Unfortunately, prior work has shown that tests often do not have descriptive names. 
+%
+To address this limitation, some techniques have been developed to automatically generate descriptive names.
+%
+Moreover, other techniques provided useful suggestions to improve existing test names.
+%
+However, they are preliminary in the sense that they are good at delivering their generated names or showing potential improvements but failed to consider the need of developers.
 
 
+The proposal focuses on systematically providing descriptive names for existing unit tests based on the intuition that tests are often named after what makes them unique.
+%
+In order to know which tests need descriptive names, I propose a new, pattern-based approach to detect and improve non-descriptive test names.
+%
+In order to generate descriptive test names, I propose two approaches.
+%
+One is a novel approach to extract the attributes of a given test that make it unique among its siblings.
+%
+As my planned future work, the other is a comprehensive approach to generate descriptive test names that contain both the uniqueness of tests and other essential information. 
