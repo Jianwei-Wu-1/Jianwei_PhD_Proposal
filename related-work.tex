@@ -1,12 +1,14 @@
 \section{Related Work}
 \label{sec:related-work}
 
+
+
 Existing work related to my proposed research will be discussed in this section. I have organized them into the following categories:
 
 \subsection{Detecting Mismatches\slash Improving Names}
 
 There are some existing works that attempt to identify name\slash implementation mismatches.
-
+%
 \Citeauthor{host2009debugging}'s work is the most similar to our approach as it attempts to identify several types of naming bugs in general Java methods~\cite{host2009debugging}.
 %
 Their approach relies on a manually generated rule book that is extracted from the implicit convention between names and implementations in Java programming, which can be utilized to detect name bugs and provide some suggestions for constructing more suitable names.
@@ -87,11 +89,13 @@ This observation during the quantitative analysis indicates there is a need to d
 
 Many researchers proposed their program analysis or automated testing techniques that can help us have a better understanding of the embedded features in unit tests. 
 %
-\citeauthor{moreno2012jstereocode} proposed Java method and class stereotypes, and they took a closer look at the statement level analysis of Java code~\cite{moreno2012jstereocode}, and~\citeauthor{ghafari2015automatically} tried to extract the focal method under test~\cite{ghafari2015automatically}.
+Some techniques proposed Java method and class stereotypes on the statement level analysis of Java code~\cite{moreno2012jstereocode,guarnera2018automatically}.
+%
+Moreover, \citeauthor{ghafari2015automatically} tried to extract the focal method under test~\cite{ghafari2015automatically}.
 %
 To be more focused on unit testing,~\citeauthor{li2018aiding} constructed a series of tags for distinguish unit test cases~\cite{li2018aiding}.
 %
-A group of researchers also conducted a series of work related to tagging methods or classes with stereotypes~\cite{dragan2006reverse,dragan2010automatic,dragan2011emergent,sharif2013identifying,alhindawi2013improving}, but their works might also not be applicable for unit tests.
+A group of researchers also conducted a series of work related to tagging methods, rename identifiers or classes with stereotypes~\cite{dragan2006reverse,dragan2010automatic,dragan2011emergent,sharif2013identifying,alhindawi2013improving,peruma2018empirical}, but their works might also not be applicable for unit tests.
 %
 From a general perspective of testing, other researchers tried to devise methods that can perform fully automated testing by the targeted event sequence or the environmental dependencies~\cite{jensen2013automated,arcuri2014automated}.
 %

@@ -1,0 +1,58 @@
+\newpage
+\begin{appendices}
+\section{Duplication of Test Names Produced by Existing Approaches}
+
+%motivation, research question(s), subject selection, results, discussion
+As we mentioned in~\cref{sec:introduction}, recent machine learning-based approaches could be adjusted to generate descriptive test names.
+%
+However, their approaches produced many duplicate names when running on unit tests.
+%
+To understand the limitation of existing machine learning-based approaches, we conducted a pilot study to measure how often their approaches might produce a duplicate test name.
+%
+From the results of this study, we found out that these existing approaches generated lots of duplicate test names, both for each project and for each test class.
+%
+Therefore, a specialized approach needs to be developed to extract what makes a given test unique before we can move on to providing descriptive test names.
+
+
+\subsection{Experimental Subjects}
+
+The experimental subjects of the study are chosen from the same \num{11} projects from Github that we used in the empirical study in~\cref{sec:emp-study}.
+%
+Because of the restriction of their approaches and complexity of existing tests, we decided to select a subset of tests from the \num{11} projects.
+%
+The \num{11} Java projects are built for various purposes like Guava is an open-source common library for Java and fastjson is a JSON parser\slash generator.
+%
+\num{15406} tests were randomly selected for \enquote{Code2seq}, and \num{15814} tests were randomly selected for \enquote{Code2vec}.
+
+
+\subsection{Research Question}
+
+The research question that we try to answer is that \emph{how often their approaches might generate a duplicate name per project and per test class}.
+%
+So we focused not only on how many duplicate test names were produced on the tests from each project but also on how often a test class contains more than one duplicate test names.
+%
+To investigate this research question, we run each corresponding set of tests on \enquote{Code2seq} and \enquote{Code2vec} and collected the generated test names as the data for dicussion.
+%
+Similarly, the same machines was utilized for running the evaluation in~\cref{sec:uniquness-approach}, and it took roughly \num{45} hours to both configure necessary environment and generating names for tests.
+
+
+\subsection{Data and Discussion}
+
+We collected and analyzed the generated test names from both \enquote{Code2seq} and \enquote{Code2vec}.
+%
+If there are many generated test names that are repeated at least once in its associated test class, it is necessary to develop a uniqueness-focused approach to solve the problem of duplication.
+%
+The collected data is shown in a shared document~\cite{CodeResult}.
+%
+It shows hundreds or thousands of duplicate names were generated for each project during their name generation process. 
+%
+For example, \enquote{Code2seq} produced \num{80} duplicate test names for the moshi project, and \num{14} out of \num{24} test classes in the moshi project contain more than one duplicate test names.
+%
+For another example, \enquote{Code2vec} produced \num{1199} duplicate test names for the guava project, and \num{211} out of \num{461} test classes in the guava project contain more than one duplicate test names.
+%
+The state-of-the-art approaches that are based on machine learning still produce duplicate test names when performing their automated name generation.
+%
+This result also indicates there is a need to develop a uniqueness-focused approach that can extract unique attributes of tests to generate descriptive names.
+
+
+\end{appendices}

@@ -20,7 +20,7 @@ This is because descriptive names:
 \end{enumerate*}~\cite{zhang2015automatically}.
 
 
-Unfortunately, unit tests often lack descriptive names.
+Unfortunately, unit tests often lack descriptive names~\cite{zhang2015automatically,daka2017generating}.
 %
 For example, an exploratory study by \citeauthor{zhang2015automatically} found that only \SI{9}{\percent} of the \num{213423} test names they considered were complete (i.e., fully described the body of test) while \SI{62}{\percent} were missing some information and \SI{29}{\percent} contained no useful information (e.g., tests named \enquote{test})~\cite{zhang2015automatically}.
 %
@@ -69,7 +69,7 @@ From a high-level point of view, the pattern-based approach uses a set of predef
 This information is then compared to find and improve non-descriptive names (i.e., cases where the name does not accurately summarize the body).
 
 
-The second step of my dissertation work is to develop an automated approach to identify the unique attributes of a given test in a way that meets with developer approval.
+The second step of my dissertation work is an empirical study to systematically investigate existing unit test naming rationales.
 %
 My work towards this goal is inspired by an impression, informed from my experiences with many tests from many projects, that a test's name is often based on what makes the test unique from its siblings---tests declared in the same class.
 %
@@ -81,14 +81,16 @@ The results of the study
 \item identify additional aspects that influence how tests are named
 \end{enumerate*}.
 %
+Therefore, the third step of my dissertation work is to develop an automated approach to identify the unique attributes of a given test in a way that meets with developer approval.
+%
 To help developers name their tests properly, I build a novel, automated approach to extract attributes that can uniquely identify a test from its siblings (i.e., other tests in the same test class).
 % 
-My approach utilizes a set of selective codes, static analysis, and formal concept analysis (FCA) to provide unique attributes that agree with human judgement.
+My approach utilizes a set of selective codes, static analysis, and formal concept analysis (FCA) to provide unique attributes that agree with human judgment.
 
 
-Consequently, for the first step of my planned future work, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique.
+For the first step of my planned future work, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique.
 %
-Moreover, I will consider those minor naming rationales that were discovered in~\cref{sec:empStudy} and combine them with the uniqueness-based naming rationale that is widely adopted by developer.
+Moreover, I will consider those minor naming rationales that were discovered in~\cref{sec:emp-study} and combine them with the uniqueness-based naming rationale that is widely adopted by developer.
 %
 The goal of these two investigations is to construct a comprehensive naming rationale that can cover as many existing tests as possible.
 %
