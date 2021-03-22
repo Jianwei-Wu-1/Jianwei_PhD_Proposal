@@ -1,6 +1,6 @@
 \newpage
 \begin{appendices}
-\section{Duplication of Test Names Produced by Existing Approaches}
+\section{Evaluation of Existing Machine-learning based Name Generation Approaches for generating test names}
 
 %motivation, research question(s), subject selection, results, discussion
 As we mentioned in~\cref{sec:introduction}, recent machine learning-based approaches could be adjusted to generate descriptive test names.
@@ -14,7 +14,11 @@ From the results of this study, we found out that these existing approaches gene
 Therefore, a specialized approach needs to be developed to extract what makes a given test unique before we can move on to providing descriptive test names.
 
 
-\subsection{Experimental Subjects}
+\subsection{Considered name generations approaches}
+
+%TODO What are the ML techniques?  Why these ones?  How are they different?
+
+\subsection{Considered Unit Tests}
 
 The experimental subjects of the study are chosen from the same \num{11} projects from Github that we used in the empirical study in~\cref{sec:emp-study}.
 %
@@ -24,6 +28,7 @@ The \num{11} Java projects are built for various purposes like Guava is an open-
 %
 \num{15406} tests were randomly selected for \enquote{Code2seq}, and \num{15814} tests were randomly selected for \enquote{Code2vec}.
 
+% WHy different number?
 
 \subsection{Research Question}
 
@@ -38,8 +43,13 @@ Similarly, the same machines was utilized for running the evaluation in~\cref{se
 
 \subsection{Data and Discussion}
 
+% Example figure for each... 
+% Individually, names may look ``OK''.
+% However, 
+
 We collected and analyzed the generated test names from both \enquote{Code2seq} and \enquote{Code2vec}.
 %
+
 If there are many generated test names that are repeated at least once in its associated test class, it is necessary to develop a uniqueness-focused approach to solve the problem of duplication.
 %
 The collected data is shown in a shared document~\cite{CodeResult}.

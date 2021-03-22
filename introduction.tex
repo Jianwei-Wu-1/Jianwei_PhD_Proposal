@@ -20,7 +20,7 @@ This is because descriptive names:
 \end{enumerate*}~\cite{zhang2015automatically}.
 
 
-Unfortunately, unit tests often lack descriptive names~\cite{zhang2015automatically,daka2017generating}.
+Unfortunately, unit tests often lack descriptive names~\cite{zhang2015automatically, daka2017generating}.
 %
 For example, an exploratory study by \citeauthor{zhang2015automatically} found that only \SI{9}{\percent} of the \num{213423} test names they considered were complete (i.e., fully described the body of test) while \SI{62}{\percent} were missing some information and \SI{29}{\percent} contained no useful information (e.g., tests named \enquote{test})~\cite{zhang2015automatically}.
 %
@@ -32,7 +32,7 @@ For example, a developer may modify a test's body but fail to make the correspon
 %
 Regardless of the cause, non-descriptive test names complicate comprehension tasks and increase the costs and difficulty of software development.
 
-
+% TODO: Can you provide a better organization of these?  Something like 1) approachs for suggesting improvements 2) Approaches for generating names.  Right now, you switch between the two.
 Because non-descriptive names negatively impact software development, there have been several attempts to address this issue.
 %
 One approach has been to automatically generate names based on implementations (e.g.,~\cite{arcuri2014automated, zhang2015automatically, daka2017generating}).
@@ -52,6 +52,8 @@ In addition, these approaches are primarily geared towards general methods and h
 For example, we have found that, due to the similarity of test bodies, these approaches often generate duplicate names for tests in the same class (see~\cite{CodeResult}).
 %
 While such names make sense individually, they are useless in practice as duplicate names are not possible and, even if they were, they would not serve the goal of helping developers comprehend the purposes of their tests.
+
+% TODO: You need a better commection between prior work and what you are proposing. Why are these previous appraochs together not good enough? Before talking about the steps in detail, you should present a high-level overview (i.e, the appraoch figure.)
 
 
 The first step of my dissertation work is to identify non-descriptive test names, so I developed a pattern-based approach that can:
@@ -80,7 +82,8 @@ The results of the study
 \item confirm our impression that the majority of tests are named after what makes them unique
 \item identify additional aspects that influence how tests are named
 \end{enumerate*}.
-%
+
+
 Therefore, the third step of my dissertation work is to develop an automated approach to identify the unique attributes of a given test in a way that meets with developer approval.
 %
 To help developers name their tests properly, I build a novel, automated approach to extract attributes that can uniquely identify a test from its siblings (i.e., other tests in the same test class).
