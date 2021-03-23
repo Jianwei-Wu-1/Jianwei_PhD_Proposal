@@ -73,16 +73,12 @@ Other techniques utilized Java bytecode, method-call sequences, API-level covera
 Even with their automated generation process, their generated test names are not human-readable that can cause misunderstanding for testers who want to further modify those generated test names or bodies.
 % change done ->
 Although some techniques can generate descriptive names, those techniques required testers to perform a full test execution with certain coverage goals or building a context model, which are often error-prone in practice (i.e., those coverage goals or models might be too specific to apply for certain projects).
-
+%
 Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
 %
-The data of our quantitative analysis is shown in this shared document~\cite{CodeResult}, and it shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
+The data of our quantitative analysis in~\cref{sec:pilot-study} shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
 %
-For example, \enquote{Code2seq} produced \num{80} repeating test names for the moshi project, and \num{14} out of \num{24} test classes in the moshi project contain more than one repeating test names.
-%
-For another example, \enquote{Code2vec} produced \num{1199} repeating test names for the guava project, and \num{211} out of \num{461} test classes in the guava project contain more than one repeating test names.
-%
-This observation during the quantitative analysis indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
+This observation indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
 
 
 \subsection{General Program Analysis\slash Automated Testing and Debugging}

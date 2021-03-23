@@ -32,18 +32,21 @@ For example, a developer may modify a test's body but fail to make the correspon
 %
 Regardless of the cause, non-descriptive test names complicate comprehension tasks and increase the costs and difficulty of software development.
 
-% TODO: Can you provide a better organization of these?  Something like 1) approachs for suggesting improvements 2) Approaches for generating names.  Right now, you switch between the two.
+
+% TODO[fixed]: Can you provide a better organization of these?  Something like 1) approaches for suggesting improvements 2) Approaches for generating names.  Right now, you switch between the two.
 Because non-descriptive names negatively impact software development, there have been several attempts to address this issue.
 %
-One approach has been to automatically generate names based on implementations (e.g.,~\cite{arcuri2014automated, zhang2015automatically, daka2017generating}).
+One approach is to help developers improve their existing names by suggesting improvements.
 %
-For example, \citeauthor{zhang2015automatically} and \citeauthor{daka2017generating} use static and dynamic analysis, respectively, to extract important expressions from a test's body and natural language processing techniques to transform such expression into test names \cite{zhang2015automatically, daka2017generating}. 
+For example, \citeauthor{host2009debugging} proposed an approach for Java methods and variables which uses a set of naming rules and related semantics~\cite{host2009debugging}, and \citeauthor{li2019deepfl} provided a learning-based approach to locate software faults using test name information \cite{li2019deepfl}.
 %
-Another approach is to help developers improve their existing names by suggesting improvements.
+Moreover, \citeauthor{allamanis2015suggesting} and \citeauthor{pradel2018deepbugs} used a model-based and a learning-based approach, respectively, to directly suggest better names or find name-based bugs to facilitate improvements~\cite{allamanis2015suggesting,pradel2018deepbugs}.
 %
-For example, \citeauthor{host2009debugging} proposed an approach for Java methods and variables which uses a set of naming rules and related semantics~\cite{host2009debugging}, \citeauthor{li2019deepfl} provided a learning-based approach to locate software faults using test name information \cite{li2019deepfl}, and \citeauthor{allamanis2015suggesting} and \citeauthor{pradel2018deepbugs} use a model-based and a learning-based approach, respectively, to directly suggest better names or find name-based bugs to facilitate improvements~\cite{allamanis2015suggesting, pradel2018deepbugs}.
+Another approach has been to automatically generate names based on implementations (e.g.,~\cite{arcuri2014automated, zhang2016towards, daka2017generating}).
 %
-More recent work attempts to generate names that more closely match existing names by using machine learning to create approach that can map method bodies to method names (e.g.,~\cite{alon2018code2seq, alon2019code2vec}).
+For example, \citeauthor{zhang2016towards} and \citeauthor{daka2017generating} use static and dynamic analysis, respectively, to extract important expressions from a test's body and natural language processing techniques to transform such expression into test names \cite{zhang2016towards,daka2017generating}.
+%
+More recent work attempts to generate names that more closely match existing names by using machine learning to create approach that can map method bodies to method names (e.g.,~\cite{alon2018code2seq,alon2019code2vec}).
 %
 However, the success of these approaches heavily depend on their training sets and are not always successful at creating models that match well with human cognition~\cite{lison2015introduction}.
 %
@@ -53,7 +56,31 @@ For example, we have found that, due to the similarity of test bodies, these app
 %
 While such names make sense individually, they are useless in practice as duplicate names are not possible and, even if they were, they would not serve the goal of helping developers comprehend the purposes of their tests.
 
-% TODO: You need a better commection between prior work and what you are proposing. Why are these previous appraochs together not good enough? Before talking about the steps in detail, you should present a high-level overview (i.e, the appraoch figure.)
+
+\begin{figure}[t]
+\centering
+\includegraphics[scale=0.35]{figures/all-research.png}
+\caption{Overview of research.}
+\label{fig:all-research}
+\end{figure}
+
+
+% TODO[fixed]: You need a better connection between prior work and what you are proposing. Why are these previous approach together not good enough? Before talking about the steps in detail, you should present a high-level overview (i.e, the approach figure.)
+Although existing approaches performed well on both providing useful suggestions to improve poor names or generating better names, they did not focus on providing descriptive test names from a uniqueness-focused perspective.
+%
+Moreover, rather than considering the test naming problem systematically, their techniques primarily focused on their specific points to solve the problem. 
+%
+Therefore, additional work should be done to systematically provide descriptive test names that meets with developers approval.
+%
+\Cref{fig:all-research} shows an overview of my dissertation work.
+%
+It contains two main steps, and the second step contains three sub-steps.
+%
+The first step is a pattern-based approach to detect and improve non-descriptive test names.
+%
+The second step is to develop a systematic approach to generate descriptive test names, which requires three sub-steps to accomplish its goal. 
+%
+Finally, the goal of my dissertation work is to systematically provide descriptive test names for developers.
 
 
 The first step of my dissertation work is to identify non-descriptive test names, so I developed a pattern-based approach that can:
@@ -71,9 +98,13 @@ From a high-level point of view, the pattern-based approach uses a set of predef
 This information is then compared to find and improve non-descriptive names (i.e., cases where the name does not accurately summarize the body).
 
 
-The second step of my dissertation work is an empirical study to systematically investigate existing unit test naming rationales.
+The second step of my dissertation work is to develop a systematic approach to generate descriptive test names.
 %
-My work towards this goal is inspired by an impression, informed from my experiences with many tests from many projects, that a test's name is often based on what makes the test unique from its siblings---tests declared in the same class.
+This step contains three sub-steps: an empirical study, an automated approach for extracting unique attributes of tests, and a descriptive test name generation approach.
+%
+The first sub-step is an empirical study to systematically investigate existing unit test naming rationales.
+%
+My work towards this sub-step is inspired by an impression, informed from my experiences with many tests from many projects, that a test's name is often based on what makes the test unique from its siblings---tests declared in the same class.
 %
 To investigate this impression, I conducted a large-scale empirical study, considering tests drawn from \num{11} open-source projects, that asks whether tests are named after what makes them unique.
 %
@@ -82,16 +113,15 @@ The results of the study
 \item confirm our impression that the majority of tests are named after what makes them unique
 \item identify additional aspects that influence how tests are named
 \end{enumerate*}.
-
-
-Therefore, the third step of my dissertation work is to develop an automated approach to identify the unique attributes of a given test in a way that meets with developer approval.
+%
+So the second sub-step is to develop an automated approach to identify the unique attributes of a given test in a way that meets with developer approval.
 %
 To help developers name their tests properly, I build a novel, automated approach to extract attributes that can uniquely identify a test from its siblings (i.e., other tests in the same test class).
 % 
 My approach utilizes a set of selective codes, static analysis, and formal concept analysis (FCA) to provide unique attributes that agree with human judgment.
 
 
-For the first step of my planned future work, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique.
+For the last sub-step\slash my planned future work, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique.
 %
 Moreover, I will consider those minor naming rationales that were discovered in~\cref{sec:emp-study} and combine them with the uniqueness-based naming rationale that is widely adopted by developer.
 %
@@ -99,10 +129,10 @@ The goal of these two investigations is to construct a comprehensive naming rati
 %
 It will be based the uniqueness-based naming rationale but adequately enhanced to provide extensive information that help me construct descriptive test names.
 %
-For the second step of the planned future work, I plan to build a descriptive name-generation approach that incorporates the formalized comprehensive naming rationale.
+I plan to build a descriptive name-generation approach that incorporates the formalized comprehensive naming rationale.
 %
 Based on the descriptive information provided by the formalized naming rationale, the generated names of the approach contain both the unique attributes and the essential information from other source or minor naming rationales.
 %
-Therefore, it would be the final step to systemically provide descriptive names that meets with developer need and approval for unit tests.
+Therefore, it would complete the second step of my dissertation work, which is to systemically provide descriptive names that meets with developer approval for unit tests.
 %
-I plan to perform an empirical evaluation of the approach to check its performance (i.e., coverage, accuracy, and consistency).
+I also plan to perform an empirical evaluation of the approach to check its performance (i.e., coverage, accuracy, and consistency).
