@@ -45,7 +45,7 @@ Regardless of their effort to introduce a new approach that can detect name-base
 Because some unit tests are expected to produce certain exceptions or failures when using them, so testers might intentionally design poorly named identifiers in those tests.
 %
 Consequently, lots of false-positives could be generated without a complete retrofit to extend their proposed framework to unit tests.
-% change done ->
+%
 For instance, Junit 4 requires every test name to have a leading \enquote{test} \cite{JUnit4}, so some of existing techniques might consider the leading \enquote{test} as the action, predicate, or scenario of the name.
 
 
@@ -53,7 +53,7 @@ For instance, Junit 4 requires every test name to have a leading \enquote{test} 
 %
 In order to provide descriptive names, existing work aimed at provide better names for methods or unit tests by predefined rules, neural probabilistic language model, and natural-language program analysis~\cite{schafer2008sound,zhang2016towards}.
 %
-To address the importance of identifiers and other names in programming, many researchers utilized different approaches to show the importance of naming the identifiers and present different solutions for the naming issue of identifiers~\cite{takang1996effects,arnaoudova2014repent,lawrie2006s,butler2009relating,butler2010exploring}.
+To address the importance of identifiers and other names in programming, many researchers utilized different approaches to show the importance of naming the identifiers and present different solutions for the naming issue of identifiers~\cite{takang1996effects,arnaoudova2014repent,lawrie2006s,butler2009relating,butler2010exploring,allamanis2015suggesting}.
 %
 Although their approaches could be modified to generate descriptive test or method names, they focused on more on name-generation rather than providing distinctive information for unit tests to facilitate better naming.
 
@@ -68,22 +68,16 @@ For example, \citeauthor{zhang2016towards} proposed their approach that can gene
 %
 However, their approach left an important question unanswered that is testers need to decide which one of the three possible test names should be used for their unit tests by themselves, and it is possible that none of the three generated names follow the common naming convention.
 %
-Other techniques utilized Java bytecode, method-call sequences, API-level coverage goals, and \texttt{logbilinear} context models~\cite{fraser2011evosuite,thummalapenta2009mseqgen,daka2017generating,allamanis2015suggesting}.
+Other techniques utilized Java bytecode, method-call sequences, API-level coverage goals, and \texttt{logbilinear} context models~\cite{fraser2011evosuite,thummalapenta2009mseqgen,daka2017generating}.
 %
 Even with their automated generation process, their generated test names are not human-readable that can cause misunderstanding for testers who want to further modify those generated test names or bodies.
 % change done ->
 Although some techniques can generate descriptive names, those techniques required testers to perform a full test execution with certain coverage goals or building a context model, which are often error-prone in practice (i.e., those coverage goals or models might be too specific to apply for certain projects).
-%
-Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
-%
-The data of our quantitative analysis in~\cref{sec:pilot-study} shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
-%
-This observation indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
 
 
 \subsection{General Program Analysis\slash Automated Testing and Debugging}
 
-Many researchers proposed their program analysis or automated testing techniques that can help us have a better understanding of the embedded features in unit tests. 
+Several researchers proposed their program analysis or automated testing techniques that can help us have a better understanding of the embedded features in unit tests. 
 %
 Some techniques proposed Java method and class stereotypes on the statement level analysis of Java code~\cite{moreno2012jstereocode,guarnera2018automatically}.
 %
@@ -102,6 +96,12 @@ However, while their works focus more on extracting features from code or automa
 Furthermore, \citeauthor{li2019deepfl} proposed a learning-based approach for fault localization and automated debugging with high performance~\cite{li2019deepfl}, but the goal of their work is primarily to locate software faults for debugging rather than the naming of unit tests. 
 %
 Regardless of the performance of their proposed tool, the goal of their work is primarily to locate software faults for debugging rather than the naming of unit testing, and the experimental subjects they used is a standard benchmark database of detecting bugs rather than the unit tests from real-world Java projects.
+%
+Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
+%
+The data of our quantitative analysis in~\cref{sec:pilot-study} shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
+%
+This observation indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
 
 
 \subsection{Natural Language Program Analysis}

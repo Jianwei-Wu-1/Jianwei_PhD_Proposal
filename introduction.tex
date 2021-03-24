@@ -24,7 +24,7 @@ Unfortunately, unit tests often lack descriptive names~\cite{zhang2015automatica
 %
 For example, an exploratory study by \citeauthor{zhang2015automatically} found that only \SI{9}{\percent} of the \num{213423} test names they considered were complete (i.e., fully described the body of test) while \SI{62}{\percent} were missing some information and \SI{29}{\percent} contained no useful information (e.g., tests named \enquote{test})~\cite{zhang2015automatically}.
 %
-Poor test names can be due to developers writing non-descriptive or incomplete names.
+Poor test names exist due to developers writing non-descriptive or incomplete names.
 %
 They can also occur due to incomplete code modifications.
 %
@@ -33,15 +33,15 @@ For example, a developer may modify a test's body but fail to make the correspon
 Regardless of the cause, non-descriptive test names complicate comprehension tasks and increase the costs and difficulty of software development.
 
 
-Because non-descriptive names negatively impact software development, there have been several attempts to address this issue. % POOR TEST NAMES
+Because non-descriptive test names negatively impact software development, there have been several attempts to address this issue. % POOR TEST NAMES
 % Unit testing
-For example, \citeauthor{zhang2016towards} and \citeauthor{daka2017generating} use static and dynamic analysis, respectively, to extract important expressions from a test's body and natural language processing techniques to transform such expression into test names \cite{zhang2016towards, daka2017generating}.
-%
-% TODO: Is there other work that goes here?
-
+For example, \citeauthor{zhang2016towards} and \citeauthor{daka2017generating} used static and dynamic analysis, respectively, to extract important expressions from a test's body and natural language processing techniques to transform such expression into test names \cite{zhang2016towards, daka2017generating}.
+% TODO[added]: Is there other work that goes here?
+Moreover, some researchers proposed code-mining, expected behavior, or natural language-based techniques to generate unit tests~\cite{thummalapenta2009mseqgen,fraser2011evosuite,zhang2015automatically}.
 % Why this isnt good enough (i.e., doesn`t meet developer approval, does follow conventions, ... ')
-
-
+However, because of their predefined rules and models, the first group of work generates test names that do not always meet with developers approval.
+%
+Also, due to their machine-oriented process, the second group of work does not produce descriptive test names that follow the common naming conventions used by developers (i.e., not human-readable).
 % More general
 More broadly, there have been attempts to to improve names for general identifiers and methods.
 %
@@ -60,21 +60,14 @@ For example, we have found that, due to the similarity of test bodies, these app
 While such names make sense individually, they are useless in practice as duplicate names are not possible and, even if they were, they would not serve the goal of helping developers comprehend the purposes of their tests.
 
 
-\begin{figure}[t]
-\centering
-\includegraphics[scale=0.35]{figures/all-research.png}
-\caption{Overview of research.}
-\label{fig:all-research}
-\end{figure}
-
-The goal of my disseration work is to develop a set of approaches that can address the problem of poor, non-desecriptive test names.
+The goal of my dissertation work is to develop a set of approaches that can address the problem of poor, non-descriptive test names.
 %
 At a high-level my work is divided into two pieces.
-
-
-The first piece is to develop an apppraoch to detected non-describ names and, if possible, suggest improvments.
 %
-The approach is based on ....
+The first piece is to develop a pattern-based approach to detected non-descriptive test names and, if possible, suggest improvements.
+%
+The approach is based on a mined set of test patterns and can:
+%
 \begin{enumerate*}
 \item detect non-descriptive test names by finding information mismatches between the test name and body of a given JUnit test and provide descriptive information that is a summarization of the action, predicate, and scenario of the test body
 \item use the descriptive information to facilitate the improvement of non-descriptive test names
@@ -89,9 +82,10 @@ From a high-level point of view, the pattern-based approach uses a set of predef
 This information is then compared to find and improve non-descriptive names (i.e., cases where the name does not accurately summarize the body).
 
 
-The second piece, is to develop an approach to generate descriptive test names.
-% % TODO What is the study of?
-This piece contains three components.
+The second piece is to develop an approach to generate descriptive test names.
+% TODO[fixed] What is the study of?
+This piece of work contains three components.
+%
 The first component is an empirical study of naming rationales that investigates whether test are named after what makes them unique.
 %
 The results of the study
@@ -101,27 +95,26 @@ The results of the study
 \end{enumerate*}.
 %
 The second component is a an automated approach for extracting the unique attributes of tests.
-% TODO Describe second component.
-The approach is encodes the knowledle gained from the study into a tool that uses selective codes, static analysis, and formal concept analysis (FCA) to identify unique attributes that agree with human judgment.
-
-
-The final component will be a new approach for generating descriptive names based primarly on the unique attributes identify by the tool created in the second component.
+% TODO[fixed] Describe second component.
+The approach is encodes the knowledge gained from the study into a tool that uses selective codes, static analysis, and formal concept analysis (FCA) to identify unique attributes that agree with human judgment.
 %
-Transforming the indentified attributes into a name is a nontrivial task... why?
+Future name generation approaches can use the identified attributes as the starting point towards generating descriptive test names.
 
 
-% For the last sub-step\slash my planned future work, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique.
-% %
-% Moreover, I will consider those minor naming rationales that were discovered in~\cref{sec:emp-study} and combine them with the uniqueness-based naming rationale that is widely adopted by developer.
-% %
-% The goal of these two investigations is to construct a comprehensive naming rationale that can cover as many existing tests as possible.
-% %
-% It will be based the uniqueness-based naming rationale but adequately enhanced to provide extensive information that help me construct descriptive test names.
-% %
-% I plan to build a descriptive name-generation approach that incorporates the formalized comprehensive naming rationale.
-% %
-% Based on the descriptive information provided by the formalized naming rationale, the generated names of the approach contain both the unique attributes and the essential information from other source or minor naming rationales.
-% %
-% Therefore, it would complete the second step of my dissertation work, which is to systemically provide descriptive names that meets with developer approval for unit tests.
-% %
-% I also plan to perform an empirical evaluation of the approach to check its performance (i.e., coverage, accuracy, and consistency).
+The final component will be a new approach for generating descriptive names based primarily on the unique attributes identified by the tool created in the second component.
+%
+Transforming the identified attributes into a name is a nontrivial task.
+%
+First, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique to discover one or more minor naming rationales.
+%
+Second, I will combine these minor naming rationales with the uniqueness-based naming rationale that is widely adopted by developers.
+%
+The goal of these two investigations is to construct a comprehensive test naming rationale that can cover as many existing tests as possible.
+%
+Finally, I plan to build a descriptive name generation approach that is based on the comprehensive test naming rationale.
+%
+Therefore, the generated names of the approach would contain both the unique attributes and other attributes from the minor naming rationales.
+%
+This final component would complete the second step of my dissertation work, which is to provide descriptive names that meets with developers approval for unit tests.
+%
+I also plan to perform an empirical evaluation of the approach to check its performance (i.e., coverage and effectiveness).
