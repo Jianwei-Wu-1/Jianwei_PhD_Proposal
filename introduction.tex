@@ -77,9 +77,13 @@ This approach is based on a mined set of test patterns and can:
 %
 Unlike existing approaches which were designed to handle general methods, our approach is specific to JUnit tests.
 %
-The narrower scope of allows the approach to take advantage of the highly repetitive structures that exist in both test names and bodies of JUnit tests (see~\cref{sec:test-pattern-section}).
+The narrower scope allows the approach to take advantage of the highly repetitive structures that exist in both test names and bodies of JUnit tests (see~\cref{sec:test-pattern-section}).
+% TODO[fixed]: Talk about the evaluation here...
+To evaluate the pattern-based approach, I selected a subset of \num{508} tests from a total of \num{26502} tests that were matched with a pattern.
 %
-% TODO: Talk about the evaluation here...
+From the collected results of the evaluation, I believe the approach is feasible, accurate at identifying the action, predicate, and
+scenario from tests, and effective at classifying descriptive and
+non-descriptive test names.
 
 
 The second piece is to develop an approach to generate descriptive test names.
@@ -100,10 +104,12 @@ The second component builds on the results of the empirical study by building an
 % 
 The approach encodes the knowledge gained from the study into a tool that uses a combination of static analysis and formal concept analysis (FCA) to identify unique attributes 
 %
-% TODO Talk about evaluation. 
-Our evaluation of the approach on a set of xxx tests shows that it is effective.
+% TODO[fixed] Talk about evaluation. 
+Our evaluation of the approach on a set of \num{920} randomly chosen tests shows that it is effective.
 %
-The unique attributes it identifies match human judgment in xxxxxx...
+The unique attributes it identifies match human judgment in about \SI{\approx 94}{\percent} of the \num{920} cases.
+%
+Therefore, the approach is shown to be capable of extracting unique attributes of tests that are consistent with human judgment.
 
 
 The final component will build on both the results of the empirical study and the approach for extracting the unique attributes of tests.
@@ -113,21 +119,3 @@ While the results of the empirical study demonstrates that tests are often named
 Instead, names appear to be the result of a complex transformation process that can add to, remove from, or modify the unique attributes.
 %
 The goal of this component is to understand and then automate this process in order to create a test name generation approach that can create names that are not only descriptive but also match existing naming rationales.
-
-
-% %
-% Transforming the identified attributes into a name is a nontrivial task.
-% %
-% First, I plan to look into the majority of tests that were categorized as partially named after what makes the test unique to discover one or more minor naming rationales.
-% %
-% Second, I will combine these minor naming rationales with the uniqueness-based naming rationale that is widely adopted by developers.
-% %
-% The goal of these two investigations is to construct a comprehensive test naming rationale that can cover as many existing tests as possible.
-% %
-% Finally, I plan to build a descriptive name generation approach that is based on the comprehensive test naming rationale.
-% %
-% Therefore, the generated names of the approach would contain both the unique attributes and other attributes from the minor naming rationales.
-% %
-% This final component would complete the second step of my dissertation work, which is to provide descriptive names that meets with developers approval for unit tests.
-% %
-% I also plan to perform an empirical evaluation of the approach to check its performance (i.e., coverage and effectiveness).
