@@ -3,6 +3,40 @@
 
 As the first component towards generating descriptive test names, I conducted an empirical study to understand existing test naming rationales.
 %
-Using the results of this study, first, I would acknowledge how unit tests are named by developers in different real-world scenarios.
+Our intuition is that developers often name unit tests based on what aspects of the test makes the test unique among its siblings.
 %
-Second, a comprehensive test naming rationale could be formed to be the basis of generating descriptive names for unit tests.
+To validate this assumption, we conducted an empirical study of \num{440} existing tests.
+%
+First, we examined each test in order to identify what makes it unique from its siblings.
+%
+Then we examined the test’s name and judged whether the name is based either entirely or in part on the unique aspect of the test.
+
+
+\subsubsection{Study Methodology}
+
+As the first part of this study, I randomly selected a set of \num{440} tests from \num{11} open-source projects from Github.
+%
+Moreover, I used an open, axial, and selective coding process to qualitatively analyze the tests.
+%
+Finally, I discussed the results of the coding process and the data to answer two research questions about whether unit tests are named, either wholly or in part, after what makes a given test unique among its siblings.
+
+\paragraph{Experimental Subjects}
+
+
+\paragraph{Code Creations}
+
+
+\paragraph{Coding Process}
+
+
+\subsubsection{Results and Discussion}
+
+As the second part of this study...
+
+
+\textbf{--Discussion--}
+
+
+Based on my findings of this empirical study (e.g., tests are often named after what makes them unique), I proceeded to build an automated approach to extract unique attributes of unit tests.
+%
+Also, this study also showed more details about how developers would name their tests and motivated us to build the last component, which is a new descriptive name generation approach for unit tests.
