@@ -90,8 +90,8 @@ The second piece is to develop an approach to generate descriptive test names.
 % 
 This piece of work contains three components.
 
-
-The first component was to conduct an empirical study of naming rationales that investigates whether test are named after what makes them unique.
+% TODO: talk about the size of the study.
+The first component was to conduct an empirical study of naming rationales that investigated whether tests are named after what makes them unique.
 %
 The results of the study
 \begin{enumerate*}
@@ -100,21 +100,18 @@ The results of the study
 \end{enumerate*}.
 
 
-The second component builds on the results of the empirical study by building an automated approach for extracting the unique attributes of tests.
+The second component was to build an automated approach for extracting the unique attributes of tests.
 % 
-The approach encodes the knowledge gained from the study into a tool that uses a combination of static analysis and formal concept analysis (FCA) to identify unique attributes 
+The approach encodes the knowledge gained from the study into a tool that uses a combination of static analysis and formal concept analysis (FCA) to identify unique attributes. 
 %
-% TODO[fixed] Talk about evaluation. 
 Our evaluation of the approach on a set of \num{920} randomly chosen tests shows that it is effective.
 %
-The unique attributes it identifies match human judgment in about \SI{\approx 94}{\percent} of the \num{920} cases.
-%
-Therefore, the approach is shown to be capable of extracting unique attributes of tests that are consistent with human judgment.
+The unique attributes it identifies match human judgment about \SI{\approx 94}{\percent} of the time.
 
 
-The final component will build on both the results of the empirical study and the approach for extracting the unique attributes of tests.
+The final component will build a new test name generation approach that builds on both results of the empirical study and the approach for extracting the unique attributes of tests.
 %
-While the results of the empirical study demonstrates that tests are often named after what makes them unique, it also reveals that a test's name is rarely a straightforward a reproduction of its unique attributes.
+While the results of the empirical study demonstrated that tests are often named after what makes them unique, it also revealed that a test's name is rarely a straightforward a reproduction of its unique attributes.
 %
 Instead, names appear to be the result of a complex transformation process that can add to, remove from, or modify the unique attributes.
 %
