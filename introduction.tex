@@ -78,7 +78,7 @@ This approach is based on a mined set of test patterns and can:
 Unlike existing approaches which were designed to handle general methods, our approach is specific to JUnit tests.
 %
 The narrower scope allows the approach to take advantage of the highly repetitive structures that exist in both test names and bodies of JUnit tests (see~\cref{sec:test-pattern-section}).
-% TODO[fixed]: Talk about the evaluation here...
+% 
 To evaluate the pattern-based approach, I selected a subset of \num{508} tests from a total of \num{26502} tests that were matched with a pattern.
 %
 From the collected results of the evaluation, I believe the approach is feasible, accurate at identifying the action, predicate, and
@@ -90,8 +90,10 @@ The second piece is to develop an approach to generate descriptive test names.
 % 
 This piece of work contains three components.
 
-% TODO: talk about the size of the study.
+% TODO[fixed]: talk about the size of the study.
 The first component was to conduct an empirical study of naming rationales that investigated whether tests are named after what makes them unique.
+%
+A total of \num{440} tests were selected from \num{11} open-source projects on Github and used as the experimental subjects in this empirical study.
 %
 The results of the study
 \begin{enumerate*}
