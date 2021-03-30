@@ -1,7 +1,9 @@
 \section{A New Approach to Generate Descriptive Test Names}
 \label{sec:generate-names}
 
-For the second piece of my dissertation work, I plan to develop an approach to generate descriptive test names.
+For the second piece of my dissertation work, I plan to develop a new approach to generate test names.
+%
+In particular, I want to create an approach that generates test names that are not only descriptive, but meet with developer approval.
 %
 This piece contains three components.
 %
@@ -10,41 +12,42 @@ The first component is an empirical study of naming rationales that investigates
 The second component is an automated approach to extract unique attributes of unit tests.
 %
 And the last component is a new approach to generate descriptive test names primarily based on the unique attributes identify by the tool created in the second component.
+%TODO: State here that the first two pieces are completed and submitted to TOSEM
 
 
-Because of the limitations of existing approaches, further work is needed in order to automatically generate test names that are both descriptive, take into account the differences between test names and general method names, and meet with developer approval.
-%
-My work in this direction is inspired by an impression, informed from my experiences with many tests from many projects, that a test's name is often based on what makes the test unique from its siblings---tests declared in the same class.
-%
-To investigate this impression, I first conducted a large-scale empirical study, considering tests drawn from \num{11} open-source projects, that asks whether tests are named after what makes them unique.
-%
-The results of the study:
-\begin{enumerate*}
-\item confirm my impression that the majority of tests are named after what makes them unique
-\item identify additional aspects that influence how tests are named
-\end{enumerate*}.
+% Because of the limitations of existing approaches, further work is needed in order to automatically generate test names that are descriptive, take into account the differences between test names and general method names, and meet with developer approval.
+% %
+% My work in this direction is inspired by an impression, informed from my experiences with many tests from many projects, that a test's name is often based on what makes the test unique from its siblings---tests declared in the same class.
+% %
+% To investigate this impression, I first conducted a large-scale empirical study, considering tests drawn from \num{11} open-source projects, that asks whether tests are named after what makes them unique.
+% %
+% The results of the study:
+% \begin{enumerate*}
+% \item confirm my impression that the majority of tests are named after what makes them unique
+% \item identify additional aspects that influence how tests are named
+% \end{enumerate*}.
 
 
-Second, based on the results from the study, I designed a novel, automated approach that can extract the attributes of a test that make it unique among its siblings.
-%
-Because descriptive names are often based on such unique attributes, the approach is a crucial building block for future name generation techniques.  
-%
-At a high-level, the approach uses a combination of static program analysis to extract a variety of candidate attributes, identified as part of the study, from a test suite and formal concept analysis to identify which combination of attributes is unique to the test under consideration.
+% Second, based on the results from the study, I designed a novel, automated approach that can extract the attributes of a test that make it unique among its siblings.
+% %
+% Because descriptive names are often based on such unique attributes, the approach is a crucial building block for future name generation techniques.  
+% %
+% At a high-level, the approach uses a combination of static program analysis to extract a variety of candidate attributes, identified as part of the study, from a test suite and formal concept analysis to identify which combination of attributes is unique to the test under consideration.
 
 
-To evaluate the approach, I implemented it as a working prototype for applications written in Java using the JUnit testing framework.
-%
-I chose these technologies as they are commonly used.
-%
-Using this prototype, I conducted an empirical evaluation based on \num{920} tests taken from \num{17} open source projects hosted on GitHub.
-%
-The results of the evaluation show that my proposed approach is consistent with human judgment.
+% To evaluate the approach, I implemented it as a working prototype for applications written in Java using the JUnit testing framework.
+% %
+% I chose these technologies as they are commonly used.
+% %
+% Using this prototype, I conducted an empirical evaluation based on \num{920} tests taken from \num{17} open source projects hosted on GitHub.
+% %
+% The results of the evaluation show that my proposed approach is consistent with human judgment.
 
 
-Finally, from the results of the empirical study, I am going to further inspect the Partial category since it takes up a majority of test names that are partially constructed after what makes the test unique.
-%
-I hope to have a better understanding of the origin of the other bits (i.e., not the bits that makes the test unique) in those test names, so it would be possible to upgrade our current approach to extract them as well.
-%
-Moreover, I plan to study the complex transformation from the unique\slash other attributes to descriptive test names and automate it as the main part of a name generation tool.
-%
-Using the findings I would discover in previous steps, I will build the name generation tool to automatically construct descriptive test names.
+% Finally, from the results of the empirical study, I am going to further inspect the Partial category since it takes up a majority of test names that are partially constructed after what makes the test unique.
+% %
+% I hope to have a better understanding of the origin of the other bits (i.e., not the bits that makes the test unique) in those test names, so it would be possible to upgrade our current approach to extract them as well.
+% %
+% Moreover, I plan to study the complex transformation from the unique\slash other attributes to descriptive test names and automate it as the main part of a name generation tool.
+% %
+% Using the findings I would discover in previous steps, I will build the name generation tool to automatically construct descriptive test names.
