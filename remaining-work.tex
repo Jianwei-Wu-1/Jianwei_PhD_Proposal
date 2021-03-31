@@ -1,49 +1,51 @@
 \subsection{Remaining Work: Generating Descriptive Names Based on the Unique Attributes of Unit Tests}
 \label{sec:remaining-work}
 
-% TODO: I don't know what you mean by cognition here.  Based primarily on unique attributes and meets with developer approval?
-As the last component of the second piece of my dissertation work, I plan to develop a new name generation approach to provide descriptive test names that match well with developers cognition.
-%TODO: Describe how this component will complete the second piece of work
+
+% TODO[fixed]: I don't know what you mean by cognition here.  Based primarily on unique attributes and meets with developer approval?
+As the last component of the second piece of my dissertation work, I plan to develop a new name generation approach to provide descriptive test names that are based primarily on unique attributes and meets with developer approval
+%TODO[fixed]: Describe how this component will complete the second piece of work
+This component will utilize the unique attributes of tests as the basis for its descriptive name generation process, and it completes the second piece of my dissertation work by generating descriptive test names.
 %
 The following subsections will describe my plan and timeline for completing this component.
 
-% TODO: These sections should be integrated with the research plan section.
-First, I will look into the test names that were categorized as partially named after what makes it unique in detail.
-%
-With the knowledge of where other information in existing test names originate from, it would be possible to include some additional attributes in the descriptive name generation process.
-%
-Second, using both the unique and additional attributes, I will build a new name generation approach to generate descriptive test names.
-%
-To achieve that, I plan to figure out the complex transformation process that produces descriptive names and use it as an essential part of the name generation process.
-%
-Based on the the transformation from the attributes to descriptive names, I will build an automated approach for descriptive name generation.
-%
-Last, the goal of my proposed research is to provide descriptive test names for developers, so I plan to evaluate my approach's generated names by their coverage and effectiveness.
+% TODO[moved to plan section]: These sections should be integrated with the research plan section.
 
 
 \subsubsection{Research Plan}
 
-% TODO: This could use some better structure.  Each step should be an individual paragraph and expanded with a bit more information.
+% TODO[fixed]: This could use some better structure.  Each step should be an individual paragraph and expanded with a bit more information.
 
 The research plan of my dissertation work is described below.
 %
 For the first step of building the name generation approach, a further investigation of the tests that were categorized as partially named after what makes them unique.
 %
-The goal of this step is to find the origin of additional attributes embedded in descriptive names and check if it is possible to figure out an automated way to extract them from tests.
+This step is to find the origin of additional attributes embedded in existing test names and check if it is possible to automate the process of extracting them from tests or other origin.
 %
-For the second step of building the name generation approach, I plan to understand the complex transformation process from the unique and additional attributes to descriptive test names.
+Based on the findings of the further investigation, I should be able to devise a method to extract them from tests or other origin as a set of additional attributes.
 %
-Moreover, I plan to figure out an optimal solution to transform the necessary attributes (e.g., add descriptive words, remove repetitive words, or modify certain phrases) to descriptive names that would be preferred by developers.
+With the extraction method, it would be possible to include the additional attributes in the descriptive name generation process.
+
+
+Second, using the unique and additional attributes as the basis of name generation, I will build a new name generation approach to provide descriptive test names.
 %
-Last, based on the complex transformation process, a new test name generation approach would be automated and implemented to provide descriptive names for unit test.
+To build the approach, I plan to look into the complex transformation process that convert the attributes of tests to descriptive test names, and this transformation is a nontrivial task.
 %
-Because my approach's generated names are produced with developers approval, they will significantly reduce the time and effort of test maintenance and documentation of the related software.
+For example, this transformation might require extracting certain words from the attributes, removing repetitive words in the attributes, or modifying certain phrases in the generated names, which would be preferred by developers.
+%
+Based on the this transformation, if a given test has non-descriptive name, my approach will transform the extracted attributes of it to a descriptive name for this test.
+
+
+Last, the goal of the second piece of my dissertation work is to provide descriptive test names for developers, so I plan to evaluate the approach by both its coverage and effectiveness.
 %
 This approach is designed to be a fully automated process, so there is no human input needed (i.e., neither to detect poor names nor generate descriptive names).
 %
-Using the implementation of the approach, I plan to evaluate it with two research questions that are checking its coverage and effectiveness.
+For the coverage of my approach, I will check how often the approach can generate descriptive names for the test that are poorly named.
+%
+For the effectiveness, I will let software engineers to decide if they would prefer our generated names over the original names on a randomly selected set of tests with non-descriptive names.
 
-%TODO: It would help to restrucutre this part
+
+%TODO[]: It would help to restrucutre this part
 % Have a subsubsection for ``subjects'' explain what you will use and why.
 % Have a subsubection for RQ1.  Explain the question, why it is interesting, the methodology for answering it (data generaton), how you will determine the answer
 % Have a subsubection for RQ2.  Explain the question, why it is interesting, the methodology for answering it (data generaton), how you will determine the answer
@@ -56,26 +58,77 @@ The planned research questions in this step are:
     \item RQ2-Effectiveness: Do the generated test names by the approach have developers approval?
 \end{enumerate}
 %
-For the experimental subjects, I plan to use the same \num{6} projects that were studies in~\cref{sec:emp-eval-attributes}.
+Also, a working prototype of the approach should be built before starting this evaluation.
+
+\paragraph{Experimental Subjects}
+
+For the experimental subjects, I plan to use a set of \num{6} randomly selected projects from Github \footnote{Same projects used for the evaluation in~\cref{sec:emp-eval-attributes}}.
 %
+These projects come from the top \num{50} Java projects from Github~\cite{top50projects}, and each project involves with at least three different developers.
+%
+Also, the unit tests from these projects are written by different developers at different times and cover a wide variety of application domains.
+%
+Hence, they tend to be more representative than other projects.
+%
+Moreover, these projects are different from the subjects we used in the empirical study in~\cref{sec:emp-study}, so I can prevent the threat of over-fitting towards the subjects of the empirical study.
+
+
+\paragraph{RQ1-Coverage: How often can the approach generate descriptive names for tests that are poorly named?}
+
 To answer RQ1, I plan to perform a quantitative analysis by calculating how often the approach can produce a descriptive name for the poorly named tests.
 %
-Based on our preliminary observation, my approach should be able to cover most of the poorly named tests and provide descriptive names for them.
+Because the usefulness of the approach depends on if it can generate descriptive names for tests that are poorly named, I need to look into this research question to measure the coverage of the approach.
 %
-To answer RQ2, I plan to conduct an empirical survey with a group of experienced developers (i.e., software engineers in real-world with more than \num{3} years of experience) by asking them if the generated names are descriptive about their corresponding tests, and
+To do that, I plan to extract a fixed number of randomly selected tests with non-descriptive names from each project and run the prototype on these tests for descriptive name generation.
+%
+Only two scenarios would be shown, either the approach can generate a descriptive name for a given test or not.
+%
+Therefore, the coverage of the approach will be determine by the number of tests that the approach can generate a descriptive name for versus the number of tests that the approach can not generate a descriptive name for.
+%
+Based on our preliminary observation, my approach should be able to cover nearly all of the poorly named tests and provide descriptive names for them.
+
+
+\paragraph{RQ2-Effectiveness: Do the generated test names by the approach have developers approval?}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.35]{figures/survey.png}
+    \caption{Example of survey questions.}
+    \label{fig:survey}
+\end{figure}
+
+To answer RQ2, I plan to conduct a developer-focused survey with a group of experienced developers (i.e., software engineers with at least three years of experience) by asking them if the generated names are descriptive about their corresponding tests, and
 \begin{enumerate*}
-    \item if yes, at which category would you put each generated name in?
-    \item if no, how would you name the corresponding tests?
-\end{enumerate*}
+    \item if yes, at which category would you put the generated name in
+    \item if no, how would you name the corresponding test
+\end{enumerate*}.
 %
-Based the results of the empirical study in~\cref{sec:emp-study}, the new name generation approach should be able to provide descriptive test names that are constructed in the same way as developers would do.
+Since the goal of the approach is to provide descriptive test names for developers, the best way to evaluate it is asking developers if they would prefer its generated names when the original test names are non-descriptive.
+%
+Rather than using less credible participants (e.g., graduate students or random people from question and answer websites), I will invite two experienced software engineers from \num{3} to \num{5} leading companies to our survey, which is \num{6} to \num{10} developers in total.
+%
+To do that, I plan to use the results of RQ1, the randomly selected tests with non-descriptive names and their generated names, to form a survey for developers to answer.
+%
+For now, \num{15} tests with non-descriptive names are planned to be chosen from each project, which gives us a survey with \num{90} questions (i.e., about \num{30} minutes to complete).
+%
+For example of the survey questions, \cref{fig:survey} shows a survey question, which contains four categories if the generated name is good and ask developers to input their own names if the generated name does not meet their approval.
+%
+Each question contains a test body, our generated name for this test, while the original non-descriptive name is omitted.
+%
+And the current four categories are: descriptive and complete, descriptive at action of test, descriptive at predicate of test, and descriptive at scenario of test.
+%
+Because our approach is still in early stage, this survey is tentative and might be changed in the future.
+%
+The effectiveness of the approach is judged by if the majority of developers (e.g., \num{4} out of \num{6} or \num{7} out of \num{10}) would like to use our generated names for the tests and which category most generated names would be in (e.g., could motivate us for future work).
+%
+Based the results of the empirical study in~\cref{sec:emp-study}, the new name generation approach should be able to provide descriptive test names that meet with developers approval.
 
 
 \subsubsection{Proposed Timeline}
 
 Currently, I already published the first piece of my dissertation work, which is a pattern-based approach to detect and improve non-descriptive test names~\cite{wu2020pattern}.
 %
-I also completed the first and second components of the second piece of my dissertation work, and they are combined and submitted to ACM Transactions on Software Engineering and Methodology.
+I also completed the first and second components of the second piece of my dissertation work, and they are submitted to ACM Transactions on Software Engineering and Methodology (TOSEM).
 %
 For my planned future work, I will start working on the last component of the second piece during Fall 2021 and complete this part by the end of Winter 2022.
 %
