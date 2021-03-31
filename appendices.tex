@@ -3,23 +3,18 @@
 \section{Evaluation of Existing Machine-learning based Name Generation Approaches for Generating Test Names}
 \label[appendix]{sec:pilot-study}
 
-Recent machine-learning based approaches (e.g.,~\cite{alon2018code2seq,alon2019code2vec}) performed significantly better on method and class name generation than previous approaches (e.g.,~\cite{allamanis2015suggesting,zhang2016towards}).
+Recent machine-learning based approaches (e.g.,~\cite{alon2018code2seq, alon2019code2vec}) performe significantly better on method and class name generation than previous approaches (e.g.,~\cite{allamanis2015suggesting, zhang2016towards}).
 %
-However, it is unknown how well these machine-learning based approaches would work in the context of generating names for unit tests.
+However, it is unknown how well these machine-learning based approaches work in the context of generating names for unit tests.
 %
-To evaluate their performance on that, we conducted a pilot study to check if they can perform well on generating descriptive test names.
-%
-This pilot study is based on two randomly selected sets of tests from \num{11} open source projects on Github.
-%
-Judging by the outcome of this study, we believe it is necessary to build a new test name generation approach that focuses on developer need (i.e., based on what makes the test unique among its siblings).
-
+To evaluate their performance for this task, we conducted a pilot study.
 
 \subsection{Considered Name Generations Approaches}
 
 %TODO[fixed] What are the ML techniques?  Why these ones?  How are they different?
-As the state-of-the-art work on the topic of abstracting code to use it for name generation, \citeauthor{alon2018code2seq} proposed a series of novel approaches on representing code snippets as compositional paths or continuous distributed vectors~\cite{alon2018code2seq,alon2019code2vec}.
-%
-After an initial review of the results of their approaches, their generated test names basically outperformed every existing name generation technique as far as we know~\cite{arcuri2014automated,ghafari2015automatically,pollock2010natural,pradel2018deepbugs,zhang2016towards,host2009debugging,schafer2008sound,allamanis2015suggesting,daka2017generating}.
+As the state-of-the-art work on the topic of abstracting code to use it for name generation, \citeauthor{alon2018code2seq} proposed a series of novel approaches on representing code snippets as compositional paths or continuous distributed vectors~\cite{alon2018code2seq, alon2019code2vec}.
+% TODO: You need to be careful here.  Is there really an evaluation comparing all of these appraoches  Pretty sure no one compared them against Zhang?  If not you can't say that it outperforms.  Instead you can say something like ``it appears''  Or you can limit the claim to what is actually compared against which I think is other approaches for general name generation.
+After an initial review of the results of their approaches, their generated test names basically outperformed every existing name generation technique as far as we know~\cite{arcuri2014automated, ghafari2015automatically,pollock2010natural, pradel2018deepbugs, zhang2016towards, host2009debugging, schafer2008sound,allamanis2015suggesting, daka2017generating}.
 %
 The difference between the two approaches is that \texttt{Code2seq} encodes a code snippet to a set of compositional paths, and \texttt{Code2vec} encodes a code snippet to a fixed-length continuous vector.
 %
@@ -69,25 +64,20 @@ The first ten projects were randomly selected from the top \num{50} Java project
 %
 Because these projects encompass a variety of domains (e.g., JavaPoet is a library for generating Java programmatically and ExoPlayer is a media player for Android) and have many contributors (e.g., Moshi’s test suite contains contributions from \num{8} different people), their tests are more likely to be representative of tests in general which helps mitigate a potential threat to validity.
 %
-In addition, we also included Barbecue, a commonly used subject in the testing literature (e.g.,~\cite{zhang2015automatically, zhang2016towards,wu2020pattern}).
-%
+In addition, we also included Barbecue, a commonly used subject in the testing literature (e.g.,~\cite{zhang2015automatically, zhang2016towards, wu2020pattern}).
+% TODO: you could provide more details here.
 \num{15400} tests were randomly selected from different test classes under different projects to evaluate both \texttt{Code2seq} and \texttt{Code2vec}.
-
-% [changed]WHy different number?
-
-To investigate this research question, we run each corresponding set of tests on \texttt{Code2seq} and \texttt{Code2vec} and collected the generated test names as the data for dicussion.
-%
-Both \texttt{Code2seq} and \texttt{Code2vec} were run on a MacBook Pro (2.4GHz Intel i5 processor and 8GB RAM) with MacOS Mojave \footnote{Same machine in the empirical study}, Tensorflow 1.13.1 and Tensorflow 2.0.0, respectively.
-%
-And it took roughly \num{25} hours to both configure necessary environment and generating names for tests.
 
 
 \subsection{Data and Discussion}
 
-% Example figure for each... 
-% Individually, names may look ``OK''.
-% However, 
+To generate the data necessary for investigating the quality of the generated names, we ran \texttt{Code2seq} and \texttt{Code2vec} on the set of \num{15400} tests.
+%
+Both \texttt{Code2seq} and \texttt{Code2vec} were run on a MacBook Pro (2.4GHz Intel i5 processor and 8GB RAM) with MacOS Mojave \footnote{Same machine in the empirical study}, Tensorflow 1.13.1 and Tensorflow 2.0.0, respectively.
+% Were you doing this locally or did you use the web interface?  This just seems really long.  Really just the execution time is what matters.
+It took roughly \num{25} hours to both configure necessary environment and generating names for tests.
 
+%TODO: I want to see the bodies of these tests.  You want people to be able to see how the similarities in the bodies.
 \begin{figure}[t]
 \centering
 \begin{subfigure}[b]{1.0\textwidth}
@@ -108,21 +98,29 @@ And it took roughly \num{25} hours to both configure necessary environment and g
 \end{figure}
 
 
-In~\cref{fig:generated1}, it shows two test names generated for Scribejava by using \texttt{Code2seq}.
+In~\cref{fig:generated1}, it shows two test names generated for test from Scribejava using \texttt{Code2seq}.
 %
 For example, \texttt{extract\-With\-Empty\-Response} is generated for \texttt{should\-Throw\-Exception\-If\-Response\-Is\-Empty\-String}.
 %
 In~\cref{fig:generated2}, it shows two test names generated for ExoPlayer by using \texttt{Code2vec}.
 %
 For another example, \texttt{accumulate} is generated for \texttt{test\-Merge}.
+
+
+Initially, our manual examination of the names was posiitve.
 %
-Individually, these generated names might look to be acceptable.
+The names appeared to be descriptive and were similiar in format to existing test names.
 %
-However, each generated name has multiple duplicates in its related test class.
-%
-For instance, \texttt{extract\-with\-empty\-response} is repeated \num{3} times, and \texttt{accumulate} is repeated \num{4} times, in their corresponding test classes.
-%
-Therefore, they are useless in practice as duplicate names are not possible and, even if they were, they would not serve the goal of helping developers comprehend the purposes of their tests.
+However, we soon realized that both approaches frequently generated duplicate names for different tests in the same class.
+
+
+
+For example, \texttt{extract\-with\-empty\-response} is repeated \num{3} times, and \texttt{accumulate} is repeated \num{4} times.
+
+% TODO: I would like to see a table here.
+% FOr each project show how many times a name is repeated in a test class.
+
+% Then Update the discussion to match.
 
 
 
