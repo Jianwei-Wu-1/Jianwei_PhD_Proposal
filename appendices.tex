@@ -11,7 +11,11 @@ To evaluate their performance for this task, we conducted a pilot study.
 
 \subsection{Considered Name Generations Approaches}
 
-Work by \citeauthor{alon2018code2seq} is currently the state-of-the-art in using machine translation to generate names and identifiers based on source code~\cite{alon2018code2seq, alon2019code2vec}. At a high-level, these approaches encode source code (e.g., methods) and labels (i.e., names) as a model that can be used to predict labels (names) for previously unseen inputs (code). The primary difference between the approaches is that \texttt{Code2seq}~\cite{alon2018code2seq} encodes a source code as set of compositional paths while \texttt{Code2vec}~\cite{alon2019code2vec} encodes a source code as a fixed-length continuous vector.
+Work by \citeauthor{alon2018code2seq} is currently the state-of-the-art in using machine translation to generate names and identifiers based on source code~\cite{alon2018code2seq, alon2019code2vec}.
+%
+At a high-level, these approaches encode source code (e.g., methods) and labels (i.e., names) as a model that can be used to predict labels (names) for previously unseen inputs (code).
+%
+The primary difference between the approaches is that \texttt{Code2seq}~\cite{alon2018code2seq} encodes a source code as set of compositional paths while \texttt{Code2vec}~\cite{alon2019code2vec} encodes a source code as a fixed-length continuous vector.
 
 \subsection{Considered Unit Tests}
 
@@ -107,7 +111,7 @@ The names appeared to be descriptive at some level and were similar, module some
 %
 However, we soon realized that both approaches frequently generated duplicate names for different tests in the same class.
 %
-For example, as shown in \cref{fig:generated1, fig:generated2}, both \texttt{Code2seq} and \texttt{Code2vec} generated the same name for different tests.
+For example, as shown in \cref{fig:generated1,fig:generated2}, both \texttt{Code2seq} and \texttt{Code2vec} generated the same name for different tests.
 
 
 \begin{table}[t]
@@ -117,31 +121,34 @@ For example, as shown in \cref{fig:generated1, fig:generated2}, both \texttt{Cod
 {
   l
   S[table-format=5.1]
+  S[table-format=3.1]
   S[table-format=5.1]
+  S[table-format=3.1]
 }
  
-%TODO: I'd like to see the percentage of duplicates.  You should add this as another column or in ().
+%TODO[fixed]: I'd like to see the percentage of duplicates.  You should add this as another column or in ().
 
 \toprule
- & \multicolumn{2}{c}{\textbf{\# Duplicates}} \\
- \cmidrule(lr){2-3}
+ & \multicolumn{4}{c}{\textbf{\# Duplicates}} \\
+ \cmidrule(lr){2-5}
  
 \multicolumn{1}{c}{\textbf{Project}} &
-\multicolumn{1}{c}{\textbf{\texttt{Code2seq}}} &
-\multicolumn{1}{c}{\textbf{\texttt{Code2vec}}}
+\multicolumn{1}{c}{\textbf{\texttt{Code2seq}}} & \multicolumn{1}{c}{\textbf{(\%)}} &
+\multicolumn{1}{c}{\textbf{\texttt{Code2vec}}} &
+\multicolumn{1}{c}{\textbf{(\%)}}
 \\
 \midrule
- Guice             &  174   & 195   \\
- Moshi             &  80    & 98    \\
- Picasso           &  48    & 50    \\
- Fastjson          &  256   & 258   \\
- Guava             &  1152  & 1161  \\
- Mockito           &  254   & 328   \\
- Socket.io-client  &  15    & 15    \\
- Scribejava        &  17    & 22    \\
- ExoPlayer         &  240   & 257   \\
- Javapoet          &  46    & 52    \\
- Barbecue          &  30    & 18    \\
+ Guice             &  174   & 14.4 & 195  &  14.8 \\
+ Moshi             &  80    & 14.5 & 98   &  17.6  \\
+ Picasso           &  48    & 14.1 & 50   &  14.7 \\
+ Fastjson          &  256   & 14.2 & 258  &  14.4 \\
+ Guava             &  1152  & 15.9 & 1161 &  16.2 \\
+ Mockito           &  254   & 12.0 & 328  &  15.5 \\
+ Socket.io-client  &  15    & 19.0 & 15   &  17.4 \\
+ Scribejava        &  17    & 15.7 & 22   &  20.2 \\
+ ExoPlayer         &  240   & 16.7 & 257  &  17.6 \\
+ Javapoet          &  46    & 14.5 & 52   &  15.9 \\
+ Barbecue          &  30    & 18.9 & 18   &  14.5 \\
 \bottomrule
 \end{tabular}
 \label{tab:ml-approach-data}
@@ -151,9 +158,11 @@ For example, as shown in \cref{fig:generated1, fig:generated2}, both \texttt{Cod
 %
 The \emph{\# Duplicates} columns shows how many times the respective approach generated a duplicate name for tests in the same test class.
 %
-For example, the first row shows that, for ExoPlater, \texttt{Code2seq} produced \num{174} duplicates and \texttt{Code2vec} produced \num{195} duplicates.
-% TODO: Update to match data.
-As this data shows, duplication occurs in all of our considered subjects.  Moreover, it is common with up to XXX percent of tests having a duplicate name in some Subjects.XXX
+For example, the first row shows that, for Guice, \texttt{Code2seq} produced \num{174} duplicates and \texttt{Code2vec} produced \num{195} duplicates.
+% TODO[fixed]: Update to match data.
+As this data shows, duplication occurs in all of our considered subjects.
+%
+Moreover, it is common with up to \SI{\approx 14.5}{\percent} percent of tests having a duplicate name in Javapoet from \texttt{Code2seq} and \SI{\approx 15.9}{\percent} percent from \texttt{Code2vec}.
 
 
 Because of the extent of the duplication issue, we believe that machine translation-based approaches are unlikely to be useful for generating names for unit tests without significant modification.
