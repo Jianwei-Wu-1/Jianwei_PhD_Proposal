@@ -1,8 +1,6 @@
 \section{Related Work}
 \label{sec:related-work}
 
-
-
 Existing work related to my proposed research will be discussed in this section. I have organized them into the following categories:
 
 \subsection{Detecting Mismatches\slash Improving Names}
@@ -68,7 +66,7 @@ For example, \citeauthor{zhang2016towards} proposed their approach that can gene
 %
 However, their approach left an important question unanswered that is testers need to decide which one of the three possible test names should be used for their unit tests by themselves, and it is possible that none of the three generated names follow the common naming convention.
 %
-Other techniques utilized Java bytecode, method-call sequences, API-level coverage goals, and \texttt{logbilinear} context models~\cite{fraser2011evosuite,thummalapenta2009mseqgen,daka2017generating}.
+Other techniques utilized Java bytecode, method-call sequences, API-level coverage goals, and logbilinear context models~\cite{fraser2011evosuite,thummalapenta2009mseqgen,daka2017generating}.
 %
 Even with their automated generation process, their generated test names are not human-readable that can cause misunderstanding for testers who want to further modify those generated test names or bodies.
 % change done ->
@@ -95,11 +93,11 @@ However, while their works focus more on extracting features from code or automa
 %
 Furthermore, \citeauthor{li2019deepfl} proposed a learning-based approach for fault localization and automated debugging with high performance~\cite{li2019deepfl}, but the goal of their work is primarily to locate software faults for debugging rather than the naming of unit tests. 
 %
-Regardless of the performance of their proposed tool, the goal of their work is primarily to locate software faults for debugging rather than the naming of unit testing, and the experimental subjects they used is a standard benchmark database of detecting bugs rather than the unit tests from real-world Java projects.
+Regardless of the performance of their proposed tools, the goal of their work is primarily to locate software faults for debugging rather than the naming of unit testing, and the experimental subjects they used is a standard benchmark database of detecting bugs rather than the unit tests from real-world Java projects.
 %
 Recent work tried to solve the naming problem of unit tests by using machine learning-based approaches~\cite{alon2018code2seq, alon2019code2vec}.
 %
-The data of our quantitative analysis in~\cref{sec:pilot-study} shows that hundreds or thousands of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
+The data of our quantitative analysis in~\cref{sec:pilot-study} shows that tens or hundreds of duplicate test names were generated for each project (i.e., either using~\cite{alon2018code2seq} or~\cite{alon2019code2vec}).
 %
 This observation indicates there is a need to develop a uniqueness-based naming rationale that can be used to generate descriptive (i.e., being unique and informative) test names.
 
